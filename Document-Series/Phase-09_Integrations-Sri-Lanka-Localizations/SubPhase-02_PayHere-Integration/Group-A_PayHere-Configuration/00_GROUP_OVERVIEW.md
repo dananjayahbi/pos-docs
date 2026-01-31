@@ -53,7 +53,8 @@ This group sets up PayHere configuration. Creates PayHere constants with API URL
 | # | Document | Description | Tasks Covered |
 |---|----------|-------------|---------------|
 | 01 | `01_Tasks-01-08_Constants-Settings.md` | Create constants and settings | 01-08 |
-| 02 | `02_Tasks-09-16_URLs-Config-Verify.md` | Create URLs, config, and verification | 09-16 |
+| 02 | `02_Tasks-09-12_URLs-Config-Model.md` | Create URLs and config model with encryption | 09-12 |
+| 03 | `03_Tasks-13-16_Validation-Client-Verify.md` | Create validation, environment detection, and client | 13-16 |
 
 ---
 
