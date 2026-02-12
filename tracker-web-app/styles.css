@@ -692,12 +692,67 @@ body {
 }
 
 .file-name {
-    flex: 1;
     font-size: 0.8rem;
     color: var(--neutral-700);
     font-weight: 500;
     cursor: pointer;
     word-break: break-word;
+}
+
+.file-meta {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.file-prompt-block {
+    border: 1px solid var(--neutral-200);
+    border-radius: var(--radius-sm);
+    background: var(--neutral-50);
+}
+
+.file-prompt-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+    padding: 6px 8px;
+    cursor: pointer;
+    font-size: 0.72rem;
+    color: var(--neutral-600);
+    list-style: none;
+}
+
+.file-prompt-summary::-webkit-details-marker {
+    display: none;
+}
+
+.copy-prompt-btn {
+    border: 1px solid var(--neutral-300);
+    background: white;
+    color: var(--neutral-700);
+    font-size: 0.68rem;
+    border-radius: var(--radius-sm);
+    padding: 2px 7px;
+    cursor: pointer;
+}
+
+.copy-prompt-btn:hover {
+    background: var(--neutral-100);
+}
+
+.file-prompt-text {
+    margin: 0;
+    padding: 8px;
+    font-size: 0.7rem;
+    color: var(--neutral-700);
+    background: white;
+    border-top: 1px solid var(--neutral-200);
+    white-space: pre-wrap;
+    word-break: break-word;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
 }
 
 .file-item.completed {

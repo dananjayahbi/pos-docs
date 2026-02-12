@@ -1,0 +1,10 @@
+{
+  "template": "Read the \"Document-Series\\{{the-phase-folder-name}}\\{{sub-phase-folder-name}}\\{{group-folder-name}}\\{{task-file-name}}.md\" document and implement its tasks.",
+  "variables": [
+    "the-phase-folder-name",
+    "sub-phase-folder-name",
+    "group-folder-name",
+    "task-file-name"
+  ],
+  "example": "Read the \"Document-Series\\Phase-01_Project-Foundation-Setup\\SubPhase-03_Frontend-Project-Initialization\\Group-G_Core-Dependencies-Config-Files\\03_Tasks-80-82_Verification.md\" document and implement its tasks."
+}

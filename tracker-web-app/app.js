@@ -302,7 +302,11 @@ class UIManager {
         this.dataModel = this.normalizeDocumentationData();
         this.storage = new StorageManager(this.dataModel);
         this.groupFilesMap = this.createGroupFilesMap();
+        this.promptConfig = {
+            template: 'Read the "Document-Series\\{{the-phase-folder-name}}\\{{sub-phase-folder-name}}\\{{group-folder-name}}\\{{task-file-name}}.md" document and implement its tasks.'
+        };
         this.init();
+        this.loadPromptConfig();
     }
 
     normalizeDocumentationData() {
@@ -358,6 +362,46 @@ class UIManager {
         this.render();
         this.attachEventListeners();
         this.updateStats();
+    }
+
+    async loadPromptConfig() {
+        try {
+            const response = await fetch('prompt.json', { cache: 'no-store' });
+            if (!response.ok) return;
+            const config = await response.json();
+            if (config && config.template) {
+                this.promptConfig = config;
+            }
+        } catch (error) {
+            // Ignore and use default template.
+        }
+    }
+
+    escapeHtml(value) {
+        return String(value)
+            .replaceAll('&', '&amp;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;')
+            .replaceAll("'", '&#39;');
+    }
+
+    buildTaskPrompt(file) {
+        const rawPath = (file.path || file.name || '').replaceAll('/', '\\');
+        const pathWithoutExt = rawPath.replace(/\.md$/i, '');
+        const segments = pathWithoutExt.split('\\').filter(Boolean);
+
+        const phase = segments[0] || '';
+        const subphase = segments[1] || '';
+        const group = segments[2] || '';
+        const task = segments[3] || '';
+
+        const template = this.promptConfig.template || '';
+        return template
+            .replaceAll('{{the-phase-folder-name}}', phase)
+            .replaceAll('{{sub-phase-folder-name}}', subphase)
+            .replaceAll('{{group-folder-name}}', group)
+            .replaceAll('{{task-file-name}}', task);
     }
 
     render() {
@@ -778,9 +822,20 @@ class UIManager {
                 <div class="file-icon">
                     <i class="fas fa-file-lines"></i>
                 </div>
-                <label class="file-name" for="file-${groupId}-${idx}">
-                    ${file.display_name || file.name}
-                </label>
+                <div class="file-meta">
+                    <label class="file-name" for="file-${groupId}-${idx}">
+                        ${this.escapeHtml(file.display_name || file.name)}
+                    </label>
+                    <details class="file-prompt-block">
+                        <summary class="file-prompt-summary">
+                            <span><i class="fas fa-terminal"></i> Prompt</span>
+                            <button type="button" class="copy-prompt-btn" data-prompt="${encodeURIComponent(this.buildTaskPrompt(file))}">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </summary>
+                        <pre class="file-prompt-text">${this.escapeHtml(this.buildTaskPrompt(file))}</pre>
+                    </details>
+                </div>
             </div>
         `).join('');
 
@@ -828,6 +883,31 @@ class UIManager {
                     groupElementName,
                     allChecked && allCheckboxes.length > 0
                 );
+            });
+        });
+
+        // Copy prompt buttons
+        filesDiv.querySelectorAll('.copy-prompt-btn').forEach(copyBtn => {
+            copyBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const promptText = decodeURIComponent(copyBtn.getAttribute('data-prompt') || '');
+
+                try {
+                    await navigator.clipboard.writeText(promptText);
+                    const original = copyBtn.innerHTML;
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied';
+                    setTimeout(() => {
+                        copyBtn.innerHTML = original;
+                    }, 1200);
+                } catch (error) {
+                    const textArea = document.createElement('textarea');
+                    textArea.value = promptText;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                }
             });
         });
 
