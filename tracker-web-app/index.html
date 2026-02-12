@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LCC Documentation Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1>
+                        <i class="fas fa-book-open"></i>
+                        Documentation Tracker
+                    </h1>
+                </div>
+                <div class="header-right">
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Overall Progress</span>
+                            <span class="stat-value" id="overallProgress">0%</span>
+                        </div>
+                    </div>
+                    <button class="icon-btn" id="focusCurrentBtn" title="Focus Current" aria-label="Focus Current">
+                        <i class="fas fa-location-crosshairs"></i>
+                    </button>
+                    <div class="header-menu" id="headerMenu">
+                        <button class="icon-btn" id="menuToggleBtn" title="Actions" aria-label="Open actions" aria-haspopup="menu" aria-expanded="false" aria-controls="actionsMenu">
+                            <i class="fas fa-ellipsis-vertical"></i>
+                        </button>
+                        <div class="dropdown-menu" id="actionsMenu" role="menu" hidden>
+                            <button class="dropdown-item" id="resetBtn" role="menuitem">
+                                <i class="fas fa-redo"></i> Reset Progress
+                            </button>
+                            <button class="dropdown-item" id="exportBtn" role="menuitem">
+                                <i class="fas fa-download"></i> Export Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Phases Container -->
+            <div class="phases-container" id="phasesContainer">
+                <!-- Phases will be dynamically inserted here -->
+            </div>
+
+            <!-- Info Box -->
+            <div class="info-box">
+                <i class="fas fa-lightbulb"></i>
+                <strong>Tip:</strong> Group checkboxes are automatically updated when all task files within the group are marked complete.
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <i class="fas fa-info-circle"></i>
+                Click on phases to expand/collapse. Check items to mark as complete. Progress is automatically saved.
+            </p>
+        </footer>
+    </div>
+
+    <!-- Modal for Reset Confirmation -->
+    <div class="modal" id="resetModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Reset Progress</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to reset all progress? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelResetBtn">Cancel</button>
+                <button class="btn btn-danger" id="confirmResetBtn">Reset All</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Export -->
+    <div class="modal" id="exportModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Export Progress Data</h2>
+                <button class="close-btn" id="closeExportModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <textarea id="exportTextarea" readonly></textarea>
+                <button class="btn btn-primary" id="copyExportBtn">
+                    <i class="fas fa-copy"></i> Copy to Clipboard
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="data-inventory.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
