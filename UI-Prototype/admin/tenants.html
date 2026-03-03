@@ -83,38 +83,38 @@
     <main class="main-content">
       <!-- Stats Row -->
       <div class="stats-row">
-        <div class="stat-card"><div class="stat-value">142</div><div class="stat-label">Total Tenants</div></div>
-        <div class="stat-card"><div class="stat-value text-success">128</div><div class="stat-label">Active</div></div>
-        <div class="stat-card"><div class="stat-value text-warning">9</div><div class="stat-label">Trial</div></div>
-        <div class="stat-card"><div class="stat-value text-danger">5</div><div class="stat-label">Suspended</div></div>
+        <div class="stat-card"><div class="stat-value" id="statTotal">142</div><div class="stat-label">Total Tenants</div></div>
+        <div class="stat-card"><div class="stat-value text-success" id="statActive">128</div><div class="stat-label">Active</div></div>
+        <div class="stat-card"><div class="stat-value text-warning" id="statTrial">9</div><div class="stat-label">Trial</div></div>
+        <div class="stat-card"><div class="stat-value text-danger" id="statSuspended">5</div><div class="stat-label">Suspended</div></div>
       </div>
 
       <!-- Filter Bar -->
       <div class="filter-bar">
         <div class="search-box">
           <i class="fa-solid fa-magnifying-glass search-icon"></i>
-          <input type="text" class="search-input" placeholder="Search store name or tenant ID…"/>
+          <input type="text" class="search-input" id="tenantSearchInput" placeholder="Search store name or tenant ID…"/>
         </div>
-        <select class="filter-select">
+        <select class="filter-select" id="planFilterSelect">
           <option value="">All Plans</option>
           <option>Free</option>
           <option>Starter</option>
           <option>Pro</option>
           <option>Enterprise</option>
         </select>
-        <select class="filter-select">
+        <select class="filter-select" id="statusFilterSelect">
           <option value="">All Status</option>
           <option>Active</option>
           <option>Suspended</option>
           <option>Trial</option>
         </select>
-        <button class="btn btn-outline btn-sm"><i class="fa-solid fa-filter-circle-xmark"></i> Clear</button>
+        <button class="btn btn-outline btn-sm" id="clearFiltersBtn"><i class="fa-solid fa-filter-circle-xmark"></i> Clear</button>
       </div>
 
       <!-- Tenants Table -->
       <div class="table-card">
         <div class="table-header">
-          <span class="table-count">Showing 8 of 142 tenants</span>
+          <span class="table-count" id="tableCountLabel">Showing 8 of 142 tenants</span>
           <div class="table-header-actions">
             <button class="btn btn-primary btn-sm" id="addTenantBtn" data-modal-open="addTenantModal"><i class="fa-solid fa-plus"></i> Add Tenant</button>
             <button class="btn btn-outline btn-sm"><i class="fa-solid fa-download"></i> Export</button>
@@ -136,7 +136,7 @@
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="tenantTableBody">
               <tr>
                 <td><input type="checkbox"/></td>
                 <td><div class="store-cell"><div class="store-icon si-blue">KS</div><div><div class="store-name">Keells Super Kandy</div><div class="store-domain">keells-kandy.lcc.lk</div></div></div></td>
@@ -237,8 +237,8 @@
           </table>
         </div>
         <div class="table-footer">
-          <span class="pagination-info">Page 1 of 18 &nbsp;·&nbsp; 142 total records</span>
-          <div class="pagination">
+          <span class="pagination-info" id="paginationInfo">Page 1 of 18 &nbsp;·&nbsp; 142 total records</span>
+          <div class="pagination" id="paginationControls">
             <button class="page-btn" disabled><i class="fa-solid fa-chevron-left"></i></button>
             <button class="page-btn active">1</button>
             <button class="page-btn">2</button>

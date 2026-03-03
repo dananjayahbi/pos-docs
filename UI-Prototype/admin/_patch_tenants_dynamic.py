@@ -1,4 +1,67 @@
-/* ============================================================
+"""
+Patch tenants.html filter/search/table/pagination IDs and
+replace tenants.js with dynamic filtering + pagination JS.
+"""
+import pathlib, re
+
+BASE = pathlib.Path(__file__).parent
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 1. Patch tenants.html
+# ─────────────────────────────────────────────────────────────────────────────
+tenants_path = BASE / "tenants.html"
+html = tenants_path.read_text(encoding="utf-8")
+
+PATCHES = [
+    # search input
+    ('class="search-input"',
+     'class="search-input" id="tenantSearchInput"'),
+    # plan filter (first filter-select without an id)
+    ('<select class="filter-select">\n          <option value="">All Plans</option>',
+     '<select class="filter-select" id="planFilterSelect">\n          <option value="">All Plans</option>'),
+    # status filter
+    ('<select class="filter-select">\n          <option value="">All Status</option>',
+     '<select class="filter-select" id="statusFilterSelect">\n          <option value="">All Status</option>'),
+    # clear button
+    ('<button class="btn btn-outline btn-sm"><i class="fa-solid fa-filter-circle-xmark"></i> Clear</button>',
+     '<button class="btn btn-outline btn-sm" id="clearFiltersBtn"><i class="fa-solid fa-filter-circle-xmark"></i> Clear</button>'),
+    # table-count span
+    ('<span class="table-count">Showing 8 of 142 tenants</span>',
+     '<span class="table-count" id="tableCountLabel">Showing 8 of 142 tenants</span>'),
+    # pagination info
+    ('<span class="pagination-info">Page 1 of 18 &nbsp;·&nbsp; 142 total records</span>',
+     '<span class="pagination-info" id="paginationInfo">Page 1 of 18 &nbsp;·&nbsp; 142 total records</span>'),
+    # pagination wrapper
+    ('<div class="pagination">',
+     '<div class="pagination" id="paginationControls">'),
+    # tbody
+    ('<tbody>',
+     '<tbody id="tenantTableBody">'),
+    # stat cards
+    ('<div class="stat-value">142</div><div class="stat-label">Total Tenants</div>',
+     '<div class="stat-value" id="statTotal">142</div><div class="stat-label">Total Tenants</div>'),
+    ('<div class="stat-value text-success">128</div><div class="stat-label">Active</div>',
+     '<div class="stat-value text-success" id="statActive">128</div><div class="stat-label">Active</div>'),
+    ('<div class="stat-value text-warning">9</div><div class="stat-label">Trial</div>',
+     '<div class="stat-value text-warning" id="statTrial">9</div><div class="stat-label">Trial</div>'),
+    ('<div class="stat-value text-danger">5</div><div class="stat-label">Suspended</div>',
+     '<div class="stat-value text-danger" id="statSuspended">5</div><div class="stat-label">Suspended</div>'),
+]
+
+for old, new in PATCHES:
+    if old in html:
+        html = html.replace(old, new, 1)
+        print(f"[OK] Patched: {old[:60]}…")
+    else:
+        print(f"[SKIP] Not found: {old[:60]}…")
+
+tenants_path.write_text(html, encoding="utf-8")
+print("[OK] tenants.html patched with IDs\n")
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 2. Replace tenants.js
+# ─────────────────────────────────────────────────────────────────────────────
+TENANTS_JS = r"""/* ============================================================
    tenants.js — Tenants page: dynamic filtering, pagination,
                 View / Edit / Confirm action modals
    ============================================================ */
@@ -427,15 +490,11 @@ function showTenantsToast(msg, type = 'success') {
 // ── Initial render ─────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   renderTable(TENANTS, 1);
-
-  // Sync new tenant from Add Tenant modal → TENANTS array (admin.js handles the
-  // form submission; we wait 1 s then push data into TENANTS and re-render).
-  document.getElementById('submitAddTenant')?.addEventListener('click', () => {
-    const form = document.getElementById('addTenantForm');
-    if (!form) return;
-    setTimeout(() => {
-      const data = Object.fromEntries(new FormData(form).entries());
-      if (data.name?.trim()) window.TENANTS_push(data);
-    }, 1000);
-  });
 });
+"""
+
+js_path = BASE / "tenants.js"
+js_path.write_text(TENANTS_JS, encoding="utf-8")
+print("[OK] tenants.js rewritten with 42 tenants, dynamic filtering + pagination")
+
+print("\n=== Done ===")
