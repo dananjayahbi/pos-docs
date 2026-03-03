@@ -1,0 +1,20 @@
+/* Page-specific styles — index.html */
+
+.report-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-bottom: 2rem; }
+    .report-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; cursor: pointer; transition: box-shadow 0.2s, border-color 0.2s; }
+    .report-card:hover { border-color: var(--color-primary-500); box-shadow: 0 4px 16px rgba(249,115,22,0.12); }
+    .report-card-icon { width: 48px; height: 48px; border-radius: var(--radius-md); background: rgba(249,115,22,0.1); display: flex; align-items: center; justify-content: center; color: var(--color-primary-500); font-size: 1.25rem; }
+    .report-card-title { font-weight: 600; font-size: 1rem; color: var(--color-text-primary); }
+    .report-card-desc { font-size: 0.8125rem; color: var(--color-text-secondary); flex: 1; }
+    .quick-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .stats-table-card, .chart-card { background: var(--color-white); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.5rem; }
+    .card-title { font-size: 0.9375rem; font-weight: 600; color: var(--color-text-primary); margin-bottom: 1rem; }
+    .stats-table { width: 100%; border-collapse: collapse; }
+    .stats-table tr { border-bottom: 1px solid var(--color-border); }
+    .stats-table tr:last-child { border-bottom: none; }
+    .stats-table td { padding: 0.6rem 0; font-size: 0.875rem; }
+    .stats-table td:first-child { color: var(--color-text-secondary); }
+    .stats-table td:last-child { text-align: right; font-weight: 600; color: var(--color-text-primary); }
+    .chart-placeholder { border: 2px dashed var(--color-border); border-radius: var(--radius-md); height: 160px; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary); font-size: 0.875rem; gap: 0.5rem; }
+    @media (max-width: 900px) { .report-grid { grid-template-columns: repeat(2, 1fr); } .quick-stats { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) { .report-grid { grid-template-columns: 1fr; } }

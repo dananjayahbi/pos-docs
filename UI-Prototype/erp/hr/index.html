@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HR — LankaCommerce Cloud</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"/>
+  <link rel="stylesheet" href="../../assets/css/variables.css"/>
+  <link rel="stylesheet" href="../../assets/css/base.css"/>
+  <link rel="stylesheet" href="../../assets/css/components.css"/>
+  <link rel="stylesheet" href="../../assets/css/layout.css"/>
+  <link rel="stylesheet" href="hr.css" />
+</head>
+<body>
+<div class="app-shell">
+
+<div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-icon"><i class="fa-solid fa-store"></i></div>
+    <div class="sidebar-logo-text">
+      <div class="sidebar-logo-name">LankaCommerce</div>
+      <div class="sidebar-logo-sub">Sandbox Business</div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Main</div>
+    <a href="../dashboard.html" class="nav-item"><i class="fa-solid fa-chart-pie nav-icon"></i><span class="nav-label">Dashboard</span></a>
+
+    <div class="nav-section-label">Commerce</div>
+    <a href="../sales/orders.html" class="nav-item"><i class="fa-solid fa-bag-shopping nav-icon"></i><span class="nav-label">Sales</span></a>
+
+    <div class="nav-section-label">Catalog</div>
+    <a href="../products/index.html" class="nav-item"><i class="fa-solid fa-box nav-icon"></i><span class="nav-label">Products</span></a>
+    <a href="../inventory/index.html" class="nav-item"><i class="fa-solid fa-boxes-stacked nav-icon"></i><span class="nav-label">Inventory</span></a>
+
+    <div class="nav-section-label">Relationships</div>
+    <a href="../customers/index.html" class="nav-item"><i class="fa-solid fa-users nav-icon"></i><span class="nav-label">Customers</span></a>
+    <a href="../vendors/index.html" class="nav-item"><i class="fa-solid fa-truck-ramp-box nav-icon"></i><span class="nav-label">Vendors</span></a>
+
+    <div class="nav-section-label">Finance</div>
+    <a href="../accounting/index.html" class="nav-item"><i class="fa-solid fa-calculator nav-icon"></i><span class="nav-label">Accounting</span></a>
+
+    <div class="nav-section-label">HR</div>
+    <a href="../hr/index.html" class="nav-item active"><i class="fa-solid fa-id-card nav-icon"></i><span class="nav-label">Human Resources</span></a>
+
+    <div class="nav-section-label">Reports</div>
+    <a href="../reports/index.html" class="nav-item"><i class="fa-solid fa-chart-column nav-icon"></i><span class="nav-label">Reports</span></a>
+
+    <div class="nav-section-label">Admin</div>
+    <a href="../settings/index.html" class="nav-item"><i class="fa-solid fa-gear nav-icon"></i><span class="nav-label">Settings</span></a>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="../../pos/index.html" class="nav-item"><i class="fa-solid fa-cash-register nav-icon"></i><span class="nav-label">Open POS</span></a>
+    <a href="../../webstore/index.html" class="nav-item" target="_blank"><i class="fa-solid fa-globe nav-icon"></i><span class="nav-label">Webstore</span></a>
+  </div>
+</aside>
+
+<!-- MAIN WRAPPER -->
+<div class="main-wrapper">
+
+  <!-- TOP BAR -->
+  <header class="top-bar" id="header">
+    <div class="header-left">
+      <button class="header-toggle-btn" title="Toggle sidebar"><i class="fa-solid fa-bars"></i></button>
+      <div class="header-breadcrumb">
+        <span class="bc-item">ERP</span>
+        <i class="fa-solid fa-chevron-right bc-sep"></i>
+        <span class="bc-item active">Human Resources</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="header-icon-btn"><i class="fa-regular fa-bell"></i><span class="notif-dot"></span></button>
+      <div class="header-avatar">AS</div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- Page Header -->
+    <div class="page-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;">
+      <div>
+        <h1 class="page-title">Human Resources</h1>
+        <p class="page-subtitle">Manage employees, attendance, payroll &amp; leave</p>
+      </div>
+      <div style="display:flex;gap:.625rem;">
+        <button class="btn btn-outline"><i class="fa-solid fa-money-check-dollar"></i> Run Payroll</button>
+        <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Employee</button>
+      </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-icon icon-orange"><i class="fa-solid fa-users"></i></div>
+        <div class="kpi-label">Total Employees</div>
+        <div class="kpi-value">48</div>
+        <div class="kpi-sub">Across all departments</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon icon-green"><i class="fa-solid fa-user-check"></i></div>
+        <div class="kpi-label">Active</div>
+        <div class="kpi-value">44</div>
+        <div class="kpi-sub">Currently employed</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon icon-yellow"><i class="fa-regular fa-calendar-xmark"></i></div>
+        <div class="kpi-label">On Leave Today</div>
+        <div class="kpi-value">3</div>
+        <div class="kpi-sub">Approved absences</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon icon-blue"><i class="fa-solid fa-sack-dollar"></i></div>
+        <div class="kpi-label">Total Payroll This Month</div>
+        <div class="kpi-value" style="font-size:1.35rem;">₨ 2.4M</div>
+        <div class="kpi-sub">February 2026</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-bar">
+      <button class="tab-btn active" data-tab="employees"><i class="fa-solid fa-users" style="margin-right:.4rem;"></i>Employees</button>
+      <button class="tab-btn" data-tab="attendance"><i class="fa-regular fa-clock" style="margin-right:.4rem;"></i>Attendance</button>
+      <button class="tab-btn" data-tab="payroll"><i class="fa-solid fa-money-check-dollar" style="margin-right:.4rem;"></i>Payroll</button>
+      <button class="tab-btn" data-tab="leave"><i class="fa-regular fa-calendar-minus" style="margin-right:.4rem;"></i>Leave Requests</button>
+    </div>
+
+    <!-- TAB: Employees -->
+    <div id="tab-employees" class="tab-panel">
+      <!-- Filter Toolbar -->
+      <div class="toolbar">
+        <div class="toolbar-search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Search by name, ID or phone…"/>
+        </div>
+        <select>
+          <option value="">All Departments</option>
+          <option>Sales</option>
+          <option>Warehouse</option>
+          <option>IT</option>
+          <option>Accounting</option>
+          <option>Administration</option>
+          <option>Delivery</option>
+        </select>
+        <select>
+          <option value="">All Status</option>
+          <option>Active</option>
+          <option>On Leave</option>
+          <option>Inactive</option>
+        </select>
+      </div>
+
+      <!-- Employee Table -->
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>ID</th>
+              <th>Department</th>
+              <th>Role / Position</th>
+              <th>Phone</th>
+              <th>Joined</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="emp-cell"><div class="emp-avatar" style="background:#f97316;">NK</div><div><div class="emp-name">Nuwan Karunaratne</div><div class="emp-email">nuwan@lcc.lk</div></div></div></td>
+              <td><span style="font-family:monospace;font-size:.8125rem;">EMP-001</span></td>
+              <td>Sales</td>
+              <td>Senior Sales Executive</td>
+              <td>+94 77 234 5678</td>
+              <td>12 Jan 2022</td>
+              <td><span class="badge badge-active"><i class="fa-solid fa-circle" style="font-size:.45rem;"></i> Active</span></td>
+              <td><div class="row-actions"><button class="row-btn" title="View"><i class="fa-regular fa-eye"></i></button><button class="row-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button><button class="row-btn danger" title="Remove"><i class="fa-regular fa-trash-can"></i></button></div></td>
+            </tr>
+            <tr>
+              <td><div class="emp-cell"><div class="emp-avatar" style="background:#8b5cf6;">DP</div><div><div class="emp-name">Dilani Perera</div><div class="emp-email">dilani@lcc.lk</div></div></div></td>
+              <td><span style="font-family:monospace;font-size:.8125rem;">EMP-002</span></td>
+              <td>Accounting</td>
+              <td>Finance Manager</td>
+              <td>+94 71 345 6789</td>
+              <td>03 Mar 2021</td>
+              <td><span class="badge badge-active"><i class="fa-solid fa-circle" style="font-size:.45rem;"></i> Active</span></td>
+              <td><div class="row-actions"><button class="row-btn" title="View"><i class="fa-regular fa-eye"></i></button><button class="row-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button><button class="row-btn danger" title="Remove"><i class="fa-regular fa-trash-can"></i></button></div></td>
+            </tr>
+            <tr>
+              <td><div class="emp-cell"><div class="emp-avatar" style="background:#0ea5e9;">RF</div><div><div class="emp-name">Ravindra Fernando</div><div class="emp-email">ravindra@lcc.lk</div></div></div></td>
+              <td><span style="font-family:monospace;font-size:.8125rem;">EMP-003</span></td>
+              <td>IT</td>
+              <td>Systems Administrator</td>
+              <td>+94 76 456 7890</td>
+              <td>17 Jun 2023</td>
+              <td><span class="badge badge-active"><i class="fa-solid fa-circle" style="font-size:.45rem;"></i> Active</span></td>
+              <td><div class="row-actions"><button class="row-btn" title="View"><i class="fa-regular fa-eye"></i></button><button class="row-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button><button class="row-btn danger" title="Remove"><i class="fa-regular fa-trash-can"></i></button></div></td>
+            </tr>
+            <tr>
+              <td><div class="emp-cell"><div class="emp-avatar" style="background:#22c55e;">SR</div><div><div class="emp-name">Samanthi Rajapaksa</div><div class="emp-email">samanthi@lcc.lk</div></div></div></td>
+              <td><span style="font-family:monospace;font-size:.8125rem;">EMP-004</span></td>
+              <td>Warehouse</td>
+              <td>Stock Controller</td>
+              <td>+94 70 567 8901</td>
+              <td>29 Aug 2022</td>
+              <td><span class="badge badge-leave"><i class="fa-solid fa-circle" style="font-size:.45rem;"></i> On Leave</span></td>
+              <td><div class="row-actions"><button class="row-btn" title="View"><i class="fa-regular fa-eye"></i></button><button class="row-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button><button class="row-btn danger" title="Remove"><i class="fa-regular fa-trash-can"></i></button></div></td>
+            </tr>
+            <tr>
+              <td><div class="emp-cell"><div class="emp-avatar" style="background:#ef4444;">PM</div><div><div class="emp-name">Pradeep Mendis</div><div class="emp-email">pradeep@lcc.lk</div></div></div></td>
+              <td><span style="font-family:monospace;font-size:.8125rem;">EMP-005</span></td>
+              <td>Sales</td>
+              <td>Sales Representative</td>
+              <td>+94 75 678 9012</td>
+              <td>05 Feb 2024</td>
+              <td><span class="badge badge-active"><i class="fa-solid fa-circle" style="font-size:.45rem;"></i> Active</span></td>
+              <td><div class="row-actions"><button class="row-btn" title="View"><i class="fa-regular fa-eye"></i></button><button class="row-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button><button class="row-btn danger" title="Remove"><i class="fa-regular fa-trash-can"></i></button></div></td>
+            </tr>
+            <tr>
+              <td><div class="emp-cell"><div class="emp-avatar" style="background:#f59e0b;">AW</div><div><div class="emp-name">Amali Wickramasinghe</div><div class="emp-email">amali@lcc.lk</div></div></div></td>
+              <td><span style="font-family:monospace;font-size:.8125rem;">EMP-006</span></td>
+              <td>Administration</td>
+              <td>HR Coordinator</td>
+              <td>+94 72 789 0123</td>
+              <td>20 Nov 2020</td>
+              <td><span class="badge badge-active"><i class="fa-solid fa-circle" style="font-size:.45rem;"></i> Active</span></td>
+              <td><div class="row-actions"><button class="row-btn" title="View"><i class="fa-regular fa-eye"></i></button><button class="row-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button><button class="row-btn danger" title="Remove"><i class="fa-regular fa-trash-can"></i></button></div></td>
+            </tr>
+            <tr>
+              <td><div class="emp-cell"><div class="emp-avatar" style="background:#06b6d4;">CS</div><div><div class="emp-name">Chaminda Silva</div><div class="emp-email">chaminda@lcc.lk</div></div></div></td>
+              <td><span style="font-family:monospace;font-size:.8125rem;">EMP-007</span></td>
+              <td>Delivery</td>
+              <td>Delivery Driver</td>
+              <td>+94 78 890 1234</td>
+              <td>14 Apr 2023</td>
+              <td><span class="badge badge-inactive"><i class="fa-solid fa-circle" style="font-size:.45rem;"></i> Inactive</span></td>
+              <td><div class="row-actions"><button class="row-btn" title="View"><i class="fa-regular fa-eye"></i></button><button class="row-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button><button class="row-btn danger" title="Remove"><i class="fa-regular fa-trash-can"></i></button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB: Attendance -->
+    <div id="tab-attendance" class="tab-panel" style="display:none;">
+      <div class="coming-soon"><i class="fa-regular fa-clock"></i><p>Attendance management coming soon.</p></div>
+    </div>
+
+    <!-- TAB: Payroll -->
+    <div id="tab-payroll" class="tab-panel" style="display:none;">
+      <div class="coming-soon"><i class="fa-solid fa-money-check-dollar"></i><p>Payroll processing coming soon.</p></div>
+    </div>
+
+    <!-- TAB: Leave Requests -->
+    <div id="tab-leave" class="tab-panel" style="display:none;">
+      <div class="coming-soon"><i class="fa-regular fa-calendar-minus"></i><p>Leave request management coming soon.</p></div>
+    </div>
+
+  </main>
+</div><!-- /.main-wrapper -->
+</div><!-- /.app-shell -->
+
+<script src="../../assets/js/layout.js"></script>
+
+  <script src="hr.js"></script>
+</body>
+</html>

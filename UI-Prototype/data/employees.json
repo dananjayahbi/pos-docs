@@ -1,0 +1,82 @@
+{
+  "departments": ["Sales", "Accounting", "IT", "Warehouse", "HR", "Delivery"],
+  "employees": [
+    {
+      "id": "EMP-001",
+      "name": "Kasun Perera",
+      "employee_id": "LCC-EMP-001",
+      "department": "Sales",
+      "role": "Sales Manager",
+      "phone": "+94 77 234 5678",
+      "email": "kasun@demo.lk",
+      "joined": "2022-03-15",
+      "status": "active"
+    },
+    {
+      "id": "EMP-002",
+      "name": "Nimesha Jayasinghe",
+      "employee_id": "LCC-EMP-002",
+      "department": "Accounting",
+      "role": "Senior Accountant",
+      "phone": "+94 71 456 7890",
+      "email": "nimesha@demo.lk",
+      "joined": "2021-07-01",
+      "status": "active"
+    },
+    {
+      "id": "EMP-003",
+      "name": "Dilshan Fernando",
+      "employee_id": "LCC-EMP-003",
+      "department": "IT",
+      "role": "System Administrator",
+      "phone": "+94 76 123 4567",
+      "email": "dilshan@demo.lk",
+      "joined": "2023-01-10",
+      "status": "active"
+    },
+    {
+      "id": "EMP-004",
+      "name": "Sanduni Wickramasinghe",
+      "employee_id": "LCC-EMP-004",
+      "department": "HR",
+      "role": "HR Executive",
+      "phone": "+94 70 987 6543",
+      "email": "sanduni@demo.lk",
+      "joined": "2022-09-20",
+      "status": "active"
+    },
+    {
+      "id": "EMP-005",
+      "name": "Ruwan Dissanayake",
+      "employee_id": "LCC-EMP-005",
+      "department": "Warehouse",
+      "role": "Warehouse Supervisor",
+      "phone": "+94 75 345 6789",
+      "email": "ruwan@demo.lk",
+      "joined": "2020-11-05",
+      "status": "active"
+    },
+    {
+      "id": "EMP-006",
+      "name": "Thisari Rajapaksa",
+      "employee_id": "LCC-EMP-006",
+      "department": "Sales",
+      "role": "Sales Representative",
+      "phone": "+94 72 678 9012",
+      "email": "thisari@demo.lk",
+      "joined": "2023-06-12",
+      "status": "on_leave"
+    },
+    {
+      "id": "EMP-007",
+      "name": "Pradeep Kumara",
+      "employee_id": "LCC-EMP-007",
+      "department": "Delivery",
+      "role": "Delivery Driver",
+      "phone": "+94 78 901 2345",
+      "email": "pradeep@demo.lk",
+      "joined": "2021-04-18",
+      "status": "active"
+    }
+  ]
+}

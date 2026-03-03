@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Platform Users — LCC Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"/>
+  <link rel="stylesheet" href="../assets/css/variables.css"/>
+  <link rel="stylesheet" href="../assets/css/base.css"/>
+  <link rel="stylesheet" href="../assets/css/components.css"/>
+  <link rel="stylesheet" href="../assets/css/layout.css"/>
+  <link rel="stylesheet" href="users.css"/>
+  <link rel="stylesheet" href="admin.css"/>
+</head>
+<body>
+<div class="app-shell">
+
+    <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <div class="sidebar-brand-text">
+        <span class="brand-name">LCC</span>
+        <span class="brand-tagline">Admin Panel</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-title">Overview</span>
+        <a href="index.html" class="nav-item" data-tooltip="Dashboard">
+          <span class="nav-item-icon"><i class="fa-solid fa-gauge-high"></i></span>
+          <span class="nav-item-text">Dashboard</span>
+        </a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Management</span>
+        <a href="tenants.html" class="nav-item" data-tooltip="Tenants">
+          <span class="nav-item-icon"><i class="fa-solid fa-store"></i></span>
+          <span class="nav-item-text">Tenants / Stores</span>
+        </a>
+        <a href="users.html" class="nav-item active" data-tooltip="Users">
+          <span class="nav-item-icon"><i class="fa-solid fa-users"></i></span>
+          <span class="nav-item-text">Users</span>
+        </a>
+        <a href="billing.html" class="nav-item" data-tooltip="Billing">
+          <span class="nav-item-icon"><i class="fa-solid fa-credit-card"></i></span>
+          <span class="nav-item-text">Billing &amp; Plans</span>
+        </a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">System</span>
+        <a href="health.html" class="nav-item" data-tooltip="Health">
+          <span class="nav-item-icon"><i class="fa-solid fa-heart-pulse"></i></span>
+          <span class="nav-item-text">System Health</span>
+        </a>
+        <a href="logs.html" class="nav-item" data-tooltip="Logs">
+          <span class="nav-item-icon"><i class="fa-solid fa-file-lines"></i></span>
+          <span class="nav-item-text">Logs &amp; Audit</span>
+        </a>
+        <a href="settings.html" class="nav-item" data-tooltip="Settings">
+          <span class="nav-item-icon"><i class="fa-solid fa-sliders"></i></span>
+          <span class="nav-item-text">Platform Settings</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="../auth/login.html" class="nav-item signout-link" id="signOutBtn" data-tooltip="Sign Out">
+        <span class="nav-item-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+        <span class="nav-item-text">Sign Out</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fa-solid fa-bars"></i></button>
+        <div class="breadcrumb">
+          <span class="breadcrumb-item">Admin</span>
+          <i class="fa-solid fa-chevron-right breadcrumb-sep"></i>
+          <span class="breadcrumb-item active">Platform Users</span>
+        </div>
+      </div>
+      <div class="top-bar-right">
+        <button class="icon-btn" title="Notifications"><i class="fa-solid fa-bell"></i><span class="badge-dot"></span></button>
+        <div class="admin-avatar">SA</div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h1 class="page-title">Platform Users</h1>
+          <p class="page-subtitle">Manage super-admin, support, and billing users across LCC</p>
+        </div>
+        <div class="page-header-actions">
+          <button class="btn btn-primary"><i class="fa-solid fa-envelope"></i> Invite User</button>
+        </div>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-value">24</div><div class="stat-label">Total Users</div></div>
+        <div class="stat-card"><div class="stat-value text-danger">4</div><div class="stat-label">Super Admins</div></div>
+        <div class="stat-card"><div class="stat-value text-primary">11</div><div class="stat-label">Support Staff</div></div>
+        <div class="stat-card"><div class="stat-value text-warning">9</div><div class="stat-label">Billing Agents</div></div>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" class="search-input" placeholder="Search name or email…"/>
+        </div>
+        <select class="filter-select">
+          <option value="">All Roles</option>
+          <option>Super Admin</option>
+          <option>Support</option>
+          <option>Billing</option>
+        </select>
+        <select class="filter-select">
+          <option value="">All Status</option>
+          <option>Active</option>
+          <option>Inactive</option>
+          <option>Pending</option>
+        </select>
+        <button class="btn btn-outline btn-sm"><i class="fa-solid fa-filter-circle-xmark"></i> Clear</button>
+      </div>
+
+      <!-- Users Table -->
+      <div class="table-card">
+        <div class="table-header">
+          <span class="table-count">Showing 7 of 24 users</span>
+          <button class="btn btn-outline btn-sm"><i class="fa-solid fa-download"></i> Export</button>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table users-table">
+            <thead>
+              <tr>
+                <th><input type="checkbox" class="cb-all"/></th>
+                <th>User</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Tenant</th>
+                <th>Last Login</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="checkbox"/></td>
+                <td><div class="user-cell"><div class="user-avatar ua-red">KP</div><div><div class="user-name">Kavinda Perera</div><div class="user-id">UID-001</div></div></div></td>
+                <td class="text-muted">k.perera@lcc.lk</td>
+                <td><span class="badge badge-superadmin">Super Admin</span></td>
+                <td><span class="text-muted fst-italic">— Platform —</span></td>
+                <td class="text-muted">Today, 09:14</td>
+                <td><span class="badge badge-active">Active</span></td>
+                <td><div class="action-btns"><button class="icon-btn-sm" title="View"><i class="fa-solid fa-eye"></i></button><button class="icon-btn-sm" title="Edit"><i class="fa-solid fa-pen"></i></button><button class="icon-btn-sm text-danger" title="Deactivate"><i class="fa-solid fa-user-slash"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"/></td>
+                <td><div class="user-cell"><div class="user-avatar ua-blue">NF</div><div><div class="user-name">Nuwani Fernando</div><div class="user-id">UID-002</div></div></div></td>
+                <td class="text-muted">n.fernando@lcc.lk</td>
+                <td><span class="badge badge-superadmin">Super Admin</span></td>
+                <td><span class="text-muted fst-italic">— Platform —</span></td>
+                <td class="text-muted">Today, 08:55</td>
+                <td><span class="badge badge-active">Active</span></td>
+                <td><div class="action-btns"><button class="icon-btn-sm" title="View"><i class="fa-solid fa-eye"></i></button><button class="icon-btn-sm" title="Edit"><i class="fa-solid fa-pen"></i></button><button class="icon-btn-sm text-danger" title="Deactivate"><i class="fa-solid fa-user-slash"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"/></td>
+                <td><div class="user-cell"><div class="user-avatar ua-green">SR</div><div><div class="user-name">Sandun Rathnayake</div><div class="user-id">UID-005</div></div></div></td>
+                <td class="text-muted">s.rathnayake@lcc.lk</td>
+                <td><span class="badge badge-support">Support</span></td>
+                <td><span class="text-muted fst-italic">— Platform —</span></td>
+                <td class="text-muted">Yesterday, 17:32</td>
+                <td><span class="badge badge-active">Active</span></td>
+                <td><div class="action-btns"><button class="icon-btn-sm" title="View"><i class="fa-solid fa-eye"></i></button><button class="icon-btn-sm" title="Edit"><i class="fa-solid fa-pen"></i></button><button class="icon-btn-sm text-danger" title="Deactivate"><i class="fa-solid fa-user-slash"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"/></td>
+                <td><div class="user-cell"><div class="user-avatar ua-purple">DW</div><div><div class="user-name">Dinusha Wickramasinghe</div><div class="user-id">UID-007</div></div></div></td>
+                <td class="text-muted">d.wickramasinghe@lcc.lk</td>
+                <td><span class="badge badge-support">Support</span></td>
+                <td><span class="text-muted fst-italic">— Platform —</span></td>
+                <td class="text-muted">2 Mar 2026</td>
+                <td><span class="badge badge-active">Active</span></td>
+                <td><div class="action-btns"><button class="icon-btn-sm" title="View"><i class="fa-solid fa-eye"></i></button><button class="icon-btn-sm" title="Edit"><i class="fa-solid fa-pen"></i></button><button class="icon-btn-sm text-danger" title="Deactivate"><i class="fa-solid fa-user-slash"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"/></td>
+                <td><div class="user-cell"><div class="user-avatar ua-orange">TJ</div><div><div class="user-name">Tharushi Jayawardena</div><div class="user-id">UID-011</div></div></div></td>
+                <td class="text-muted">t.jayawardena@lcc.lk</td>
+                <td><span class="badge badge-billing">Billing</span></td>
+                <td><span class="text-muted fst-italic">— Platform —</span></td>
+                <td class="text-muted">Today, 07:44</td>
+                <td><span class="badge badge-active">Active</span></td>
+                <td><div class="action-btns"><button class="icon-btn-sm" title="View"><i class="fa-solid fa-eye"></i></button><button class="icon-btn-sm" title="Edit"><i class="fa-solid fa-pen"></i></button><button class="icon-btn-sm text-danger" title="Deactivate"><i class="fa-solid fa-user-slash"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"/></td>
+                <td><div class="user-cell"><div class="user-avatar ua-teal">RD</div><div><div class="user-name">Roshani De Silva</div><div class="user-id">UID-016</div></div></div></td>
+                <td class="text-muted">r.desilva@lcc.lk</td>
+                <td><span class="badge badge-billing">Billing</span></td>
+                <td><span class="text-muted fst-italic">— Platform —</span></td>
+                <td class="text-muted">28 Feb 2026</td>
+                <td><span class="badge badge-inactive">Inactive</span></td>
+                <td><div class="action-btns"><button class="icon-btn-sm" title="View"><i class="fa-solid fa-eye"></i></button><button class="icon-btn-sm" title="Edit"><i class="fa-solid fa-pen"></i></button><button class="icon-btn-sm text-success" title="Activate"><i class="fa-solid fa-user-check"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"/></td>
+                <td><div class="user-cell"><div class="user-avatar ua-indigo">MK</div><div><div class="user-name">Malith Kumara</div><div class="user-id">UID-022</div></div></div></td>
+                <td class="text-muted">m.kumara@lcc.lk</td>
+                <td><span class="badge badge-support">Support</span></td>
+                <td><span class="text-muted fst-italic">— Platform —</span></td>
+                <td class="text-muted">— Never —</td>
+                <td><span class="badge badge-pending">Pending</span></td>
+                <td><div class="action-btns"><button class="icon-btn-sm" title="Resend Invite"><i class="fa-solid fa-paper-plane"></i></button><button class="icon-btn-sm" title="Edit"><i class="fa-solid fa-pen"></i></button><button class="icon-btn-sm text-danger" title="Revoke"><i class="fa-solid fa-trash"></i></button></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footer">
+          <span class="pagination-info">Page 1 of 3 &nbsp;·&nbsp; 24 total records</span>
+          <div class="pagination">
+            <button class="page-btn" disabled><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn"><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="../assets/js/layout.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

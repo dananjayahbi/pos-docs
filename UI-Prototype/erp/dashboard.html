@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — LankaCommerce Cloud</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="../assets/css/variables.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/components.css" />
+  <link rel="stylesheet" href="../assets/css/layout.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+
+<div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+<!-- ──────────────── SIDEBAR ──────────────── -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-icon"><i class="fa-solid fa-store"></i></div>
+    <div class="sidebar-logo-text">
+      <div class="sidebar-logo-name">LankaCommerce</div>
+      <div class="sidebar-logo-sub">Sandbox Business</div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Main</div>
+
+    <a href="dashboard.html" class="nav-item active">
+      <i class="fa-solid fa-chart-pie nav-icon"></i>
+      <span class="nav-label">Dashboard</span>
+    </a>
+
+    <div class="nav-section-label">Commerce</div>
+
+    <a href="sales/orders.html" class="nav-item">
+      <i class="fa-solid fa-bag-shopping nav-icon"></i>
+      <span class="nav-label">Orders</span>
+      <span class="nav-badge">12</span>
+    </a>
+
+    <a href="sales/orders.html" class="nav-item">
+      <i class="fa-solid fa-file-invoice nav-icon"></i>
+      <span class="nav-label">Invoices</span>
+    </a>
+
+    <a href="sales/orders.html" class="nav-item">
+      <i class="fa-solid fa-file-lines nav-icon"></i>
+      <span class="nav-label">Quotations</span>
+    </a>
+
+    <div class="nav-section-label">Catalog</div>
+
+    <a href="products/index.html" class="nav-item">
+      <i class="fa-solid fa-box nav-icon"></i>
+      <span class="nav-label">Products</span>
+    </a>
+
+    <a href="inventory/index.html" class="nav-item">
+      <i class="fa-solid fa-boxes-stacked nav-icon"></i>
+      <span class="nav-label">Inventory</span>
+      <span class="nav-badge badge-error">3</span>
+    </a>
+
+    <a href="products/index.html" class="nav-item">
+      <i class="fa-solid fa-tags nav-icon"></i>
+      <span class="nav-label">Categories</span>
+    </a>
+
+    <div class="nav-section-label">Relationships</div>
+
+    <a href="customers/index.html" class="nav-item">
+      <i class="fa-solid fa-users nav-icon"></i>
+      <span class="nav-label">Customers</span>
+    </a>
+
+    <a href="vendors/index.html" class="nav-item">
+      <i class="fa-solid fa-truck-ramp-box nav-icon"></i>
+      <span class="nav-label">Vendors</span>
+    </a>
+
+    <a href="vendors/index.html" class="nav-item">
+      <i class="fa-solid fa-cart-flatbed nav-icon"></i>
+      <span class="nav-label">Purchase Orders</span>
+    </a>
+
+    <div class="nav-section-label">Finance</div>
+
+    <a href="accounting/index.html" class="nav-item">
+      <i class="fa-solid fa-calculator nav-icon"></i>
+      <span class="nav-label">Accounting</span>
+    </a>
+
+    <a href="accounting/index.html" class="nav-item">
+      <i class="fa-solid fa-receipt nav-icon"></i>
+      <span class="nav-label">Expenses</span>
+    </a>
+
+    <div class="nav-section-label">HR</div>
+
+    <a href="hr/index.html" class="nav-item">
+      <i class="fa-solid fa-id-card nav-icon"></i>
+      <span class="nav-label">Employees</span>
+    </a>
+
+    <a href="hr/index.html" class="nav-item">
+      <i class="fa-regular fa-clock nav-icon"></i>
+      <span class="nav-label">Attendance</span>
+    </a>
+
+    <a href="hr/index.html" class="nav-item">
+      <i class="fa-solid fa-money-check-dollar nav-icon"></i>
+      <span class="nav-label">Payroll</span>
+    </a>
+
+    <div class="nav-section-label">Reports</div>
+
+    <a href="reports/index.html" class="nav-item">
+      <i class="fa-solid fa-chart-column nav-icon"></i>
+      <span class="nav-label">Reports</span>
+    </a>
+
+    <div class="nav-section-label">Admin</div>
+
+    <a href="settings/index.html" class="nav-item">
+      <i class="fa-solid fa-gear nav-icon"></i>
+      <span class="nav-label">Settings</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <a href="../pos/index.html" class="nav-item">
+      <i class="fa-solid fa-cash-register nav-icon"></i>
+      <span class="nav-label">Open POS</span>
+    </a>
+    <a href="../webstore/index.html" class="nav-item" target="_blank">
+      <i class="fa-solid fa-globe nav-icon"></i>
+      <span class="nav-label">Webstore</span>
+    </a>
+  </div>
+</aside>
+
+<!-- ──────────────── HEADER ──────────────── -->
+<header class="header" id="header">
+  <div class="header-left">
+    <button class="header-toggle-btn" title="Toggle sidebar">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="header-breadcrumb">
+      <span class="breadcrumb-item">LankaCommerce Cloud</span>
+      <i class="fa-solid fa-chevron-right breadcrumb-sep"></i>
+      <span class="breadcrumb-item active">Dashboard</span>
+    </div>
+  </div>
+
+  <div class="header-right">
+    <!-- Search -->
+    <div class="header-search">
+      <i class="fa-solid fa-search header-search-icon"></i>
+      <input type="text" class="header-search-input" placeholder="Quick search…" />
+      <span class="header-search-shortcut">⌘K</span>
+    </div>
+
+    <!-- Notifications -->
+    <div class="header-icon-btn" style="position:relative;">
+      <i class="fa-solid fa-bell"></i>
+      <span style="position:absolute;top:4px;right:4px;width:8px;height:8px;background:#ef4444;border-radius:50%;border:2px solid #fff;"></span>
+    </div>
+
+    <!-- Quick links -->
+    <a href="../pos/index.html" class="btn btn-sm btn-outline" title="Open POS terminal">
+      <i class="fa-solid fa-cash-register"></i>
+      <span>POS</span>
+    </a>
+
+    <!-- User Avatar -->
+    <div class="header-avatar" data-dropdown="userDropdown" title="Account menu">
+      <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=64&h=64&fit=crop&crop=face" alt="Admin" />
+    </div>
+    <div class="dropdown-menu" id="userDropdown">
+      <div class="dropdown-header">
+        <div style="font-weight:600;font-size:0.875rem;">Tenant Admin</div>
+        <div style="font-size:0.75rem;color:var(--color-neutral-500);">admin@sandbox.lcc.lk</div>
+      </div>
+      <div class="dropdown-divider"></div>
+      <a href="settings/index.html" class="dropdown-item"><i class="fa-solid fa-gear"></i> Settings</a>
+      <a href="settings/index.html#profile" class="dropdown-item"><i class="fa-solid fa-user-circle"></i> My Profile</a>
+      <div class="dropdown-divider"></div>
+      <a href="../auth/login.html" class="dropdown-item text-error"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a>
+    </div>
+  </div>
+</header>
+
+<!-- ──────────────── MAIN ──────────────── -->
+<main class="main-wrapper" id="mainWrapper">
+  <div class="page-content">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Dashboard</h1>
+        <p class="page-subtitle" id="greetingText">Good morning, Admin · Today is Monday, 14 July 2025</p>
+      </div>
+      <div class="page-actions">
+        <button class="btn btn-outline btn-sm">
+          <i class="fa-solid fa-filter"></i>
+          Filter: Today
+        </button>
+        <button class="btn btn-primary btn-sm">
+          <i class="fa-solid fa-plus"></i>
+          New Order
+        </button>
+      </div>
+    </div>
+
+    <!-- ── KPI Cards ── -->
+    <div class="kpi-grid" id="kpiGrid">
+      <!-- Loaded dynamically -->
+      <div class="kpi-card skeleton-card"><div class="skeleton" style="height:44px;width:44px;border-radius:12px;"></div><div class="skeleton" style="height:32px;width:120px;margin-top:0.5rem;"></div></div>
+      <div class="kpi-card skeleton-card"><div class="skeleton" style="height:44px;width:44px;border-radius:12px;"></div><div class="skeleton" style="height:32px;width:120px;margin-top:0.5rem;"></div></div>
+      <div class="kpi-card skeleton-card"><div class="skeleton" style="height:44px;width:44px;border-radius:12px;"></div><div class="skeleton" style="height:32px;width:120px;margin-top:0.5rem;"></div></div>
+      <div class="kpi-card skeleton-card"><div class="skeleton" style="height:44px;width:44px;border-radius:12px;"></div><div class="skeleton" style="height:32px;width:120px;margin-top:0.5rem;"></div></div>
+    </div>
+
+    <!-- ── Charts Row ── -->
+    <div class="charts-row">
+      <!-- Revenue Chart -->
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div>
+            <div class="chart-card-title">Revenue Overview</div>
+            <div class="chart-card-sub">Last 7 days · LKR</div>
+          </div>
+          <div style="display:flex;gap:0.5rem;">
+            <button class="btn btn-xs btn-outline active-tab">7D</button>
+            <button class="btn btn-xs btn-outline">30D</button>
+            <button class="btn btn-xs btn-outline">90D</button>
+          </div>
+        </div>
+        <div class="chart-canvas-wrap">
+          <canvas id="revenueChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Orders by Source donut -->
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div>
+            <div class="chart-card-title">Orders by Source</div>
+            <div class="chart-card-sub">Today</div>
+          </div>
+        </div>
+        <div class="chart-canvas-wrap" style="height:170px;">
+          <canvas id="sourceChart"></canvas>
+        </div>
+        <div id="sourceChartLegend" style="margin-top:0.75rem;display:flex;flex-direction:column;gap:0.4rem;"></div>
+      </div>
+    </div>
+
+    <!-- ── Quick Actions ── -->
+    <div style="background:#fff;border:1px solid var(--color-neutral-200);border-radius:var(--radius-lg);padding:1.25rem 1.5rem;margin-top:1.25rem;">
+      <div style="font-size:0.9375rem;font-weight:600;color:var(--color-neutral-900);margin-bottom:0.75rem;">Quick Actions</div>
+      <div class="quick-actions">
+        <a href="sales/orders.html" class="quick-action-btn">
+          <i class="fa-solid fa-plus"></i>New Order
+        </a>
+        <a href="products/index.html" class="quick-action-btn">
+          <i class="fa-solid fa-box"></i>Add Product
+        </a>
+        <a href="customers/index.html" class="quick-action-btn">
+          <i class="fa-solid fa-user-plus"></i>Add Customer
+        </a>
+        <a href="../pos/index.html" class="quick-action-btn">
+          <i class="fa-solid fa-cash-register"></i>Open POS
+        </a>
+        <a href="vendors/index.html" class="quick-action-btn">
+          <i class="fa-solid fa-cart-flatbed"></i>New PO
+        </a>
+        <a href="accounting/index.html" class="quick-action-btn">
+          <i class="fa-solid fa-receipt"></i>Add Expense
+        </a>
+        <a href="reports/index.html" class="quick-action-btn">
+          <i class="fa-solid fa-chart-column"></i>Reports
+        </a>
+        <a href="settings/index.html" class="quick-action-btn">
+          <i class="fa-solid fa-gear"></i>Settings
+        </a>
+      </div>
+    </div>
+
+    <!-- ── Bottom Row: Recent Orders · Low Stock · Activity ── -->
+    <div class="bottom-row">
+
+      <!-- Recent Orders -->
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div>
+            <div class="chart-card-title">Recent Orders</div>
+            <div class="chart-card-sub">Last 10 orders</div>
+          </div>
+          <a href="sales/orders.html" class="btn btn-xs btn-outline">View All</a>
+        </div>
+        <table class="mini-table" id="recentOrdersTable">
+          <thead>
+            <tr>
+              <th>Order</th>
+              <th>Customer</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="recentOrdersBody">
+            <tr><td colspan="4" style="text-align:center;padding:2rem;color:var(--color-neutral-400);"><i class="fa-solid fa-spinner fa-spin"></i> Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Low Stock Alerts -->
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div>
+            <div class="chart-card-title">Low Stock Alerts</div>
+            <div class="chart-card-sub" id="lowStockCount">0 items need attention</div>
+          </div>
+          <a href="inventory/index.html" class="btn btn-xs btn-outline">Manage</a>
+        </div>
+        <div id="lowStockList">
+          <div style="padding:2rem;text-align:center;color:var(--color-neutral-400);font-size:0.875rem;">
+            <i class="fa-solid fa-spinner fa-spin"></i> Loading…
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity Feed -->
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div>
+            <div class="chart-card-title">Activity Feed</div>
+            <div class="chart-card-sub">Real-time updates</div>
+          </div>
+        </div>
+        <div class="activity-list" id="activityFeed">
+          <div style="padding:2rem;text-align:center;color:var(--color-neutral-400);font-size:0.875rem;">
+            <i class="fa-solid fa-spinner fa-spin"></i> Loading…
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</main>
+
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/layout.js"></script>
+<script src="../assets/js/toast.js"></script>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

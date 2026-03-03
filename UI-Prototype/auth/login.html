@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In — LankaCommerce Cloud</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="../assets/css/variables.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/components.css" />
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+<div class="auth-page">
+
+  <!-- ── Left: Brand Panel ── -->
+  <div class="auth-brand-panel">
+    <div class="brand-logo">
+      <div class="brand-logo-icon"><i class="fa-solid fa-store"></i></div>
+      <div>
+        <div>LankaCommerce Cloud</div>
+        <div class="brand-tagline">ERP &amp; Commerce Platform</div>
+      </div>
+    </div>
+
+    <div class="brand-content">
+      <h2 class="brand-headline">Manage your business<br /><span>smarter, faster.</span></h2>
+      <p class="brand-desc">
+        The all-in-one ERP platform designed for Sri Lankan SMEs. Manage sales, inventory, employees, accounting, and your online store — all in one place.
+      </p>
+
+      <div class="brand-features">
+        <div class="brand-feature-item">
+          <i class="fa-solid fa-boxes-stacked"></i>
+          <span>Inventory &amp; Stock Management</span>
+        </div>
+        <div class="brand-feature-item">
+          <i class="fa-solid fa-cash-register"></i>
+          <span>Point of Sale Terminal</span>
+        </div>
+        <div class="brand-feature-item">
+          <i class="fa-solid fa-globe"></i>
+          <span>Built-in Webstore &amp; E-Commerce</span>
+        </div>
+        <div class="brand-feature-item">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Real-time Analytics &amp; Reports</span>
+        </div>
+        <div class="brand-feature-item">
+          <i class="fa-solid fa-robot"></i>
+          <span>AI-Powered Insights &amp; Forecasting</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-footer">
+      &copy; 2024 LankaCommerce Cloud. Licensed to Sandbox Tenant — Colombo, Sri Lanka.
+    </div>
+  </div>
+
+  <!-- ── Right: Form Panel ── -->
+  <div class="auth-form-panel">
+    <div class="auth-form-container">
+
+      <div class="auth-form-header">
+        <h1>Welcome back</h1>
+        <p>Sign in to your workspace to continue.</p>
+      </div>
+
+      <!-- Tenant indicator & dropdown -->
+      <div class="tenant-dropdown-wrapper">
+        <div class="tenant-selector" title="Change workspace" onclick="toggleTenantDropdown()">
+          <div class="tenant-selector-info">
+            <div class="tenant-avatar" id="currentTenantAvatar">SB</div>
+            <div>
+              <div class="tenant-name" id="currentTenantName">Sandbox Business</div>
+              <div class="tenant-domain" id="currentTenantDomain">sandbox.lcc.lk</div>
+            </div>
+          </div>
+          <i class="fa-solid fa-chevron-down" style="color:var(--color-neutral-400); font-size:0.75rem;"></i>
+        </div>
+        
+        <div class="tenant-dropdown" id="tenantDropdown">
+          <div class="tenant-option active" onclick="selectTenant('Sandbox Business', 'sandbox.lcc.lk', 'SB')">
+            <div class="tenant-avatar">SB</div>
+            <div>
+              <div class="tenant-name">Sandbox Business</div>
+              <div class="tenant-domain">sandbox.lcc.lk</div>
+            </div>
+          </div>
+          <div class="tenant-option" onclick="selectTenant('TechNova Solutions', 'technova.lcc.lk', 'TN')">
+            <div class="tenant-avatar">TN</div>
+            <div>
+              <div class="tenant-name">TechNova Solutions</div>
+              <div class="tenant-domain">technova.lcc.lk</div>
+            </div>
+          </div>
+          <div class="tenant-option" onclick="selectTenant('GreenLeaf Organics', 'greenleaf.lcc.lk', 'GL')">
+            <div class="tenant-avatar">GL</div>
+            <div>
+              <div class="tenant-name">GreenLeaf Organics</div>
+              <div class="tenant-domain">greenleaf.lcc.lk</div>
+            </div>
+          </div>
+          <div class="tenant-option" onclick="selectTenant('OceanBreeze Resort', 'oceanbreeze.lcc.lk', 'OB')">
+            <div class="tenant-avatar">OB</div>
+            <div>
+              <div class="tenant-name">OceanBreeze Resort</div>
+              <div class="tenant-domain">oceanbreeze.lcc.lk</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <div class="input-with-icon">
+            <i class="fa-solid fa-envelope input-icon"></i>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              placeholder="you@example.com"
+              value="admin@sandbox.lcc.lk"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-with-icon">
+            <i class="fa-solid fa-lock input-icon"></i>
+            <input
+              type="password"
+              id="password"
+              class="form-control"
+              placeholder="••••••••"
+              value="admin123"
+              required
+            />
+            <button type="button" class="input-toggle" onclick="togglePassword()">
+              <i class="fa-solid fa-eye" id="eyeIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="auth-row">
+          <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" id="rememberMe" checked />
+            Remember me
+          </label>
+          <a href="forgot-password.html" class="auth-link">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn-auth" id="loginBtn">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          Sign In
+        </button>
+
+      </form>
+
+      <div class="auth-divider" style="margin: 1.5rem 0;">Demo Accounts</div>
+
+      <div class="demo-accounts">
+        <div class="demo-accounts-title">
+          <i class="fa-solid fa-circle-info" style="color:var(--color-primary-500);"></i>
+          Quick access demo accounts
+        </div>
+        <div class="demo-account-items" id="demoAccountsList">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <p class="auth-footer-note">
+        Don&apos;t have an account?
+        <a href="#" class="auth-link">Start free trial</a>
+      </p>
+
+    </div>
+  </div>
+</div>
+
+
+  <script src="login.js"></script>
+</body>
+</html>

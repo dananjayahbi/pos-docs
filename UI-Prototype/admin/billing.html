@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Billing & Plans — LCC Super Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"/>
+  <link rel="stylesheet" href="../assets/css/variables.css"/>
+  <link rel="stylesheet" href="../assets/css/base.css"/>
+  <link rel="stylesheet" href="../assets/css/components.css"/>
+  <link rel="stylesheet" href="../assets/css/layout.css"/>
+  <link rel="stylesheet" href="billing.css"/>
+  <link rel="stylesheet" href="admin.css"/>
+</head>
+<body>
+<div class="app-shell">
+    <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <div class="sidebar-brand-text">
+        <span class="brand-name">LCC</span>
+        <span class="brand-tagline">Admin Panel</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-title">Overview</span>
+        <a href="index.html" class="nav-item" data-tooltip="Dashboard">
+          <span class="nav-item-icon"><i class="fa-solid fa-gauge-high"></i></span>
+          <span class="nav-item-text">Dashboard</span>
+        </a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Management</span>
+        <a href="tenants.html" class="nav-item" data-tooltip="Tenants">
+          <span class="nav-item-icon"><i class="fa-solid fa-store"></i></span>
+          <span class="nav-item-text">Tenants / Stores</span>
+        </a>
+        <a href="users.html" class="nav-item" data-tooltip="Users">
+          <span class="nav-item-icon"><i class="fa-solid fa-users"></i></span>
+          <span class="nav-item-text">Users</span>
+        </a>
+        <a href="billing.html" class="nav-item active" data-tooltip="Billing">
+          <span class="nav-item-icon"><i class="fa-solid fa-credit-card"></i></span>
+          <span class="nav-item-text">Billing &amp; Plans</span>
+        </a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">System</span>
+        <a href="health.html" class="nav-item" data-tooltip="Health">
+          <span class="nav-item-icon"><i class="fa-solid fa-heart-pulse"></i></span>
+          <span class="nav-item-text">System Health</span>
+        </a>
+        <a href="logs.html" class="nav-item" data-tooltip="Logs">
+          <span class="nav-item-icon"><i class="fa-solid fa-file-lines"></i></span>
+          <span class="nav-item-text">Logs &amp; Audit</span>
+        </a>
+        <a href="settings.html" class="nav-item" data-tooltip="Settings">
+          <span class="nav-item-icon"><i class="fa-solid fa-sliders"></i></span>
+          <span class="nav-item-text">Platform Settings</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="../auth/login.html" class="nav-item signout-link" id="signOutBtn" data-tooltip="Sign Out">
+        <span class="nav-item-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+        <span class="nav-item-text">Sign Out</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="top-bar">
+      <button class="sidebar-toggle" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
+      <div class="top-bar-title">Billing & Plans</div>
+      <div class="top-bar-actions">
+        <button class="btn btn-sm btn-outline"><i class="fa-solid fa-download"></i> Export</button>
+        <div class="avatar-pill">SA</div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Billing &amp; Plans</h1>
+          <p class="page-subtitle">Manage subscription plans and revenue metrics</p>
+        </div>
+      </div>
+
+      <!-- Plan Cards -->
+      <div class="plans-grid">
+        <div class="plan-card">
+          <div class="plan-badge badge-free">Free</div>
+          <div class="plan-price">₨0<span>/mo</span></div>
+          <ul class="plan-features">
+            <li><i class="fa-solid fa-check"></i> Up to 2 users</li>
+            <li><i class="fa-solid fa-check"></i> 1 POS terminal</li>
+            <li><i class="fa-solid fa-check"></i> 500 products</li>
+            <li><i class="fa-solid fa-check"></i> Basic reports</li>
+            <li><i class="fa-solid fa-xmark dim"></i> Webstore</li>
+            <li><i class="fa-solid fa-xmark dim"></i> AI features</li>
+          </ul>
+          <div class="plan-tenants"><span class="count">124</span> active tenants</div>
+        </div>
+
+        <div class="plan-card plan-featured">
+          <div class="plan-badge badge-starter">Starter</div>
+          <div class="plan-price">₨4,900<span>/mo</span></div>
+          <ul class="plan-features">
+            <li><i class="fa-solid fa-check"></i> Up to 10 users</li>
+            <li><i class="fa-solid fa-check"></i> 5 POS terminals</li>
+            <li><i class="fa-solid fa-check"></i> Unlimited products</li>
+            <li><i class="fa-solid fa-check"></i> Advanced reports</li>
+            <li><i class="fa-solid fa-check"></i> Webstore included</li>
+            <li><i class="fa-solid fa-xmark dim"></i> AI features</li>
+          </ul>
+          <div class="plan-tenants"><span class="count">387</span> active tenants</div>
+        </div>
+
+        <div class="plan-card">
+          <div class="plan-badge badge-pro">Pro</div>
+          <div class="plan-price">₨12,900<span>/mo</span></div>
+          <ul class="plan-features">
+            <li><i class="fa-solid fa-check"></i> Unlimited users</li>
+            <li><i class="fa-solid fa-check"></i> Unlimited terminals</li>
+            <li><i class="fa-solid fa-check"></i> Unlimited products</li>
+            <li><i class="fa-solid fa-check"></i> Custom reports</li>
+            <li><i class="fa-solid fa-check"></i> Webstore + custom domain</li>
+            <li><i class="fa-solid fa-check"></i> Full AI features</li>
+          </ul>
+          <div class="plan-tenants"><span class="count">89</span> active tenants</div>
+        </div>
+      </div>
+
+      <!-- Revenue Summary Table -->
+      <div class="section-card">
+        <div class="section-header">
+          <h2 class="section-title"><i class="fa-solid fa-chart-line"></i> Revenue Summary</h2>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Total Revenue</th>
+                <th>Active Subs</th>
+                <th>New Subs</th>
+                <th>Churned</th>
+                <th>Net MRR</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>October 2025</td>
+                <td class="amount">₨ 3,241,200</td>
+                <td>452</td>
+                <td>38</td>
+                <td>12</td>
+                <td class="positive">+₨ 128,800</td>
+              </tr>
+              <tr>
+                <td>November 2025</td>
+                <td class="amount">₨ 3,389,100</td>
+                <td>471</td>
+                <td>29</td>
+                <td>10</td>
+                <td class="positive">+₨ 147,900</td>
+              </tr>
+              <tr>
+                <td>December 2025</td>
+                <td class="amount">₨ 3,512,600</td>
+                <td>486</td>
+                <td>22</td>
+                <td>7</td>
+                <td class="positive">+₨ 123,500</td>
+              </tr>
+              <tr>
+                <td>January 2026</td>
+                <td class="amount">₨ 3,648,900</td>
+                <td>498</td>
+                <td>18</td>
+                <td>6</td>
+                <td class="positive">+₨ 136,300</td>
+              </tr>
+              <tr>
+                <td>February 2026</td>
+                <td class="amount">₨ 3,724,500</td>
+                <td>512</td>
+                <td>21</td>
+                <td>7</td>
+                <td class="positive">+₨ 75,600</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="../assets/js/layout.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+{
+  "vendors": [
+    {
+      "id": "VND-001",
+      "company_name": "Lanka Textile Mills Ltd",
+      "contact_person": "Arun Kumar",
+      "email": "arun.kumar@lankatextile.lk",
+      "phone": "+94112223344",
+      "address": "Industrial Zone, Biyagama",
+      "district": "Gampaha",
+      "province": "Western Province",
+      "payment_terms": "Net30",
+      "currency": "LKR",
+      "tax_id": "BRN-00112233",
+      "bank_name": "Bank of Ceylon",
+      "bank_account": "12345678901",
+      "bank_branch": "Biyagama",
+      "lead_time_days": 7,
+      "status": "active",
+      "total_orders": 25,
+      "total_amount": 1250000,
+      "outstanding_amount": 45000,
+      "rating": 4.5,
+      "notes": "Primary textile supplier. Reliable delivery. Negotiated 10% discount on orders above ₨100k."
+    },
+    {
+      "id": "VND-002",
+      "company_name": "Ceylon Grocery Distributors",
+      "contact_person": "Pradeep Ranasinghe",
+      "email": "sales@ceylongrocery.lk",
+      "phone": "+94117778899",
+      "address": "Manning Market Complex, Pettah",
+      "district": "Colombo",
+      "province": "Western Province",
+      "payment_terms": "COD",
+      "currency": "LKR",
+      "tax_id": "BRN-00445566",
+      "bank_name": "People's Bank",
+      "bank_account": "98765432100",
+      "bank_branch": "Pettah",
+      "lead_time_days": 2,
+      "status": "active",
+      "total_orders": 48,
+      "total_amount": 890000,
+      "outstanding_amount": 0,
+      "rating": 4.2,
+      "notes": "Grocery and FMCG supplier. COD terms. Twice weekly delivery."
+    }
+  ],
+  "purchase_orders": [
+    {
+      "id": "PO-2026-0012",
+      "vendor_id": "VND-001",
+      "vendor_name": "Lanka Textile Mills Ltd",
+      "po_number": "PO-2026-0012",
+      "status": "partially_received",
+      "expected_delivery_date": "2026-01-28",
+      "items": [
+        { "product_id": "PRD-001", "product_name": "Classic White Cotton T-Shirt", "ordered_qty": 50, "received_qty": 30, "unit_cost": 600, "line_total": 30000 },
+        { "product_id": "PRD-002", "product_name": "Men's Slim Fit Trousers", "ordered_qty": 20, "received_qty": 20, "unit_cost": 1400, "line_total": 28000 }
+      ],
+      "subtotal": 58000,
+      "discount": 5800,
+      "total": 52200,
+      "notes": "Seasonal restock. 10% discount applied.",
+      "created_at": "2026-01-18T09:00:00Z"
+    },
+    {
+      "id": "PO-2026-0011",
+      "vendor_id": "VND-002",
+      "vendor_name": "Ceylon Grocery Distributors",
+      "po_number": "PO-2026-0011",
+      "status": "fully_received",
+      "expected_delivery_date": "2026-01-22",
+      "items": [
+        { "product_id": "PRD-003", "product_name": "Basmati Rice Premium 5kg", "ordered_qty": 30, "received_qty": 30, "unit_cost": 1000, "line_total": 30000 },
+        { "product_id": "PRD-004", "product_name": "Ceylon Tea Black 250g", "ordered_qty": 50, "received_qty": 50, "unit_cost": 300, "line_total": 15000 }
+      ],
+      "subtotal": 45000,
+      "discount": 0,
+      "total": 45000,
+      "created_at": "2026-01-20T08:00:00Z",
+      "received_at": "2026-01-22T10:00:00Z"
+    }
+  ]
+}

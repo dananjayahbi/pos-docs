@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LCC Store — Shop Sri Lankan</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"/>
+  <link rel="stylesheet" href="../assets/css/variables.css"/>
+  <link rel="stylesheet" href="webstore.css" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="logo"><i class="fa-solid fa-store"></i> LCC Store</div>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Products</a></li>
+      <li><a href="#">Categories</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <i class="fa-solid fa-magnifying-glass nav-icon"></i>
+      <div class="cart-wrap">
+        <i class="fa-solid fa-cart-shopping nav-icon" id="cartIcon"></i>
+        <span class="cart-badge" id="cartBadge">3</span>
+      </div>
+      <button class="btn-login"><i class="fa-regular fa-user"></i> Login</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Shop Smart, Shop Sri Lankan</h1>
+  <p>Discover quality products at the best prices in LKR</p>
+  <button class="btn-cta">Shop Now <i class="fa-solid fa-arrow-right"></i></button>
+</section>
+
+<!-- CATEGORIES -->
+<div class="section">
+  <div class="section-title">Browse Categories</div>
+  <div class="cat-scroll">
+    <div class="cat-card"><i class="fa-solid fa-laptop"></i><span>Electronics</span></div>
+    <div class="cat-card"><i class="fa-solid fa-shirt"></i><span>Clothing &amp; Apparel</span></div>
+    <div class="cat-card"><i class="fa-solid fa-bowl-food"></i><span>Food &amp; Beverages</span></div>
+    <div class="cat-card"><i class="fa-solid fa-house-chimney"></i><span>Home &amp; Garden</span></div>
+    <div class="cat-card"><i class="fa-solid fa-heart-pulse"></i><span>Health &amp; Beauty</span></div>
+  </div>
+</div>
+
+<!-- FEATURED PRODUCTS -->
+<div class="section">
+  <div class="section-title">Featured Products</div>
+  <div class="product-grid">
+
+    <div class="product-card">
+      <div class="product-img" style="background:#fef3c7;">📱</div>
+      <div class="product-info">
+        <div class="product-name">Wireless Earbuds Pro</div>
+        <div class="product-price">LKR 4,500</div>
+        <div class="stars">★★★★★ <span>(128)</span></div>
+        <button class="btn-cart" onclick="addToCart()">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="background:#dbeafe;">👕</div>
+      <div class="product-info">
+        <div class="product-name">Cotton Batik Shirt</div>
+        <div class="product-price">LKR 1,850</div>
+        <div class="stars">★★★★☆ <span>(64)</span></div>
+        <button class="btn-cart" onclick="addToCart()">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="background:#dcfce7;">🍵</div>
+      <div class="product-info">
+        <div class="product-name">Ceylon Green Tea 100g</div>
+        <div class="product-price">LKR 680</div>
+        <div class="stars">★★★★★ <span>(210)</span></div>
+        <button class="btn-cart" onclick="addToCart()">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="background:#fce7f3;">🕯️</div>
+      <div class="product-info">
+        <div class="product-name">Aromatherapy Candle Set</div>
+        <div class="product-price">LKR 1,200</div>
+        <div class="stars">★★★★☆ <span>(47)</span></div>
+        <button class="btn-cart" onclick="addToCart()">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="background:#ede9fe;">⌚</div>
+      <div class="product-info">
+        <div class="product-name">Smart Watch Lite</div>
+        <div class="product-price">LKR 9,750</div>
+        <div class="stars">★★★★★ <span>(95)</span></div>
+        <button class="btn-cart" onclick="addToCart()">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="background:#fff7ed;">🌿</div>
+      <div class="product-info">
+        <div class="product-name">Herbal Face Cream</div>
+        <div class="product-price">LKR 920</div>
+        <div class="stars">★★★★☆ <span>(83)</span></div>
+        <button class="btn-cart" onclick="addToCart()">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="background:#ecfeff;">📦</div>
+      <div class="product-info">
+        <div class="product-name">Bamboo Storage Basket</div>
+        <div class="product-price">LKR 2,300</div>
+        <div class="stars">★★★★★ <span>(56)</span></div>
+        <button class="btn-cart" onclick="addToCart()">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="background:#f0fdf4;">🥥</div>
+      <div class="product-info">
+        <div class="product-name">Organic Coconut Oil 500ml</div>
+        <div class="product-price">LKR 550</div>
+        <div class="stars">★★★★★ <span>(174)</span></div>
+        <button class="btn-cart" onclick="addToCart()">Add to Cart</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 LankaCommerce Cloud. All rights reserved. &nbsp;|&nbsp;
+    <a href="#">Privacy</a> <a href="#">Terms</a>
+  </p>
+</footer>
+
+
+  <script src="webstore.js"></script>
+</body>
+</html>

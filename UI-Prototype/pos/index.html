@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>POS Terminal — LankaCommerce Cloud</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"/>
+  <link rel="stylesheet" href="../assets/css/variables.css"/>
+  <link rel="stylesheet" href="../assets/css/base.css"/>
+  <link rel="stylesheet" href="pos.css" />
+</head>
+<body class="pos-body">
+  <div class="pos-terminal">
+
+    <!-- LEFT PANEL: Product Selection -->
+    <div class="pos-left">
+      <div class="pos-topbar">
+        <div class="shift-info">
+          <span><i class="fa-solid fa-user"></i> Kasun Perera</span>
+          <span><i class="fa-solid fa-sun"></i> Morning Shift</span>
+          <span><i class="fa-solid fa-desktop"></i> POS-01</span>
+          <span><i class="fa-solid fa-clock"></i> <span id="pos-time">--:--</span></span>
+        </div>
+        <a href="../auth/login.html" class="logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+      </div>
+
+      <div class="pos-search">
+        <div class="search-wrap">
+          <i class="fa-solid fa-magnifying-glass si"></i>
+          <input type="text" id="prod-search" placeholder="Search products by name or barcode…" oninput="filterProducts()"/>
+          <i class="fa-solid fa-xmark sc" onclick="clearSearch()"></i>
+        </div>
+      </div>
+
+      <div class="pos-cats">
+        <button class="cat-btn active" onclick="filterCat(this,'all')">All</button>
+        <button class="cat-btn" onclick="filterCat(this,'food')">Food &amp; Beverages</button>
+        <button class="cat-btn" onclick="filterCat(this,'electronics')">Electronics</button>
+        <button class="cat-btn" onclick="filterCat(this,'clothing')">Clothing</button>
+        <button class="cat-btn" onclick="filterCat(this,'household')">Household</button>
+      </div>
+
+      <div class="pos-grid" id="prod-grid">
+        <!-- Product cards injected by JS -->
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL: Cart / Checkout -->
+    <div class="pos-right">
+      <div class="cart-header">
+        <h2><i class="fa-solid fa-cart-shopping"></i> Current Order <span style="font-size:12px;font-weight:500;color:#64748b;margin-left:6px;" id="item-count">(3 items)</span></h2>
+      </div>
+
+      <div class="cart-customer">
+        <select>
+          <option>👤 Walk-in Customer</option>
+          <option>Nuwan Silva (Member #1042)</option>
+          <option>Dilani Fernando (Member #0871)</option>
+          <option>Chamara Bandara (Member #2215)</option>
+        </select>
+      </div>
+
+      <div class="cart-items" id="cart-items">
+        <!-- Cart rows injected by JS -->
+      </div>
+
+      <div class="cart-totals">
+        <div class="totals-row">
+          <span class="label">Subtotal</span>
+          <span class="val" id="subtotal">LKR 0.00</span>
+        </div>
+        <div class="totals-row">
+          <span class="label">Discount</span>
+          <div class="discount-wrap">
+            <input type="number" id="discount-val" value="0" min="0" oninput="recalc()"/>
+            <select id="discount-type" onchange="recalc()" style="padding:4px 6px;border:1.5px solid #e2e8f0;border-radius:6px;font-size:12px;outline:none;">
+              <option value="lkr">LKR</option>
+              <option value="pct">%</option>
+            </select>
+          </div>
+        </div>
+        <div class="totals-row">
+          <span class="label">VAT (15%)</span>
+          <span class="val" id="tax-val">LKR 0.00</span>
+        </div>
+        <div class="totals-row total-big">
+          <span class="label">Total</span>
+          <span class="val" id="grand-total">LKR 0.00</span>
+        </div>
+      </div>
+
+      <div class="cart-payment">
+        <div class="pay-methods">
+          <button class="pay-btn active" onclick="setPayMethod(this,'cash')"><i class="fa-solid fa-money-bill-wave"></i> Cash</button>
+          <button class="pay-btn" onclick="setPayMethod(this,'card')"><i class="fa-solid fa-credit-card"></i> Card</button>
+          <button class="pay-btn" onclick="setPayMethod(this,'split')"><i class="fa-solid fa-code-branch"></i> Split</button>
+        </div>
+        <div class="cash-row">
+          <label>Cash Tendered (LKR)</label>
+          <input type="number" id="cash-tendered" placeholder="0.00" oninput="calcChange()"/>
+        </div>
+        <div class="change-row">
+          <span><i class="fa-solid fa-coins"></i> Change</span>
+          <span id="change-display">LKR 0.00</span>
+        </div>
+        <button class="btn-process" onclick="processPayment()">
+          <i class="fa-solid fa-check-circle"></i> Process Payment
+        </button>
+      </div>
+    </div>
+
+  </div>
+  
+  <script src="pos.js"></script>
+</body>
+</html>

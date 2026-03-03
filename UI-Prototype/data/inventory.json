@@ -1,0 +1,125 @@
+{
+  "warehouses": ["Colombo Main", "Kandy Branch", "Galle Warehouse"],
+  "items": [
+    {
+      "id": "INV-001",
+      "product": "Milo 400g",
+      "sku": "MLO-400",
+      "warehouse": "Colombo Main",
+      "location": "A-01-03",
+      "on_hand": 245,
+      "reserved": 12,
+      "available": 233,
+      "min_stock": 50,
+      "status": "in_stock"
+    },
+    {
+      "id": "INV-002",
+      "product": "Anchor Full Cream Milk Powder 1kg",
+      "sku": "ANC-MK-1K",
+      "warehouse": "Colombo Main",
+      "location": "A-02-01",
+      "on_hand": 18,
+      "reserved": 5,
+      "available": 13,
+      "min_stock": 30,
+      "status": "low_stock"
+    },
+    {
+      "id": "INV-003",
+      "product": "Keells Super Basmati Rice 5kg",
+      "sku": "KLS-RCE-5K",
+      "warehouse": "Kandy Branch",
+      "location": "B-03-02",
+      "on_hand": 0,
+      "reserved": 0,
+      "available": 0,
+      "min_stock": 20,
+      "status": "out_of_stock"
+    },
+    {
+      "id": "INV-004",
+      "product": "Elephant House Ginger Beer 400ml",
+      "sku": "ELH-GB-400",
+      "warehouse": "Galle Warehouse",
+      "location": "C-01-05",
+      "on_hand": 312,
+      "reserved": 48,
+      "available": 264,
+      "min_stock": 60,
+      "status": "in_stock"
+    },
+    {
+      "id": "INV-005",
+      "product": "Astra Margarine 200g",
+      "sku": "AST-MRG-200",
+      "warehouse": "Colombo Main",
+      "location": "A-04-02",
+      "on_hand": 9,
+      "reserved": 2,
+      "available": 7,
+      "min_stock": 25,
+      "status": "low_stock"
+    },
+    {
+      "id": "INV-006",
+      "product": "Lanka Soy Sauce 330ml",
+      "sku": "LNK-SOY-330",
+      "warehouse": "Kandy Branch",
+      "location": "B-02-04",
+      "on_hand": 150,
+      "reserved": 20,
+      "available": 130,
+      "min_stock": 40,
+      "status": "in_stock"
+    },
+    {
+      "id": "INV-007",
+      "product": "Nestomalt 400g",
+      "sku": "NST-MLT-400",
+      "warehouse": "Galle Warehouse",
+      "location": "C-02-01",
+      "on_hand": 0,
+      "reserved": 0,
+      "available": 0,
+      "min_stock": 35,
+      "status": "out_of_stock"
+    },
+    {
+      "id": "INV-008",
+      "product": "Maggi Noodles 75g (Pack of 12)",
+      "sku": "MGG-NDL-12P",
+      "warehouse": "Colombo Main",
+      "location": "A-05-03",
+      "on_hand": 88,
+      "reserved": 16,
+      "available": 72,
+      "min_stock": 30,
+      "status": "in_stock"
+    },
+    {
+      "id": "INV-009",
+      "product": "Sunlight Dishwashing Liquid 750ml",
+      "sku": "SNL-DSH-750",
+      "warehouse": "Kandy Branch",
+      "location": "B-05-01",
+      "on_hand": 22,
+      "reserved": 8,
+      "available": 14,
+      "min_stock": 20,
+      "status": "low_stock"
+    },
+    {
+      "id": "INV-010",
+      "product": "Hemas Baby Soap 75g",
+      "sku": "HMS-BSP-075",
+      "warehouse": "Galle Warehouse",
+      "location": "C-04-02",
+      "on_hand": 195,
+      "reserved": 30,
+      "available": 165,
+      "min_stock": 50,
+      "status": "in_stock"
+    }
+  ]
+}

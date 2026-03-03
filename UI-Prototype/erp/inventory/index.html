@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventory — LankaCommerce Cloud</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    />
+    <link rel="stylesheet" href="../../assets/css/variables.css" />
+    <link rel="stylesheet" href="../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../assets/css/components.css" />
+    <link rel="stylesheet" href="../../assets/css/layout.css" />
+    <link rel="stylesheet" href="inventory.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <!-- ─── Sidebar ─────────────────────────────────────────────────────────── -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+          <span class="logo-icon"><i class="fa-solid fa-store"></i></span>
+          <span class="logo-text">LankaCommerce</span>
+        </div>
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="../dashboard.html"
+                ><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a
+              >
+            </li>
+            <li>
+              <a href="../products/index.html"
+                ><i class="fa-solid fa-box"></i><span>Products</span></a
+              >
+            </li>
+            <li class="active">
+              <a href="../inventory/index.html"
+                ><i class="fa-solid fa-warehouse"></i><span>Inventory</span></a
+              >
+            </li>
+            <li>
+              <a href="../sales/orders.html"
+                ><i class="fa-solid fa-receipt"></i><span>Sales</span></a
+              >
+            </li>
+            <li>
+              <a href="../customers/index.html"
+                ><i class="fa-solid fa-users"></i><span>Customers</span></a
+              >
+            </li>
+            <li>
+              <a href="../vendors/index.html"
+                ><i class="fa-solid fa-truck"></i><span>Vendors</span></a
+              >
+            </li>
+            <li>
+              <a href="../hr/index.html"
+                ><i class="fa-solid fa-id-badge"></i><span>HR</span></a
+              >
+            </li>
+            <li>
+              <a href="../accounting/index.html"
+                ><i class="fa-solid fa-coins"></i><span>Accounting</span></a
+              >
+            </li>
+            <li>
+              <a href="../reports/index.html"
+                ><i class="fa-solid fa-chart-bar"></i><span>Reports</span></a
+              >
+            </li>
+            <li>
+              <a href="../settings/index.html"
+                ><i class="fa-solid fa-gear"></i><span>Settings</span></a
+              >
+            </li>
+          </ul>
+        </nav>
+        <div class="sidebar-footer">
+          <div class="sidebar-user">
+            <div class="avatar avatar-sm">NK</div>
+            <div class="user-info">
+              <span class="user-name">Nimal Kumara</span>
+              <span class="user-role">Store Manager</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ─── Main Wrapper ─────────────────────────────────────────────────────── -->
+      <div class="main-wrapper">
+        <!-- Top Bar -->
+        <header class="top-bar">
+          <div class="top-bar-left">
+            <button
+              class="sidebar-toggle"
+              id="sidebarToggle"
+              aria-label="Toggle sidebar"
+            >
+              <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="breadcrumb">
+              <span><a href="../dashboard.html">ERP</a></span>
+              <i class="fa-solid fa-chevron-right"></i>
+              <span class="active">Inventory</span>
+            </div>
+          </div>
+          <div class="top-bar-right">
+            <button class="icon-btn" aria-label="Notifications">
+              <i class="fa-regular fa-bell"></i><span class="badge-dot"></span>
+            </button>
+            <div class="avatar avatar-sm">NK</div>
+          </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+          <!-- Page Header -->
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Inventory Management</h1>
+              <p class="page-subtitle">
+                Track stock levels, movements, and valuations
+              </p>
+            </div>
+            <div class="page-actions">
+              <button class="btn btn-outline btn-sm">
+                <i class="fa-solid fa-arrow-down"></i> Stock In
+              </button>
+              <button class="btn btn-outline btn-sm">
+                <i class="fa-solid fa-arrow-up"></i> Stock Out
+              </button>
+              <button class="btn btn-primary btn-sm">
+                <i class="fa-solid fa-sliders"></i> Adjust Stock
+              </button>
+            </div>
+          </div>
+
+          <!-- KPI Cards -->
+          <div class="kpi-row">
+            <div class="kpi-card">
+              <div class="kpi-value">1,248</div>
+              <div class="kpi-label">
+                <i class="fa-solid fa-tags"></i> Total SKUs
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-value kpi-danger">87</div>
+              <div class="kpi-label">
+                <i class="fa-solid fa-triangle-exclamation"></i> Low Stock Items
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-value kpi-danger">23</div>
+              <div class="kpi-label">
+                <i class="fa-solid fa-circle-xmark"></i> Out of Stock
+              </div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-value">₨ 14.2M</div>
+              <div class="kpi-label">
+                <i class="fa-solid fa-coins"></i> Total Stock Value (LKR)
+              </div>
+            </div>
+          </div>
+
+          <!-- Filter Bar -->
+          <div class="filter-bar">
+            <i
+              class="fa-solid fa-magnifying-glass"
+              style="color: var(--color-neutral-400)"
+            ></i>
+            <input
+              type="search"
+              placeholder="Search product or SKU…"
+              id="searchInput"
+            />
+            <select id="warehouseFilter">
+              <option value="">All Warehouses</option>
+              <option>Colombo Main</option>
+              <option>Kandy Branch</option>
+              <option>Galle Store</option>
+            </select>
+            <select id="categoryFilter">
+              <option value="">All Categories</option>
+              <option>Electronics</option>
+              <option>Clothing</option>
+              <option>Food & Beverage</option>
+              <option>Household</option>
+            </select>
+            <select id="statusFilter">
+              <option value="">All Statuses</option>
+              <option>In Stock</option>
+              <option>Low Stock</option>
+              <option>Out of Stock</option>
+            </select>
+          </div>
+
+          <!-- Inventory Table -->
+          <div class="tbl-wrap">
+            <table class="inv-table" id="invTable">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>SKU</th>
+                  <th>Warehouse</th>
+                  <th>Location</th>
+                  <th>On Hand</th>
+                  <th>Reserved</th>
+                  <th>Available</th>
+                  <th>Min Stock</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Maliban Cream Cracker</strong><br /><small
+                      style="color: var(--color-neutral-500)"
+                      >Food &amp; Beverage</small
+                    >
+                  </td>
+                  <td class="sku-code">SKU-00124</td>
+                  <td>Colombo Main</td>
+                  <td>A1-R3</td>
+                  <td>540</td>
+                  <td>60</td>
+                  <td>480</td>
+                  <td>100</td>
+                  <td><span class="badge badge-green">In Stock</span></td>
+                  <td>
+                    <button class="act-btn" title="Edit">
+                      <i class="fa-solid fa-pen"></i></button
+                    ><button class="act-btn" title="View">
+                      <i class="fa-solid fa-eye"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Dialog 4G Router</strong><br /><small
+                      style="color: var(--color-neutral-500)"
+                      >Electronics</small
+                    >
+                  </td>
+                  <td class="sku-code">SKU-00287</td>
+                  <td>Colombo Main</td>
+                  <td>C2-R1</td>
+                  <td>18</td>
+                  <td>5</td>
+                  <td>13</td>
+                  <td>20</td>
+                  <td><span class="badge badge-yellow">Low Stock</span></td>
+                  <td>
+                    <button class="act-btn" title="Edit">
+                      <i class="fa-solid fa-pen"></i></button
+                    ><button class="act-btn" title="View">
+                      <i class="fa-solid fa-eye"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Hemas Baby Lotion 200ml</strong><br /><small
+                      style="color: var(--color-neutral-500)"
+                      >Household</small
+                    >
+                  </td>
+                  <td class="sku-code">SKU-00391</td>
+                  <td>Kandy Branch</td>
+                  <td>B4-R2</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>50</td>
+                  <td><span class="badge badge-red">Out of Stock</span></td>
+                  <td>
+                    <button class="act-btn" title="Edit">
+                      <i class="fa-solid fa-pen"></i></button
+                    ><button class="act-btn" title="View">
+                      <i class="fa-solid fa-eye"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Batik Sarong — Blue</strong><br /><small
+                      style="color: var(--color-neutral-500)"
+                      >Clothing</small
+                    >
+                  </td>
+                  <td class="sku-code">SKU-00452</td>
+                  <td>Galle Store</td>
+                  <td>D1-R5</td>
+                  <td>210</td>
+                  <td>30</td>
+                  <td>180</td>
+                  <td>40</td>
+                  <td><span class="badge badge-green">In Stock</span></td>
+                  <td>
+                    <button class="act-btn" title="Edit">
+                      <i class="fa-solid fa-pen"></i></button
+                    ><button class="act-btn" title="View">
+                      <i class="fa-solid fa-eye"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Elephant House Ginger Beer 330ml</strong
+                    ><br /><small style="color: var(--color-neutral-500)"
+                      >Food &amp; Beverage</small
+                    >
+                  </td>
+                  <td class="sku-code">SKU-00503</td>
+                  <td>Colombo Main</td>
+                  <td>A3-R1</td>
+                  <td>1,200</td>
+                  <td>150</td>
+                  <td>1,050</td>
+                  <td>200</td>
+                  <td><span class="badge badge-green">In Stock</span></td>
+                  <td>
+                    <button class="act-btn" title="Edit">
+                      <i class="fa-solid fa-pen"></i></button
+                    ><button class="act-btn" title="View">
+                      <i class="fa-solid fa-eye"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Singer Ceiling Fan 56"</strong><br /><small
+                      style="color: var(--color-neutral-500)"
+                      >Electronics</small
+                    >
+                  </td>
+                  <td class="sku-code">SKU-00617</td>
+                  <td>Kandy Branch</td>
+                  <td>E2-R3</td>
+                  <td>14</td>
+                  <td>3</td>
+                  <td>11</td>
+                  <td>15</td>
+                  <td><span class="badge badge-yellow">Low Stock</span></td>
+                  <td>
+                    <button class="act-btn" title="Edit">
+                      <i class="fa-solid fa-pen"></i></button
+                    ><button class="act-btn" title="View">
+                      <i class="fa-solid fa-eye"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Munchee Chocolate Puff</strong><br /><small
+                      style="color: var(--color-neutral-500)"
+                      >Food &amp; Beverage</small
+                    >
+                  </td>
+                  <td class="sku-code">SKU-00742</td>
+                  <td>Colombo Main</td>
+                  <td>A2-R4</td>
+                  <td>875</td>
+                  <td>100</td>
+                  <td>775</td>
+                  <td>150</td>
+                  <td><span class="badge badge-green">In Stock</span></td>
+                  <td>
+                    <button class="act-btn" title="Edit">
+                      <i class="fa-solid fa-pen"></i></button
+                    ><button class="act-btn" title="View">
+                      <i class="fa-solid fa-eye"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Kandyan Handloom Cushion Cover</strong><br /><small
+                      style="color: var(--color-neutral-500)"
+                      >Household</small
+                    >
+                  </td>
+                  <td class="sku-code">SKU-00881</td>
+                  <td>Galle Store</td>
+                  <td>D3-R2</td>
+                  <td>62</td>
+                  <td>10</td>
+                  <td>52</td>
+                  <td>25</td>
+                  <td><span class="badge badge-green">In Stock</span></td>
+                  <td>
+                    <button class="act-btn" title="Edit">
+                      <i class="fa-solid fa-pen"></i></button
+                    ><button class="act-btn" title="View">
+                      <i class="fa-solid fa-eye"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+      <!-- /.main-wrapper -->
+    </div>
+    <!-- /.app-shell -->
+
+    <script src="../../assets/js/layout.js"></script>
+
+    <script src="inventory.js"></script>
+  </body>
+</html>

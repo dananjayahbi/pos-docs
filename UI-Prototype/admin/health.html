@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>System Health — LCC Super Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"/>
+  <link rel="stylesheet" href="../assets/css/variables.css"/>
+  <link rel="stylesheet" href="../assets/css/base.css"/>
+  <link rel="stylesheet" href="../assets/css/components.css"/>
+  <link rel="stylesheet" href="../assets/css/layout.css"/>
+  <link rel="stylesheet" href="health.css"/>
+  <link rel="stylesheet" href="admin.css"/>
+</head>
+<body>
+<div class="app-shell">
+    <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <div class="sidebar-brand-text">
+        <span class="brand-name">LCC</span>
+        <span class="brand-tagline">Admin Panel</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-title">Overview</span>
+        <a href="index.html" class="nav-item" data-tooltip="Dashboard">
+          <span class="nav-item-icon"><i class="fa-solid fa-gauge-high"></i></span>
+          <span class="nav-item-text">Dashboard</span>
+        </a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Management</span>
+        <a href="tenants.html" class="nav-item" data-tooltip="Tenants">
+          <span class="nav-item-icon"><i class="fa-solid fa-store"></i></span>
+          <span class="nav-item-text">Tenants / Stores</span>
+        </a>
+        <a href="users.html" class="nav-item" data-tooltip="Users">
+          <span class="nav-item-icon"><i class="fa-solid fa-users"></i></span>
+          <span class="nav-item-text">Users</span>
+        </a>
+        <a href="billing.html" class="nav-item" data-tooltip="Billing">
+          <span class="nav-item-icon"><i class="fa-solid fa-credit-card"></i></span>
+          <span class="nav-item-text">Billing &amp; Plans</span>
+        </a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">System</span>
+        <a href="health.html" class="nav-item active" data-tooltip="Health">
+          <span class="nav-item-icon"><i class="fa-solid fa-heart-pulse"></i></span>
+          <span class="nav-item-text">System Health</span>
+        </a>
+        <a href="logs.html" class="nav-item" data-tooltip="Logs">
+          <span class="nav-item-icon"><i class="fa-solid fa-file-lines"></i></span>
+          <span class="nav-item-text">Logs &amp; Audit</span>
+        </a>
+        <a href="settings.html" class="nav-item" data-tooltip="Settings">
+          <span class="nav-item-icon"><i class="fa-solid fa-sliders"></i></span>
+          <span class="nav-item-text">Platform Settings</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="../auth/login.html" class="nav-item signout-link" id="signOutBtn" data-tooltip="Sign Out">
+        <span class="nav-item-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+        <span class="nav-item-text">Sign Out</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="top-bar">
+      <button class="sidebar-toggle" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
+      <div class="top-bar-title">System Health</div>
+      <div class="top-bar-actions">
+        <button class="btn btn-sm btn-outline"><i class="fa-solid fa-rotate"></i> Refresh</button>
+        <div class="avatar-pill">SA</div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">System Health</h1>
+          <p class="page-subtitle">Real-time platform status and incident log</p>
+        </div>
+        <div class="status-timestamp"><i class="fa-regular fa-clock"></i> Last checked: just now</div>
+      </div>
+
+      <!-- Overall Status Banner -->
+      <div class="status-banner banner-ok">
+        <i class="fa-solid fa-circle-check"></i>
+        <div>
+          <strong>All Systems Operational</strong>
+          <span>No active incidents detected across all monitored services.</span>
+        </div>
+      </div>
+
+      <!-- Services Grid -->
+      <div class="services-grid">
+
+        <div class="service-card">
+          <div class="service-header">
+            <span class="service-name"><i class="fa-solid fa-network-wired"></i> API Gateway</span>
+            <span class="status-badge badge-ok">Operational</span>
+          </div>
+          <div class="service-metrics">
+            <div class="metric"><span class="label">Uptime</span><span class="val">99.98%</span></div>
+            <div class="metric"><span class="label">Response</span><span class="val">42 ms</span></div>
+            <div class="metric"><span class="label">Last Incident</span><span class="val muted">14 days ago</span></div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-header">
+            <span class="service-name"><i class="fa-solid fa-server"></i> Web Server</span>
+            <span class="status-badge badge-ok">Operational</span>
+          </div>
+          <div class="service-metrics">
+            <div class="metric"><span class="label">Uptime</span><span class="val">99.97%</span></div>
+            <div class="metric"><span class="label">Response</span><span class="val">58 ms</span></div>
+            <div class="metric"><span class="label">Last Incident</span><span class="val muted">21 days ago</span></div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-header">
+            <span class="service-name"><i class="fa-solid fa-database"></i> Database (Primary)</span>
+            <span class="status-badge badge-ok">Operational</span>
+          </div>
+          <div class="service-metrics">
+            <div class="metric"><span class="label">Uptime</span><span class="val">99.99%</span></div>
+            <div class="metric"><span class="label">Response</span><span class="val">12 ms</span></div>
+            <div class="metric"><span class="label">Last Incident</span><span class="val muted">32 days ago</span></div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-header">
+            <span class="service-name"><i class="fa-solid fa-copy"></i> Database (Replica)</span>
+            <span class="status-badge badge-degraded">Degraded</span>
+          </div>
+          <div class="service-metrics">
+            <div class="metric"><span class="label">Uptime</span><span class="val">98.41%</span></div>
+            <div class="metric"><span class="label">Response</span><span class="val">210 ms</span></div>
+            <div class="metric"><span class="label">Last Incident</span><span class="val warn">2 hours ago</span></div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-header">
+            <span class="service-name"><i class="fa-solid fa-bolt"></i> Redis Cache</span>
+            <span class="status-badge badge-ok">Operational</span>
+          </div>
+          <div class="service-metrics">
+            <div class="metric"><span class="label">Uptime</span><span class="val">99.95%</span></div>
+            <div class="metric"><span class="label">Response</span><span class="val">3 ms</span></div>
+            <div class="metric"><span class="label">Last Incident</span><span class="val muted">7 days ago</span></div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-header">
+            <span class="service-name"><i class="fa-solid fa-gears"></i> Celery Workers</span>
+            <span class="status-badge badge-ok">Operational</span>
+          </div>
+          <div class="service-metrics">
+            <div class="metric"><span class="label">Uptime</span><span class="val">99.90%</span></div>
+            <div class="metric"><span class="label">Response</span><span class="val">—</span></div>
+            <div class="metric"><span class="label">Last Incident</span><span class="val muted">5 days ago</span></div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-header">
+            <span class="service-name"><i class="fa-solid fa-envelope"></i> Email Service</span>
+            <span class="status-badge badge-ok">Operational</span>
+          </div>
+          <div class="service-metrics">
+            <div class="metric"><span class="label">Uptime</span><span class="val">99.85%</span></div>
+            <div class="metric"><span class="label">Response</span><span class="val">320 ms</span></div>
+            <div class="metric"><span class="label">Last Incident</span><span class="val muted">11 days ago</span></div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-header">
+            <span class="service-name"><i class="fa-solid fa-hard-drive"></i> File Storage</span>
+            <span class="status-badge badge-ok">Operational</span>
+          </div>
+          <div class="service-metrics">
+            <div class="metric"><span class="label">Uptime</span><span class="val">99.99%</span></div>
+            <div class="metric"><span class="label">Response</span><span class="val">88 ms</span></div>
+            <div class="metric"><span class="label">Last Incident</span><span class="val muted">45 days ago</span></div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-header">
+            <span class="service-name"><i class="fa-solid fa-globe"></i> CDN</span>
+            <span class="status-badge badge-ok">Operational</span>
+          </div>
+          <div class="service-metrics">
+            <div class="metric"><span class="label">Uptime</span><span class="val">99.97%</span></div>
+            <div class="metric"><span class="label">Response</span><span class="val">24 ms</span></div>
+            <div class="metric"><span class="label">Last Incident</span><span class="val muted">18 days ago</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Incident Log -->
+      <div class="section-card">
+        <div class="section-header">
+          <h2 class="section-title"><i class="fa-solid fa-triangle-exclamation"></i> Incident Log</h2>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Service</th>
+                <th>Description</th>
+                <th>Duration</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2026-03-03 08:14</td>
+                <td>Database (Replica)</td>
+                <td>High replication lag causing slow reads</td>
+                <td>Ongoing</td>
+                <td><span class="incident-badge inc-investigating">Investigating</span></td>
+              </tr>
+              <tr>
+                <td>2026-02-24 14:32</td>
+                <td>Celery Workers</td>
+                <td>Task queue backlog — worker restart required</td>
+                <td>18 min</td>
+                <td><span class="incident-badge inc-resolved">Resolved</span></td>
+              </tr>
+              <tr>
+                <td>2026-02-20 09:05</td>
+                <td>Email Service</td>
+                <td>SMTP relay timeout from provider</td>
+                <td>32 min</td>
+                <td><span class="incident-badge inc-resolved">Resolved</span></td>
+              </tr>
+              <tr>
+                <td>2026-02-17 22:47</td>
+                <td>Redis Cache</td>
+                <td>Memory pressure caused eviction spike</td>
+                <td>9 min</td>
+                <td><span class="incident-badge inc-resolved">Resolved</span></td>
+              </tr>
+              <tr>
+                <td>2026-02-10 03:12</td>
+                <td>API Gateway</td>
+                <td>Elevated 502 errors during deploy window</td>
+                <td>4 min</td>
+                <td><span class="incident-badge inc-resolved">Resolved</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="../assets/js/layout.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

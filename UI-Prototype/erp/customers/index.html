@@ -1,0 +1,433 @@
+<!-- FILE: erp/customers/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customers — LankaCommerce Cloud</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="../../assets/css/variables.css" />
+  <link rel="stylesheet" href="../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../assets/css/components.css" />
+  <link rel="stylesheet" href="../../assets/css/layout.css" />
+  <link rel="stylesheet" href="customers.css" />
+</head>
+<body>
+
+<div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+<!-- ──────────────── SIDEBAR ──────────────── -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-icon"><i class="fa-solid fa-store"></i></div>
+    <div class="sidebar-logo-text">
+      <div class="sidebar-logo-name">LankaCommerce</div>
+      <div class="sidebar-logo-sub">Sandbox Business</div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Main</div>
+    <a href="../dashboard.html" class="nav-item">
+      <i class="fa-solid fa-chart-pie nav-icon"></i>
+      <span class="nav-label">Dashboard</span>
+    </a>
+
+    <div class="nav-section-label">Commerce</div>
+    <a href="../sales/orders.html" class="nav-item">
+      <i class="fa-solid fa-bag-shopping nav-icon"></i>
+      <span class="nav-label">Orders</span>
+      <span class="nav-badge">12</span>
+    </a>
+    <a href="../sales/orders.html" class="nav-item">
+      <i class="fa-solid fa-file-invoice nav-icon"></i>
+      <span class="nav-label">Invoices</span>
+    </a>
+    <a href="../sales/orders.html" class="nav-item">
+      <i class="fa-solid fa-file-lines nav-icon"></i>
+      <span class="nav-label">Quotations</span>
+    </a>
+
+    <div class="nav-section-label">Catalog</div>
+    <a href="../products/index.html" class="nav-item">
+      <i class="fa-solid fa-box nav-icon"></i>
+      <span class="nav-label">Products</span>
+    </a>
+    <a href="../inventory/index.html" class="nav-item">
+      <i class="fa-solid fa-boxes-stacked nav-icon"></i>
+      <span class="nav-label">Inventory</span>
+      <span class="nav-badge badge-error">3</span>
+    </a>
+    <a href="../products/index.html" class="nav-item">
+      <i class="fa-solid fa-tags nav-icon"></i>
+      <span class="nav-label">Categories</span>
+    </a>
+
+    <div class="nav-section-label">Relationships</div>
+    <a href="index.html" class="nav-item active">
+      <i class="fa-solid fa-users nav-icon"></i>
+      <span class="nav-label">Customers</span>
+    </a>
+    <a href="../vendors/index.html" class="nav-item">
+      <i class="fa-solid fa-truck-ramp-box nav-icon"></i>
+      <span class="nav-label">Vendors</span>
+    </a>
+    <a href="../vendors/index.html" class="nav-item">
+      <i class="fa-solid fa-cart-flatbed nav-icon"></i>
+      <span class="nav-label">Purchase Orders</span>
+    </a>
+
+    <div class="nav-section-label">Finance</div>
+    <a href="../accounting/index.html" class="nav-item">
+      <i class="fa-solid fa-calculator nav-icon"></i>
+      <span class="nav-label">Accounting</span>
+    </a>
+    <a href="../accounting/index.html" class="nav-item">
+      <i class="fa-solid fa-receipt nav-icon"></i>
+      <span class="nav-label">Expenses</span>
+    </a>
+
+    <div class="nav-section-label">HR</div>
+    <a href="../hr/index.html" class="nav-item">
+      <i class="fa-solid fa-id-card nav-icon"></i>
+      <span class="nav-label">Employees</span>
+    </a>
+    <a href="../hr/index.html" class="nav-item">
+      <i class="fa-regular fa-clock nav-icon"></i>
+      <span class="nav-label">Attendance</span>
+    </a>
+    <a href="../hr/index.html" class="nav-item">
+      <i class="fa-solid fa-money-check-dollar nav-icon"></i>
+      <span class="nav-label">Payroll</span>
+    </a>
+
+    <div class="nav-section-label">Reports</div>
+    <a href="../reports/index.html" class="nav-item">
+      <i class="fa-solid fa-chart-column nav-icon"></i>
+      <span class="nav-label">Reports</span>
+    </a>
+
+    <div class="nav-section-label">Admin</div>
+    <a href="../settings/index.html" class="nav-item">
+      <i class="fa-solid fa-gear nav-icon"></i>
+      <span class="nav-label">Settings</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <a href="../../pos/index.html" class="nav-item">
+      <i class="fa-solid fa-cash-register nav-icon"></i>
+      <span class="nav-label">Open POS</span>
+    </a>
+    <a href="../../webstore/index.html" class="nav-item" target="_blank">
+      <i class="fa-solid fa-globe nav-icon"></i>
+      <span class="nav-label">Webstore</span>
+    </a>
+  </div>
+</aside>
+
+<!-- ──────────────── HEADER ──────────────── -->
+<header class="header" id="header">
+  <div class="header-left">
+    <button class="header-toggle-btn" title="Toggle sidebar">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="header-breadcrumb">
+      <span class="breadcrumb-item">LankaCommerce Cloud</span>
+      <i class="fa-solid fa-chevron-right breadcrumb-sep"></i>
+      <span class="breadcrumb-item">Relationships</span>
+      <i class="fa-solid fa-chevron-right breadcrumb-sep"></i>
+      <span class="breadcrumb-item active">Customers</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="header-search">
+      <i class="fa-solid fa-search header-search-icon"></i>
+      <input type="text" class="header-search-input" placeholder="Quick search…" />
+      <span class="header-search-shortcut">⌘K</span>
+    </div>
+    <div class="header-icon-btn" style="position:relative;">
+      <i class="fa-solid fa-bell"></i>
+      <span style="position:absolute;top:4px;right:4px;width:8px;height:8px;background:#ef4444;border-radius:50%;border:2px solid #fff;"></span>
+    </div>
+    <a href="../../pos/index.html" class="btn btn-sm btn-outline" title="Open POS terminal">
+      <i class="fa-solid fa-cash-register"></i>
+      <span>POS</span>
+    </a>
+    <div class="header-avatar" data-dropdown="userDropdown" title="Account menu">
+      <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=64&h=64&fit=crop&crop=face" alt="Admin" />
+    </div>
+    <div class="dropdown-menu" id="userDropdown">
+      <div class="dropdown-header">
+        <div style="font-weight:600;font-size:0.875rem;">Tenant Admin</div>
+        <div style="font-size:0.75rem;color:var(--color-neutral-500);">admin@sandbox.lcc.lk</div>
+      </div>
+      <div class="dropdown-divider"></div>
+      <a href="../settings/index.html" class="dropdown-item"><i class="fa-solid fa-gear"></i> Settings</a>
+      <a href="../settings/index.html#profile" class="dropdown-item"><i class="fa-solid fa-user-circle"></i> My Profile</a>
+      <div class="dropdown-divider"></div>
+      <a href="../../auth/login.html" class="dropdown-item text-error"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a>
+    </div>
+  </div>
+</header>
+
+<!-- ──────────────── MAIN ──────────────── -->
+<main class="main-wrapper" id="mainWrapper">
+  <div class="page-content">
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Customers</h1>
+        <p class="page-subtitle" id="custSubtitle">Loading customer data…</p>
+      </div>
+      <div class="page-actions">
+        <button class="btn btn-outline btn-sm" id="btnImport" title="Import customers from CSV">
+          <i class="fa-solid fa-file-import"></i> Import
+        </button>
+        <button class="btn btn-outline btn-sm" id="btnExport" title="Export customers to CSV">
+          <i class="fa-solid fa-file-export"></i> Export
+        </button>
+        <button class="btn btn-primary btn-sm" id="btnAddCustomer">
+          <i class="fa-solid fa-user-plus"></i> Add Customer
+        </button>
+      </div>
+    </div>
+
+    <!-- Stat pills -->
+    <div class="stat-pills" id="statPills">
+      <div class="stat-pill"><span class="pill-dot orange"></span> Total <strong id="statTotal">–</strong></div>
+      <div class="stat-pill"><span class="pill-dot green"></span> Active <strong id="statActive">–</strong></div>
+      <div class="stat-pill"><span class="pill-dot purple"></span> VIP / Platinum <strong id="statVip">–</strong></div>
+      <div class="stat-pill"><span class="pill-dot red"></span> Has Balance <strong id="statOverdue">–</strong></div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="toolbar-search">
+        <i class="fa-solid fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Search by name, phone, or email…" autocomplete="off" />
+      </div>
+      <select id="filterTier" title="Filter by tier">
+        <option value="">All Tiers</option>
+        <option value="Bronze">Bronze</option>
+        <option value="Silver">Silver</option>
+        <option value="Gold">Gold</option>
+        <option value="Platinum">Platinum</option>
+      </select>
+      <select id="filterType" title="Filter by type">
+        <option value="">All Types</option>
+        <option value="individual">Individual</option>
+        <option value="business">Business</option>
+      </select>
+      <select id="filterProvince" title="Filter by province">
+        <option value="">All Provinces</option>
+        <option>Western Province</option>
+        <option>Central Province</option>
+        <option>Southern Province</option>
+        <option>Northern Province</option>
+        <option>Eastern Province</option>
+        <option>North Western Province</option>
+        <option>North Central Province</option>
+        <option>Uva Province</option>
+        <option>Sabaragamuwa Province</option>
+      </select>
+      <div class="toolbar-actions">
+        <button class="btn btn-sm btn-outline" id="btnBulkDelete" style="display:none;" title="Delete selected">
+          <i class="fa-solid fa-trash"></i> Delete (<span id="bulkCount">0</span>)
+        </button>
+        <button class="btn btn-sm btn-outline" onclick="clearFilters()">
+          <i class="fa-solid fa-xmark"></i> Clear
+        </button>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="data-table-wrap">
+      <table class="data-table" id="custTable">
+        <thead>
+          <tr>
+            <th class="cb-col"><input type="checkbox" id="selectAll" title="Select all" /></th>
+            <th>Customer</th>
+            <th>Phone</th>
+            <th>Tier</th>
+            <th>Orders</th>
+            <th>Total Spent</th>
+            <th>Outstanding</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="custTableBody">
+          <tr><td colspan="9" class="empty-state"><i class="fa-solid fa-spinner fa-spin"></i><p>Loading customers…</p></td></tr>
+        </tbody>
+      </table>
+
+      <!-- Pagination -->
+      <div class="pagination" id="pagination">
+        <span id="paginationInfo">Showing 0 of 0</span>
+        <div class="pagination-btns" id="paginationBtns"></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ══════════════ ADD / EDIT CUSTOMER MODAL ══════════════ -->
+<div class="modal-overlay" id="customerModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modalTitle">Add Customer</span>
+      <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <form id="customerForm">
+      <div class="modal-body">
+
+        <!-- Personal Info -->
+        <div class="form-section-title"><i class="fa-solid fa-user" style="margin-right:0.4rem;"></i>Personal Information</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">First Name <span class="req">*</span></label>
+            <input type="text" class="form-control" id="fFirstName" placeholder="Kamal" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name <span class="req">*</span></label>
+            <input type="text" class="form-control" id="fLastName" placeholder="Perera" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" id="fEmail" placeholder="kamal@example.com" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone <span class="req">*</span></label>
+            <div class="phone-input">
+              <span class="phone-prefix">+94</span>
+              <input type="tel" class="form-control" id="fPhone" placeholder="77 123 4567" maxlength="12" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Date of Birth</label>
+            <input type="date" class="form-control" id="fDob" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Customer Type</label>
+            <select class="form-control" id="fCustType">
+              <option value="individual">Individual</option>
+              <option value="business">Business</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="form-section-title"><i class="fa-solid fa-location-dot" style="margin-right:0.4rem;"></i>Address</div>
+        <div class="form-grid">
+          <div class="form-group span2">
+            <label class="form-label">Address Line 1</label>
+            <input type="text" class="form-control" id="fAddr1" placeholder="123, Galle Road" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Province</label>
+            <select class="form-control" id="fProvince" onchange="cascadeDistrict()">
+              <option value="">Select Province</option>
+              <option>Western Province</option>
+              <option>Central Province</option>
+              <option>Southern Province</option>
+              <option>Northern Province</option>
+              <option>Eastern Province</option>
+              <option>North Western Province</option>
+              <option>North Central Province</option>
+              <option>Uva Province</option>
+              <option>Sabaragamuwa Province</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">District</label>
+            <select class="form-control" id="fDistrict">
+              <option value="">Select Province first</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">City</label>
+            <input type="text" class="form-control" id="fCity" placeholder="Colombo 03" />
+          </div>
+        </div>
+
+        <!-- Business Info -->
+        <div class="form-section-title"><i class="fa-solid fa-building" style="margin-right:0.4rem;"></i>Business Information</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Company Name</label>
+            <input type="text" class="form-control" id="fCompany" placeholder="Perera &amp; Co." />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tax Number (NIC / VAT)</label>
+            <input type="text" class="form-control" id="fTaxId" placeholder="VAT-12345678" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Customer Group / Tier</label>
+            <select class="form-control" id="fTier">
+              <option value="Bronze">Bronze (New)</option>
+              <option value="Silver">Silver</option>
+              <option value="Gold">Gold</option>
+              <option value="Platinum">Platinum (VIP)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Credit Limit (LKR)</label>
+            <input type="number" class="form-control" id="fCreditLimit" placeholder="50000" min="0" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Payment Terms</label>
+            <select class="form-control" id="fPayTerms">
+              <option value="Immediate">Immediate</option>
+              <option value="Net30">Net 30</option>
+              <option value="Net60">Net 60</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="form-section-title"><i class="fa-solid fa-note-sticky" style="margin-right:0.4rem;"></i>Notes</div>
+        <div class="form-grid full">
+          <div class="form-group">
+            <label class="form-label">Internal Notes</label>
+            <textarea class="form-control" id="fNotes" placeholder="Add any notes about this customer…" style="min-height:80px;"></textarea>
+          </div>
+        </div>
+
+      </div><!-- modal-body -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="modalSaveBtn">
+          <i class="fa-solid fa-floppy-disk"></i> Save Customer
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ══════════════ CUSTOMER DETAIL SLIDE-OVER ══════════════ -->
+<div class="slideover-overlay" id="slideoverOverlay" onclick="closeSlideOver()"></div>
+<div class="slideover" id="slideover">
+  <div class="slideover-header">
+    <span style="font-weight:700;font-size:0.9375rem;">Customer Detail</span>
+    <button class="slideover-close" onclick="closeSlideOver()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="slideover-body" id="slideoverBody">
+    <!-- Populated dynamically -->
+  </div>
+</div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ══════════════ SCRIPTS ══════════════ -->
+<script src="../../assets/js/utils.js"></script>
+<script src="../../assets/js/layout.js"></script>
+<script src="../../assets/js/toast.js"></script>
+
+  <script src="customers.js"></script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Platform Settings | LCC Super Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"/>
+  <link rel="stylesheet" href="../assets/css/variables.css"/>
+  <link rel="stylesheet" href="../assets/css/base.css"/>
+  <link rel="stylesheet" href="../assets/css/components.css"/>
+  <link rel="stylesheet" href="../assets/css/layout.css"/>
+  <link rel="stylesheet" href="settings.css"/>
+  <link rel="stylesheet" href="admin.css"/>
+</head>
+<body>
+<div class="app-shell">
+    <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <div class="sidebar-brand-text">
+        <span class="brand-name">LCC</span>
+        <span class="brand-tagline">Admin Panel</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-title">Overview</span>
+        <a href="index.html" class="nav-item" data-tooltip="Dashboard">
+          <span class="nav-item-icon"><i class="fa-solid fa-gauge-high"></i></span>
+          <span class="nav-item-text">Dashboard</span>
+        </a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Management</span>
+        <a href="tenants.html" class="nav-item" data-tooltip="Tenants">
+          <span class="nav-item-icon"><i class="fa-solid fa-store"></i></span>
+          <span class="nav-item-text">Tenants / Stores</span>
+        </a>
+        <a href="users.html" class="nav-item" data-tooltip="Users">
+          <span class="nav-item-icon"><i class="fa-solid fa-users"></i></span>
+          <span class="nav-item-text">Users</span>
+        </a>
+        <a href="billing.html" class="nav-item" data-tooltip="Billing">
+          <span class="nav-item-icon"><i class="fa-solid fa-credit-card"></i></span>
+          <span class="nav-item-text">Billing &amp; Plans</span>
+        </a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">System</span>
+        <a href="health.html" class="nav-item" data-tooltip="Health">
+          <span class="nav-item-icon"><i class="fa-solid fa-heart-pulse"></i></span>
+          <span class="nav-item-text">System Health</span>
+        </a>
+        <a href="logs.html" class="nav-item" data-tooltip="Logs">
+          <span class="nav-item-icon"><i class="fa-solid fa-file-lines"></i></span>
+          <span class="nav-item-text">Logs &amp; Audit</span>
+        </a>
+        <a href="settings.html" class="nav-item active" data-tooltip="Settings">
+          <span class="nav-item-icon"><i class="fa-solid fa-sliders"></i></span>
+          <span class="nav-item-text">Platform Settings</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="../auth/login.html" class="nav-item signout-link" id="signOutBtn" data-tooltip="Sign Out">
+        <span class="nav-item-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+        <span class="nav-item-text">Sign Out</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="top-bar">
+      <button class="sidebar-toggle" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
+      <div class="top-bar-left"><span class="page-title">Platform Settings</span></div>
+      <div class="top-bar-right">
+        <div class="admin-profile">
+          <div class="admin-avatar">SA</div>
+          <div class="admin-info"><span class="admin-name">Super Admin</span><span class="admin-email">admin@lcc.lk</span></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-heading">Platform Settings</h1>
+          <p class="page-sub">Configure global platform behaviour and defaults</p>
+        </div>
+      </div>
+
+      <div class="settings-layout">
+        <!-- Settings Nav -->
+        <nav class="settings-nav card">
+          <a href="#general"     class="settings-nav-item active"><i class="fa-solid fa-sliders"></i> General</a>
+          <a href="#email"       class="settings-nav-item"><i class="fa-solid fa-envelope"></i> Email (SMTP)</a>
+          <a href="#security"    class="settings-nav-item"><i class="fa-solid fa-shield-halved"></i> Security</a>
+          <a href="#maintenance" class="settings-nav-item"><i class="fa-solid fa-wrench"></i> Maintenance</a>
+        </nav>
+
+        <!-- Settings Panels -->
+        <div class="settings-panels">
+
+          <!-- General -->
+          <section class="settings-panel card" id="general">
+            <div class="panel-head">
+              <i class="fa-solid fa-sliders panel-icon"></i>
+              <div><h2 class="panel-title">General</h2><p class="panel-desc">Basic platform identity and regional defaults</p></div>
+            </div>
+            <div class="form-grid">
+              <div class="form-field">
+                <label>Platform Name</label>
+                <input type="text" class="form-control" value="LankaCommerce Cloud"/>
+              </div>
+              <div class="form-field">
+                <label>Support Email</label>
+                <input type="email" class="form-control" value="support@lcc.lk"/>
+              </div>
+              <div class="form-field">
+                <label>Default Language</label>
+                <select class="form-control">
+                  <option selected>English</option>
+                  <option>Sinhala</option>
+                  <option>Tamil</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label>Default Timezone</label>
+                <select class="form-control">
+                  <option selected>Asia/Colombo (IST +05:30)</option>
+                  <option>UTC</option>
+                  <option>Asia/Kolkata</option>
+                </select>
+              </div>
+            </div>
+            <div class="panel-footer">
+              <button class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save General</button>
+            </div>
+          </section>
+
+          <!-- Email SMTP -->
+          <section class="settings-panel card" id="email">
+            <div class="panel-head">
+              <i class="fa-solid fa-envelope panel-icon"></i>
+              <div><h2 class="panel-title">Email (SMTP)</h2><p class="panel-desc">Outbound email server configuration</p></div>
+            </div>
+            <div class="form-grid">
+              <div class="form-field">
+                <label>SMTP Host</label>
+                <input type="text" class="form-control" value="smtp.mailgun.org"/>
+              </div>
+              <div class="form-field">
+                <label>SMTP Port</label>
+                <input type="number" class="form-control" value="587"/>
+              </div>
+              <div class="form-field">
+                <label>From Address</label>
+                <input type="email" class="form-control" value="no-reply@lcc.lk"/>
+              </div>
+              <div class="form-field">
+                <label>SMTP Username</label>
+                <input type="text" class="form-control" value="postmaster@lcc.mailgun.org"/>
+              </div>
+            </div>
+            <div class="toggle-row">
+              <label class="toggle-label">
+                <span>Use TLS</span>
+                <div class="toggle-switch">
+                  <input type="checkbox" checked/>
+                  <span class="slider"></span>
+                </div>
+              </label>
+              <label class="toggle-label">
+                <span>Enable Email Notifications</span>
+                <div class="toggle-switch">
+                  <input type="checkbox" checked/>
+                  <span class="slider"></span>
+                </div>
+              </label>
+            </div>
+            <div class="panel-footer">
+              <button class="btn btn-ghost"><i class="fa-solid fa-paper-plane"></i> Test Email</button>
+              <button class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Email</button>
+            </div>
+          </section>
+
+          <!-- Security -->
+          <section class="settings-panel card" id="security">
+            <div class="panel-head">
+              <i class="fa-solid fa-shield-halved panel-icon"></i>
+              <div><h2 class="panel-title">Security</h2><p class="panel-desc">Access control and authentication policies</p></div>
+            </div>
+            <div class="form-grid">
+              <div class="form-field">
+                <label>Minimum Password Length</label>
+                <input type="number" class="form-control" value="10" min="6" max="32"/>
+              </div>
+              <div class="form-field">
+                <label>Session Timeout (minutes)</label>
+                <input type="number" class="form-control" value="60" min="5"/>
+              </div>
+              <div class="form-field">
+                <label>Max Failed Login Attempts</label>
+                <input type="number" class="form-control" value="5" min="1"/>
+              </div>
+              <div class="form-field">
+                <label>Account Lockout Duration (minutes)</label>
+                <input type="number" class="form-control" value="15" min="1"/>
+              </div>
+            </div>
+            <div class="toggle-row">
+              <label class="toggle-label">
+                <span>Require 2FA for Super Admins</span>
+                <div class="toggle-switch">
+                  <input type="checkbox" checked/>
+                  <span class="slider"></span>
+                </div>
+              </label>
+              <label class="toggle-label">
+                <span>Require Uppercase in Password</span>
+                <div class="toggle-switch">
+                  <input type="checkbox" checked/>
+                  <span class="slider"></span>
+                </div>
+              </label>
+            </div>
+            <div class="panel-footer">
+              <button class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Security</button>
+            </div>
+          </section>
+
+          <!-- Maintenance -->
+          <section class="settings-panel card" id="maintenance">
+            <div class="panel-head">
+              <i class="fa-solid fa-wrench panel-icon"></i>
+              <div><h2 class="panel-title">Maintenance</h2><p class="panel-desc">Maintenance mode and platform-wide announcements</p></div>
+            </div>
+            <div class="toggle-row">
+              <label class="toggle-label maintenance-toggle">
+                <span class="toggle-text-block">
+                  <strong>Maintenance Mode</strong>
+                  <small>Disables tenant access and shows a maintenance page</small>
+                </span>
+                <div class="toggle-switch danger">
+                  <input type="checkbox"/>
+                  <span class="slider"></span>
+                </div>
+              </label>
+            </div>
+            <div class="form-field full-width" style="margin-top:16px;">
+              <label>Announcement Banner</label>
+              <textarea class="form-control" rows="3" placeholder="Scheduled maintenance on March 10, 2026 from 02:00–04:00 AM IST."></textarea>
+              <span class="field-hint">Leave blank to hide the banner. Shown to all tenants on their dashboard.</span>
+            </div>
+            <div class="panel-footer">
+              <button class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Maintenance</button>
+            </div>
+          </section>
+
+        </div><!-- /.settings-panels -->
+      </div><!-- /.settings-layout -->
+    </main>
+  </div>
+</div>
+<script src="../assets/js/layout.js"></script>
+<script>
+  document.querySelectorAll('.settings-nav-item').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      document.querySelectorAll('.settings-nav-item').forEach(l => l.classList.remove('active'));
+      this.classList.add('active');
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+  <script src="admin.js"></script>
+</body>
+</html>

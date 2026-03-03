@@ -1,0 +1,54 @@
+{
+  "dashboard": {
+    "today": {
+      "revenue": 87500,
+      "revenue_change": 12.5,
+      "orders": 14,
+      "orders_change": 3,
+      "new_customers": 2,
+      "pending_approvals": 4
+    },
+    "this_month": {
+      "revenue": 1250000,
+      "revenue_change": 8.2,
+      "orders": 312,
+      "top_products": [
+        { "name": "Classic White T-Shirt", "sales": 85, "revenue": 110415 },
+        { "name": "Men's Slim Fit Trousers", "sales": 42, "revenue": 147000 },
+        { "name": "Basmati Rice 5kg", "sales": 78, "revenue": 105300 }
+      ]
+    },
+    "revenue_chart": {
+      "labels": ["Jan 17", "Jan 18", "Jan 19", "Jan 20", "Jan 21", "Jan 22", "Jan 23"],
+      "values": [45000, 62000, 38500, 75000, 55000, 87500, 68000]
+    },
+    "low_stock_alerts": [
+      { "product_id": "PRD-003", "name": "Basmati Rice Premium 5kg", "stock": 8, "threshold": 20 },
+      { "product_id": "PRD-004", "name": "Ceylon Tea Black 250g", "stock": 0, "threshold": 15 },
+      { "product_id": "PRD-001", "name": "T-Shirt (Black M)", "stock": 10, "threshold": 10 }
+    ],
+    "recent_activities": [
+      { "type": "order", "icon": "fa-shopping-cart", "text": "New order #ORD-2026-0042 from Kamal Perera", "time": "5 min ago", "color": "success" },
+      { "type": "alert", "icon": "fa-exclamation-triangle", "text": "Low stock alert: Ceylon Tea Black 250g (0 units)", "time": "18 min ago", "color": "error" },
+      { "type": "payment", "icon": "fa-credit-card", "text": "Payment received for INV-2026-0033 — ₨10,349", "time": "1 hr ago", "color": "success" },
+      { "type": "order", "icon": "fa-shopping-cart", "text": "New order #ORD-2026-0041 - POS sale completed", "time": "2 hrs ago", "color": "info" },
+      { "type": "product", "icon": "fa-box", "text": "Product 'Women's Floral Saree' updated by Admin", "time": "3 hrs ago", "color": "neutral" }
+    ],
+    "pending_tasks": [
+      { "type": "approval", "text": "Leave request from Sanduni Perera", "icon": "fa-calendar-times", "route": "/erp/hr/leave.html" },
+      { "type": "payment", "text": "Invoice INV-2026-0034 overdue — ₨12,441 outstanding", "icon": "fa-file-invoice-dollar", "route": "/erp/sales/invoice-detail.html" },
+      { "type": "po", "text": "PO-2026-0012 partial receipt pending GRN", "icon": "fa-truck", "route": "/erp/vendors/purchase-orders.html" },
+      { "type": "stock", "text": "3 products below reorder point", "icon": "fa-warehouse", "route": "/erp/inventory/overview.html" }
+    ]
+  },
+  "inventory": [
+    { "product_id": "PRD-001", "product_name": "Classic White Cotton T-Shirt", "sku": "TSH-WHT-001", "warehouse": "Main Warehouse", "in_stock": 145, "reserved": 5, "available": 140, "low_stock_threshold": 10, "reorder_point": 20, "status": "in_stock" },
+    { "product_id": "PRD-002", "product_name": "Men's Slim Fit Trousers", "sku": "TRS-BLK-001", "warehouse": "Main Warehouse", "in_stock": 80, "reserved": 8, "available": 72, "low_stock_threshold": 10, "reorder_point": 20, "status": "in_stock" },
+    { "product_id": "PRD-003", "product_name": "Basmati Rice Premium 5kg", "sku": "RICE-PRM-5KG", "warehouse": "Main Warehouse", "in_stock": 8, "reserved": 2, "available": 6, "low_stock_threshold": 20, "reorder_point": 30, "status": "low_stock" },
+    { "product_id": "PRD-004", "product_name": "Ceylon Tea Black 250g", "sku": "TEA-BLK-250", "warehouse": "Main Warehouse", "in_stock": 0, "reserved": 0, "available": 0, "low_stock_threshold": 15, "reorder_point": 25, "status": "out_of_stock" },
+    { "product_id": "PRD-005", "product_name": "Women's Floral Saree", "sku": "SAR-FLR-001", "warehouse": "Main Warehouse", "in_stock": 22, "reserved": 1, "available": 21, "low_stock_threshold": 5, "reorder_point": 10, "status": "in_stock" },
+    { "product_id": "PRD-006", "product_name": "Lanka Coconut Oil 500ml", "sku": "OIL-CCN-500", "warehouse": "Main Warehouse", "in_stock": 35, "reserved": 0, "available": 35, "low_stock_threshold": 10, "reorder_point": 20, "status": "in_stock" },
+    { "product_id": "PRD-007", "product_name": "Office Chair Ergonomic", "sku": "FRN-CHR-001", "warehouse": "Main Warehouse", "in_stock": 12, "reserved": 0, "available": 12, "low_stock_threshold": 3, "reorder_point": 5, "status": "in_stock" },
+    { "product_id": "PRD-008", "product_name": "Wireless Bluetooth Headphones", "sku": "ELC-HPH-001", "warehouse": "Main Warehouse", "in_stock": 18, "reserved": 1, "available": 17, "low_stock_threshold": 5, "reorder_point": 10, "status": "in_stock" }
+  ]
+}

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tenants / Stores — LCC Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"/>
+  <link rel="stylesheet" href="../assets/css/variables.css"/>
+  <link rel="stylesheet" href="../assets/css/base.css"/>
+  <link rel="stylesheet" href="../assets/css/components.css"/>
+  <link rel="stylesheet" href="../assets/css/layout.css"/>
+  <link rel="stylesheet" href="tenants.css"/>
+  <link rel="stylesheet" href="admin.css"/>
+</head>
+<body>
+<div class="app-shell">
+
+    <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <div class="sidebar-brand-text">
+        <span class="brand-name">LCC</span>
+        <span class="brand-tagline">Admin Panel</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-title">Overview</span>
+        <a href="index.html" class="nav-item" data-tooltip="Dashboard">
+          <span class="nav-item-icon"><i class="fa-solid fa-gauge-high"></i></span>
+          <span class="nav-item-text">Dashboard</span>
+        </a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Management</span>
+        <a href="tenants.html" class="nav-item active" data-tooltip="Tenants">
+          <span class="nav-item-icon"><i class="fa-solid fa-store"></i></span>
+          <span class="nav-item-text">Tenants / Stores</span>
+        </a>
+        <a href="users.html" class="nav-item" data-tooltip="Users">
+          <span class="nav-item-icon"><i class="fa-solid fa-users"></i></span>
+          <span class="nav-item-text">Users</span>
+        </a>
+        <a href="billing.html" class="nav-item" data-tooltip="Billing">
+          <span class="nav-item-icon"><i class="fa-solid fa-credit-card"></i></span>
+          <span class="nav-item-text">Billing &amp; Plans</span>
+        </a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">System</span>
+        <a href="health.html" class="nav-item" data-tooltip="Health">
+          <span class="nav-item-icon"><i class="fa-solid fa-heart-pulse"></i></span>
+          <span class="nav-item-text">System Health</span>
+        </a>
+        <a href="logs.html" class="nav-item" data-tooltip="Logs">
+          <span class="nav-item-icon"><i class="fa-solid fa-file-lines"></i></span>
+          <span class="nav-item-text">Logs &amp; Audit</span>
+        </a>
+        <a href="settings.html" class="nav-item" data-tooltip="Settings">
+          <span class="nav-item-icon"><i class="fa-solid fa-sliders"></i></span>
+          <span class="nav-item-text">Platform Settings</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="../auth/login.html" class="nav-item signout-link" id="signOutBtn" data-tooltip="Sign Out">
+        <span class="nav-item-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+        <span class="nav-item-text">Sign Out</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fa-solid fa-bars"></i></button>
+        <div class="breadcrumb">
+          <span class="breadcrumb-item">Admin</span>
+          <i class="fa-solid fa-chevron-right breadcrumb-sep"></i>
+          <span class="breadcrumb-item active">Tenants / Stores</span>
+        </div>
+      </div>
+      <div class="top-bar-right">
+        <button class="icon-btn" title="Notifications"><i class="fa-solid fa-bell"></i><span class="badge-dot"></span></button>
+        <div class="admin-avatar">SA</div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h1 class="page-title">Tenants / Stores</h1>
+          <p class="page-subtitle">Manage all registered tenant stores on the platform</p>
+        </div>
+        <div class="page-header-actions">
+          <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Tenant</button>
+        </div>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-value">142</div><div class="stat-label">Total Tenants</div></div>
+        <div class="stat-card"><div class="stat-value text-success">128</div><div class="stat-label">Active</div></div>
+        <div class="stat-card"><div class="stat-value text-warning">9</div><div class="stat-label">Trial</div></div>
+        <div class="stat-card"><div class="stat-value text-danger">5</div><div class="stat-label">Suspended</div></div>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" class="search-input" placeholder="Search store name or tenant ID…"/>
+        </div>
+        <select class="filter-select">
+          <option value="">All Plans</option>
+          <option>Free</option>
+          <option>Starter</option>
+          <option>Pro</option>
+          <option>Enterprise</option>
+        </select>
+        <select class="filter-select">
+          <option value="">All Status</option>
+          <option>Active</option>
+          <option>Suspended</option>
+          <option>Trial</option>
+        </select>
+        <button class="btn btn-outline btn-sm"><i class="fa-solid fa-filter-circle-xmark"></i> Clear</button>
+      </div>
+
+      <!-- Tenants Table -->
+      <div class="table-card">
+        <div class="table-header">
+          <span class="table-count">Showing 8 of 142 tenants</span>
+          <button class="btn btn-outline btn-sm"><i class="fa-solid fa-download"></i> Export</button>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th><input type="checkbox" class="cb-all"/></th>
+                <th>Store Name</th>
+                <th>Tenant ID</th>
+                <th>Plan</th>
+                <th>Status</th>
+                <th>Employees</th>
+                <th>Storage Used</th>
+                <th>Monthly Rev (LKR)</th>
+                <th>Reg Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="checkbox"/></td>
+                <td><div class="store-cell"><div class="store-icon si-blue">KS</div><div><div class="store-name">Keells Super Kandy</div><div class="store-domain">keells-kandy.lcc.lk</div></div></div></td>
+                <td><code class="tenant-id">T-00142</code></td>
+                <td><span class="badge badge-enterprise">Enterprise</span></td>
+                <td><span class="badge badge-active">Active</span></td>
+                <td>48</td>
+                <td><div class="storage-bar"><div class="storage-fill" style="width:72%"></div></div><span class="storage-text">7.2 / 10 GB</span></td>
+                <td class="text-right fw-600">₨ 184,500</td>
+                <td class="text-muted">12 Jan 2024</td>
+                <td><div class="action-btns"><button class="icon-btn-sm" title="View"><i class="fa-solid fa-eye"></i></button><button class="icon-btn-sm" title="Edit"><i class="fa-solid fa-pen"></i></button><button class="icon-btn-sm text-danger" title="Suspend"><i class="fa-solid fa-ban"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"/></td>
+                <td><div class="store-cell"><div class="store-icon si-green">CF</div><div><div class="store-name">Cargills Food City Gampaha</div><div class="store-domain">cargills-gampaha.lcc.lk</div></div></div></td>
+                <td><code class="tenant-id">T-00138</code></td>
+                <td><span class="badge badge-pro">Pro</span></td>
+                <td><span class="badge badge-active">Active</span></td>
+                <td>24</td>
+                <td><div class="storage-bar"><div class="storage-fill" style="width:45%"></div></div><span class="storage-text">2.2 / 5 GB</span></td>
+                <td class="text-right fw-600">₨ 92,000</td>
+                <td class="text-muted">03 Feb 2024</td>
+                <td><div class="action-btns"><button class="icon-btn-sm" title="View"><i class="fa-solid fa-eye"></i></button><button class="icon-btn-sm" title="Edit"><i class="fa-solid fa-pen"></i></button><button class="icon-btn-sm text-danger" title="Suspend"><i class="fa-solid fa-ban"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"/></td>
+                <td><div class="store-cell"><div class="store-icon si-purple">SR</div><div><div class="store-name">Sampath Retail Nugegoda</div><div class="store-domain">sampath-retail.lcc.lk</div></div></div></td>
+                <td><code class="tenant-id">T-00131</code></td>
+                <td><span class="badge badge-pro">Pro</span></td>
+                <td><span class="badge badge-trial">Trial</span></td>
+                <td>12</td>
+                <td><div class="storage-bar"><div class="storage-fill" style="width:18%"></div></div><span class="storage-text">0.9 / 5 GB</span></td>
+                <td class="text-right fw-600">₨ 0</td>
+                <td class="text-muted">18 Feb 2025</td>
+                <td><div class="action-btns"><button class="icon-btn-sm" title="View"><i class="fa-solid fa-eye"></i></button><button class="icon-btn-sm" title="Edit"><i class="fa-solid fa-pen"></i></button><button class="icon-btn-sm text-danger" title="Suspend"><i class="fa-solid fa-ban"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"/></td>
+                <td><div class="store-cell"><div class="store-icon si-orange">LM</div><div><div class="store-name">Lanka Mart Matara</div><div class="store-domain">lankamart-matara.lcc.lk</div></div></div></td>
+                <td><code class="tenant-id">T-00127</code></td>
+                <td><span class="badge badge-starter">Starter</span></td>
+                <td><span class="badge badge-active">Active</span></td>
+                <td>6</td>
+                <td><div class="storage-bar"><div class="storage-fill" style="width:30%"></div></div><span class="storage-text">0.6 / 2 GB</span></td>
+                <td class="text-right fw-600">₨ 14,900</td>
+                <td class="text-muted">22 Mar 2024</td>
+                <td><div class="action-btns"><button class="icon-btn-sm" title="View"><i class="fa-solid fa-eye"></i></button><button class="icon-btn-sm" title="Edit"><i class="fa-solid fa-pen"></i></button><button class="icon-btn-sm text-danger" title="Suspend"><i class="fa-solid fa-ban"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"/></td>
+                <td><div class="store-cell"><div class="store-icon si-red">NF</div><div><div class="store-name">Nandini Fashion Colombo 03</div><div class="store-domain">nandini-fashion.lcc.lk</div></div></div></td>
+                <td><code class="tenant-id">T-00119</code></td>
+                <td><span class="badge badge-enterprise">Enterprise</span></td>
+                <td><span class="badge badge-suspended">Suspended</span></td>
+                <td>31</td>
+                <td><div class="storage-bar"><div class="storage-fill warn" style="width:88%"></div></div><span class="storage-text">8.8 / 10 GB</span></td>
+                <td class="text-right fw-600">₨ 0</td>
+                <td class="text-muted">05 Jun 2023</td>
+                <td><div class="action-btns"><button class="icon-btn-sm" title="View"><i class="fa-solid fa-eye"></i></button><button class="icon-btn-sm" title="Edit"><i class="fa-solid fa-pen"></i></button><button class="icon-btn-sm text-success" title="Activate"><i class="fa-solid fa-circle-check"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"/></td>
+                <td><div class="store-cell"><div class="store-icon si-teal">RH</div><div><div class="store-name">Ridgeway Hardware Jaffna</div><div class="store-domain">ridgeway-jaffna.lcc.lk</div></div></div></td>
+                <td><code class="tenant-id">T-00115</code></td>
+                <td><span class="badge badge-starter">Starter</span></td>
+                <td><span class="badge badge-active">Active</span></td>
+                <td>8</td>
+                <td><div class="storage-bar"><div class="storage-fill" style="width:22%"></div></div><span class="storage-text">0.4 / 2 GB</span></td>
+                <td class="text-right fw-600">₨ 14,900</td>
+                <td class="text-muted">11 Jul 2024</td>
+                <td><div class="action-btns"><button class="icon-btn-sm" title="View"><i class="fa-solid fa-eye"></i></button><button class="icon-btn-sm" title="Edit"><i class="fa-solid fa-pen"></i></button><button class="icon-btn-sm text-danger" title="Suspend"><i class="fa-solid fa-ban"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"/></td>
+                <td><div class="store-cell"><div class="store-icon si-indigo">DS</div><div><div class="store-name">De Silva Pharmacy Kurunegala</div><div class="store-domain">desilva-pharm.lcc.lk</div></div></div></td>
+                <td><code class="tenant-id">T-00108</code></td>
+                <td><span class="badge badge-free">Free</span></td>
+                <td><span class="badge badge-trial">Trial</span></td>
+                <td>3</td>
+                <td><div class="storage-bar"><div class="storage-fill" style="width:8%"></div></div><span class="storage-text">0.1 / 1 GB</span></td>
+                <td class="text-right fw-600">₨ 0</td>
+                <td class="text-muted">27 Jan 2026</td>
+                <td><div class="action-btns"><button class="icon-btn-sm" title="View"><i class="fa-solid fa-eye"></i></button><button class="icon-btn-sm" title="Edit"><i class="fa-solid fa-pen"></i></button><button class="icon-btn-sm text-danger" title="Suspend"><i class="fa-solid fa-ban"></i></button></div></td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"/></td>
+                <td><div class="store-cell"><div class="store-icon si-pink">PB</div><div><div class="store-name">Perera Bakery &amp; Café Negombo</div><div class="store-domain">perera-bakery.lcc.lk</div></div></div></td>
+                <td><code class="tenant-id">T-00099</code></td>
+                <td><span class="badge badge-pro">Pro</span></td>
+                <td><span class="badge badge-active">Active</span></td>
+                <td>16</td>
+                <td><div class="storage-bar"><div class="storage-fill" style="width:55%"></div></div><span class="storage-text">2.7 / 5 GB</span></td>
+                <td class="text-right fw-600">₨ 54,900</td>
+                <td class="text-muted">15 Sep 2023</td>
+                <td><div class="action-btns"><button class="icon-btn-sm" title="View"><i class="fa-solid fa-eye"></i></button><button class="icon-btn-sm" title="Edit"><i class="fa-solid fa-pen"></i></button><button class="icon-btn-sm text-danger" title="Suspend"><i class="fa-solid fa-ban"></i></button></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footer">
+          <span class="pagination-info">Page 1 of 18 &nbsp;·&nbsp; 142 total records</span>
+          <div class="pagination">
+            <button class="page-btn" disabled><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <span class="page-ellipsis">…</span>
+            <button class="page-btn">18</button>
+            <button class="page-btn"><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="../assets/js/layout.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

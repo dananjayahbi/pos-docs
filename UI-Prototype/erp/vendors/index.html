@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vendors — LankaCommerce Cloud</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"/>
+  <link rel="stylesheet" href="../../assets/css/variables.css"/>
+  <link rel="stylesheet" href="../../assets/css/base.css"/>
+  <link rel="stylesheet" href="../../assets/css/components.css"/>
+  <link rel="stylesheet" href="../../assets/css/layout.css"/>
+  <link rel="stylesheet" href="vendors.css" />
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <span class="logo-icon"><i class="fa-solid fa-store"></i></span>
+        <span class="logo-text">LankaCommerce</span>
+      </div>
+      <button class="sidebar-toggle" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
+    </div>
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a href="../dashboard.html"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a></li>
+        <li><a href="../products/index.html"><i class="fa-solid fa-box"></i><span>Products</span></a></li>
+        <li><a href="../inventory/index.html"><i class="fa-solid fa-warehouse"></i><span>Inventory</span></a></li>
+        <li><a href="../sales/orders.html"><i class="fa-solid fa-receipt"></i><span>Sales</span></a></li>
+        <li><a href="../customers/index.html"><i class="fa-solid fa-users"></i><span>Customers</span></a></li>
+        <li class="active"><a href="../vendors/index.html"><i class="fa-solid fa-truck"></i><span>Vendors</span></a></li>
+        <li><a href="../hr/index.html"><i class="fa-solid fa-id-badge"></i><span>HR</span></a></li>
+        <li><a href="../accounting/index.html"><i class="fa-solid fa-calculator"></i><span>Accounting</span></a></li>
+        <li><a href="../reports/index.html"><i class="fa-solid fa-chart-bar"></i><span>Reports</span></a></li>
+        <li><a href="../settings/index.html"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-mini">
+        <div class="user-avatar-sm">KP</div>
+        <div class="user-meta">
+          <div class="user-name-sm">Kasun Perera</div>
+          <div class="user-role-sm">Admin</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+
+    <!-- TOP BAR -->
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <button class="mobile-toggle" id="mobileToggle"><i class="fa-solid fa-bars"></i></button>
+        <div class="breadcrumb">
+          <span>ERP</span>
+          <i class="fa-solid fa-chevron-right"></i>
+          <span class="active">Vendors</span>
+        </div>
+      </div>
+      <div class="top-bar-right">
+        <button class="icon-btn"><i class="fa-regular fa-bell"></i><span class="badge-dot"></span></button>
+        <button class="icon-btn"><i class="fa-regular fa-circle-question"></i></button>
+        <div class="user-avatar">KP</div>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Vendors</h1>
+          <p class="page-subtitle">Manage supplier relationships and purchase records</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-outline"><i class="fa-solid fa-file-export"></i> Export</button>
+          <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Vendor</button>
+        </div>
+      </div>
+
+      <!-- KPI Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-icon orange"><i class="fa-solid fa-truck"></i></div>
+          <div>
+            <div class="kpi-label">Total Vendors</div>
+            <div class="kpi-value">148</div>
+            <div class="kpi-sub">+4 this month</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon green"><i class="fa-solid fa-circle-check"></i></div>
+          <div>
+            <div class="kpi-label">Active Vendors</div>
+            <div class="kpi-value">112</div>
+            <div class="kpi-sub">75.7% of total</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon red"><i class="fa-solid fa-clock-rotate-left"></i></div>
+          <div>
+            <div class="kpi-label">Pending Payments</div>
+            <div class="kpi-value">₨ 2.4M</div>
+            <div class="kpi-sub">18 invoices due</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon blue"><i class="fa-solid fa-cart-flatbed"></i></div>
+          <div>
+            <div class="kpi-label">This Month Purchases</div>
+            <div class="kpi-value">₨ 8.7M</div>
+            <div class="kpi-sub">+12.3% vs last month</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <div class="search-wrap">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Search vendors by name, contact or email…"/>
+        </div>
+        <select>
+          <option value="">All Statuses</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+        <select>
+          <option value="">All Categories</option>
+          <option value="electronics">Electronics</option>
+          <option value="fmcg">FMCG</option>
+          <option value="textiles">Textiles</option>
+          <option value="stationery">Stationery</option>
+          <option value="food">Food &amp; Beverages</option>
+          <option value="hardware">Hardware</option>
+        </select>
+      </div>
+
+      <!-- Vendors Table -->
+      <div class="table-card">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Vendor Name</th>
+              <th>Contact Person</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Category</th>
+              <th>Balance (LKR)</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="vendor-name">Perera &amp; Sons Traders</div><div style="font-size:.72rem;color:var(--color-neutral-400)">VND-0041</div></td>
+              <td>Nimal Perera</td>
+              <td>+94 77 234 5678</td>
+              <td>nimal@pererasonsltd.lk</td>
+              <td>Electronics</td>
+              <td style="font-weight:600;color:#dc2626">₨ 245,800</td>
+              <td><span class="badge active">Active</span></td>
+              <td><div class="actions"><button class="btn-icon" title="View"><i class="fa-solid fa-eye"></i></button><button class="btn-icon" title="Edit"><i class="fa-solid fa-pen"></i></button></div></td>
+            </tr>
+            <tr>
+              <td><div class="vendor-name">Colombo Wholesale Hub</div><div style="font-size:.72rem;color:var(--color-neutral-400)">VND-0038</div></td>
+              <td>Chamara Bandara</td>
+              <td>+94 71 456 1230</td>
+              <td>chamara@cwh.lk</td>
+              <td>FMCG</td>
+              <td style="font-weight:600;color:#dc2626">₨ 512,000</td>
+              <td><span class="badge active">Active</span></td>
+              <td><div class="actions"><button class="btn-icon" title="View"><i class="fa-solid fa-eye"></i></button><button class="btn-icon" title="Edit"><i class="fa-solid fa-pen"></i></button></div></td>
+            </tr>
+            <tr>
+              <td><div class="vendor-name">Silva Textile Imports</div><div style="font-size:.72rem;color:var(--color-neutral-400)">VND-0029</div></td>
+              <td>Priya Silva</td>
+              <td>+94 76 987 3456</td>
+              <td>priya@silvatextile.lk</td>
+              <td>Textiles</td>
+              <td style="font-weight:600;color:var(--color-neutral-900)">₨ 0</td>
+              <td><span class="badge active">Active</span></td>
+              <td><div class="actions"><button class="btn-icon" title="View"><i class="fa-solid fa-eye"></i></button><button class="btn-icon" title="Edit"><i class="fa-solid fa-pen"></i></button></div></td>
+            </tr>
+            <tr>
+              <td><div class="vendor-name">Kandy Office Supplies</div><div style="font-size:.72rem;color:var(--color-neutral-400)">VND-0055</div></td>
+              <td>Ruwan Rajapaksa</td>
+              <td>+94 81 222 6789</td>
+              <td>ruwan@kandyoffice.lk</td>
+              <td>Stationery</td>
+              <td style="font-weight:600;color:#dc2626">₨ 87,400</td>
+              <td><span class="badge active">Active</span></td>
+              <td><div class="actions"><button class="btn-icon" title="View"><i class="fa-solid fa-eye"></i></button><button class="btn-icon" title="Edit"><i class="fa-solid fa-pen"></i></button></div></td>
+            </tr>
+            <tr>
+              <td><div class="vendor-name">Galle Fresh Produce Ltd</div><div style="font-size:.72rem;color:var(--color-neutral-400)">VND-0017</div></td>
+              <td>Dilani Fernando</td>
+              <td>+94 91 345 8900</td>
+              <td>dilani@gallefresh.lk</td>
+              <td>Food &amp; Beverages</td>
+              <td style="font-weight:600;color:var(--color-neutral-900)">₨ 0</td>
+              <td><span class="badge inactive">Inactive</span></td>
+              <td><div class="actions"><button class="btn-icon" title="View"><i class="fa-solid fa-eye"></i></button><button class="btn-icon" title="Edit"><i class="fa-solid fa-pen"></i></button></div></td>
+            </tr>
+            <tr>
+              <td><div class="vendor-name">Jayasinghe Hardware Co.</div><div style="font-size:.72rem;color:var(--color-neutral-400)">VND-0062</div></td>
+              <td>Asanka Jayasinghe</td>
+              <td>+94 77 601 2345</td>
+              <td>asanka@jh-hardware.lk</td>
+              <td>Hardware</td>
+              <td style="font-weight:600;color:#dc2626">₨ 320,150</td>
+              <td><span class="badge active">Active</span></td>
+              <td><div class="actions"><button class="btn-icon" title="View"><i class="fa-solid fa-eye"></i></button><button class="btn-icon" title="Edit"><i class="fa-solid fa-pen"></i></button></div></td>
+            </tr>
+            <tr>
+              <td><div class="vendor-name">Nugegoda Tech Distributors</div><div style="font-size:.72rem;color:var(--color-neutral-400)">VND-0073</div></td>
+              <td>Tharaka Wijewardena</td>
+              <td>+94 70 123 9876</td>
+              <td>tharaka@ntd.lk</td>
+              <td>Electronics</td>
+              <td style="font-weight:600;color:#dc2626">₨ 1,045,600</td>
+              <td><span class="badge active">Active</span></td>
+              <td><div class="actions"><button class="btn-icon" title="View"><i class="fa-solid fa-eye"></i></button><button class="btn-icon" title="Edit"><i class="fa-solid fa-pen"></i></button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:1rem;font-size:.82rem;color:var(--color-neutral-500);">
+        <span>Showing 1–7 of 148 vendors</span>
+        <div style="display:flex;gap:.35rem;">
+          <button class="btn-icon" disabled><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="btn-icon" style="background:var(--color-primary-500);color:#fff;border-color:var(--color-primary-500);">1</button>
+          <button class="btn-icon">2</button>
+          <button class="btn-icon">3</button>
+          <button class="btn-icon"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+
+    </main>
+  </div><!-- /.main-wrapper -->
+</div><!-- /.app-shell -->
+
+<script src="../../assets/js/layout.js"></script>
+</body>
+</html>

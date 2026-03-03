@@ -1,0 +1,96 @@
+/* Page-specific styles — index.html */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .splash {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+
+    .logo-wrap {
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      border-radius: 20px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 8px 24px rgba(249,115,22,0.35);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 8px 24px rgba(249,115,22,0.35); }
+      50%       { transform: scale(1.05); box-shadow: 0 12px 32px rgba(249,115,22,0.5); }
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.03em;
+    }
+
+    p {
+      color: #64748b;
+      font-size: 0.9375rem;
+    }
+
+    .spinner {
+      width: 32px; height: 32px;
+      border: 3px solid #fed7aa;
+      border-top-color: #f97316;
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .status { font-size: 0.8125rem; color: #94a3b8; }
+
+    /* App selector — shown if JS redirect is slow */
+    .app-cards {
+      display: none;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .app-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.25rem 1rem;
+      text-decoration: none;
+      color: #0f172a;
+      text-align: center;
+      transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
+      cursor: pointer;
+    }
+
+    .app-card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      border-color: #f97316;
+      transform: translateY(-2px);
+    }
+
+    .app-card i {
+      font-size: 1.75rem;
+      color: #f97316;
+      display: block;
+      margin-bottom: 0.625rem;
+    }
+
+    .app-card .app-name { font-weight: 600; font-size: 0.9rem; }
+    .app-card .app-desc { font-size: 0.75rem; color: #64748b; margin-top: 0.2rem; }

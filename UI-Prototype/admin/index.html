@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Platform Dashboard — LCC Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"/>
+  <link rel="stylesheet" href="../assets/css/variables.css"/>
+  <link rel="stylesheet" href="../assets/css/base.css"/>
+  <link rel="stylesheet" href="../assets/css/components.css"/>
+  <link rel="stylesheet" href="../assets/css/layout.css"/>
+  <link rel="stylesheet" href="admin.css"/>
+</head>
+<body>
+<div class="app-shell">
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <div class="sidebar-brand-text">
+        <span class="brand-name">LCC</span>
+        <span class="brand-tagline">Admin Panel</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-title">Overview</span>
+        <a href="index.html" class="nav-item active" data-tooltip="Dashboard">
+          <span class="nav-item-icon"><i class="fa-solid fa-gauge-high"></i></span>
+          <span class="nav-item-text">Dashboard</span>
+        </a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Management</span>
+        <a href="tenants.html" class="nav-item" data-tooltip="Tenants">
+          <span class="nav-item-icon"><i class="fa-solid fa-store"></i></span>
+          <span class="nav-item-text">Tenants / Stores</span>
+        </a>
+        <a href="users.html" class="nav-item" data-tooltip="Users">
+          <span class="nav-item-icon"><i class="fa-solid fa-users"></i></span>
+          <span class="nav-item-text">Users</span>
+        </a>
+        <a href="billing.html" class="nav-item" data-tooltip="Billing">
+          <span class="nav-item-icon"><i class="fa-solid fa-credit-card"></i></span>
+          <span class="nav-item-text">Billing &amp; Plans</span>
+        </a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">System</span>
+        <a href="health.html" class="nav-item" data-tooltip="Health">
+          <span class="nav-item-icon"><i class="fa-solid fa-heart-pulse"></i></span>
+          <span class="nav-item-text">System Health</span>
+        </a>
+        <a href="logs.html" class="nav-item" data-tooltip="Logs">
+          <span class="nav-item-icon"><i class="fa-solid fa-file-lines"></i></span>
+          <span class="nav-item-text">Logs &amp; Audit</span>
+        </a>
+        <a href="settings.html" class="nav-item" data-tooltip="Settings">
+          <span class="nav-item-icon"><i class="fa-solid fa-sliders"></i></span>
+          <span class="nav-item-text">Platform Settings</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="../auth/login.html" class="nav-item signout-link" id="signOutBtn" data-tooltip="Sign Out">
+        <span class="nav-item-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+        <span class="nav-item-text">Sign Out</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="main-wrapper" id="mainWrapper">
+
+    <!-- Top Bar -->
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <button class="btn btn-ghost btn-icon header-toggle-btn" id="sidebarToggle" title="Toggle Sidebar">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <span class="top-bar-title">Platform Administration</span>
+      </div>
+      <div class="top-bar-right">
+        <button class="btn btn-ghost btn-icon" title="Notifications">
+          <i class="fa-solid fa-bell"></i>
+        </button>
+        <div class="top-bar-user">
+          <div class="avatar-circle">SA</div>
+          <span class="top-bar-username">Super Admin</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Platform Dashboard</h1>
+          <p class="page-subtitle" id="pageDate">Loading...</p>
+        </div>
+        <button class="btn btn-primary btn-sm">
+          <i class="fa-solid fa-plus"></i> Add Tenant
+        </button>
+      </div>
+
+      <!-- KPI Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-icon--blue"><i class="fa-solid fa-store"></i></div>
+          <div class="kpi-body">
+            <span class="kpi-label">Total Tenants</span>
+            <span class="kpi-value">247</span>
+            <span class="kpi-delta kpi-delta--up"><i class="fa-solid fa-arrow-trend-up"></i> +8 this month</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-icon--green"><i class="fa-solid fa-circle-check"></i></div>
+          <div class="kpi-body">
+            <span class="kpi-label">Active Today</span>
+            <span class="kpi-value">44</span>
+            <span class="kpi-delta kpi-delta--up"><i class="fa-solid fa-arrow-trend-up"></i> +3 vs yesterday</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-icon--orange"><i class="fa-solid fa-sack-dollar"></i></div>
+          <div class="kpi-body">
+            <span class="kpi-label">Platform Revenue</span>
+            <span class="kpi-value">₨3.2M</span>
+            <span class="kpi-delta kpi-delta--up"><i class="fa-solid fa-arrow-trend-up"></i> /mo</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-icon--purple"><i class="fa-solid fa-server"></i></div>
+          <div class="kpi-body">
+            <span class="kpi-label">System Uptime</span>
+            <span class="kpi-value">99.8%</span>
+            <span class="kpi-delta kpi-delta--up"><i class="fa-solid fa-arrow-trend-up"></i> Last 30 days</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Tenants + System Status -->
+      <div class="dashboard-grid">
+
+        <!-- Recent Tenants Table -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Recent Tenants</h3>
+            <a href="tenants.html" class="btn btn-ghost btn-sm">View All <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Store Name</th>
+                  <th>Plan</th>
+                  <th>Status</th>
+                  <th>Reg. Date</th>
+                  <th>Monthly Rev</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Perera Mart</strong></td>
+                  <td><span class="plan-badge plan-pro">Pro</span></td>
+                  <td><span class="status-pill status-active"><span class="status-dot dot-green"></span>Active</span></td>
+                  <td>Jan 12, 2026</td>
+                  <td>₨48,500</td>
+                </tr>
+                <tr>
+                  <td><strong>Silva Superstore</strong></td>
+                  <td><span class="plan-badge plan-enterprise">Enterprise</span></td>
+                  <td><span class="status-pill status-active"><span class="status-dot dot-green"></span>Active</span></td>
+                  <td>Dec 28, 2025</td>
+                  <td>₨124,000</td>
+                </tr>
+                <tr>
+                  <td><strong>Kandy Grocery</strong></td>
+                  <td><span class="plan-badge plan-starter">Starter</span></td>
+                  <td><span class="status-pill status-trial"><span class="status-dot dot-orange"></span>Trial</span></td>
+                  <td>Feb 14, 2026</td>
+                  <td>₨8,200</td>
+                </tr>
+                <tr>
+                  <td><strong>Galle Fresh</strong></td>
+                  <td><span class="plan-badge plan-free">Free</span></td>
+                  <td><span class="status-pill status-active"><span class="status-dot dot-green"></span>Active</span></td>
+                  <td>Feb 20, 2026</td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <td><strong>Colombo Wholesale</strong></td>
+                  <td><span class="plan-badge plan-pro">Pro</span></td>
+                  <td><span class="status-pill status-suspended"><span class="status-dot dot-red"></span>Suspended</span></td>
+                  <td>Nov 5, 2025</td>
+                  <td>₨52,000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- System Status -->
+        <div class="system-status-panel">
+          <div class="card-header">
+            <h3 class="card-title">System Status</h3>
+            <span class="text-muted" style="font-size:var(--text-xs)">Updated just now</span>
+          </div>
+          <div class="status-cards">
+            <div class="sys-status-card">
+              <div class="sys-status-icon sys-status-icon--green"><i class="fa-solid fa-network-wired"></i></div>
+              <div class="sys-status-body">
+                <span class="sys-status-label">API Gateway</span>
+                <span class="sys-status-state state-green">Operational</span>
+              </div>
+              <span class="status-dot dot-green"></span>
+            </div>
+            <div class="sys-status-card">
+              <div class="sys-status-icon sys-status-icon--green"><i class="fa-solid fa-database"></i></div>
+              <div class="sys-status-body">
+                <span class="sys-status-label">DB Cluster</span>
+                <span class="sys-status-state state-green">Operational</span>
+              </div>
+              <span class="status-dot dot-green"></span>
+            </div>
+            <div class="sys-status-card">
+              <div class="sys-status-icon sys-status-icon--orange"><i class="fa-solid fa-gears"></i></div>
+              <div class="sys-status-body">
+                <span class="sys-status-label">Background Jobs</span>
+                <span class="sys-status-state state-orange">Degraded</span>
+              </div>
+              <span class="status-dot dot-orange"></span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.dashboard-grid -->
+    </main>
+  </div><!-- /.main-wrapper -->
+</div><!-- /.app-shell -->
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<script src="../assets/js/layout.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Logs & Audit | LCC Super Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"/>
+  <link rel="stylesheet" href="../assets/css/variables.css"/>
+  <link rel="stylesheet" href="../assets/css/base.css"/>
+  <link rel="stylesheet" href="../assets/css/components.css"/>
+  <link rel="stylesheet" href="../assets/css/layout.css"/>
+  <link rel="stylesheet" href="logs.css"/>
+  <link rel="stylesheet" href="admin.css"/>
+</head>
+<body>
+<div class="app-shell">
+    <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <div class="sidebar-brand-text">
+        <span class="brand-name">LCC</span>
+        <span class="brand-tagline">Admin Panel</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-title">Overview</span>
+        <a href="index.html" class="nav-item" data-tooltip="Dashboard">
+          <span class="nav-item-icon"><i class="fa-solid fa-gauge-high"></i></span>
+          <span class="nav-item-text">Dashboard</span>
+        </a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Management</span>
+        <a href="tenants.html" class="nav-item" data-tooltip="Tenants">
+          <span class="nav-item-icon"><i class="fa-solid fa-store"></i></span>
+          <span class="nav-item-text">Tenants / Stores</span>
+        </a>
+        <a href="users.html" class="nav-item" data-tooltip="Users">
+          <span class="nav-item-icon"><i class="fa-solid fa-users"></i></span>
+          <span class="nav-item-text">Users</span>
+        </a>
+        <a href="billing.html" class="nav-item" data-tooltip="Billing">
+          <span class="nav-item-icon"><i class="fa-solid fa-credit-card"></i></span>
+          <span class="nav-item-text">Billing &amp; Plans</span>
+        </a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">System</span>
+        <a href="health.html" class="nav-item" data-tooltip="Health">
+          <span class="nav-item-icon"><i class="fa-solid fa-heart-pulse"></i></span>
+          <span class="nav-item-text">System Health</span>
+        </a>
+        <a href="logs.html" class="nav-item active" data-tooltip="Logs">
+          <span class="nav-item-icon"><i class="fa-solid fa-file-lines"></i></span>
+          <span class="nav-item-text">Logs &amp; Audit</span>
+        </a>
+        <a href="settings.html" class="nav-item" data-tooltip="Settings">
+          <span class="nav-item-icon"><i class="fa-solid fa-sliders"></i></span>
+          <span class="nav-item-text">Platform Settings</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="../auth/login.html" class="nav-item signout-link" id="signOutBtn" data-tooltip="Sign Out">
+        <span class="nav-item-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+        <span class="nav-item-text">Sign Out</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="top-bar">
+      <button class="sidebar-toggle" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
+      <div class="top-bar-left"><span class="page-title">Logs &amp; Audit</span></div>
+      <div class="top-bar-right">
+        <div class="admin-profile">
+          <div class="admin-avatar">SA</div>
+          <div class="admin-info"><span class="admin-name">Super Admin</span><span class="admin-email">admin@lcc.lk</span></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-heading">Logs &amp; Audit Trail</h1>
+          <p class="page-sub">Monitor system events, errors, and user activity</p>
+        </div>
+        <button class="btn btn-primary"><i class="fa-solid fa-download"></i> Export Logs</button>
+      </div>
+
+      <div class="filter-bar card">
+        <div class="filter-row">
+          <div class="filter-group">
+            <label>From</label>
+            <input type="date" class="form-control" value="2026-03-01"/>
+          </div>
+          <div class="filter-group">
+            <label>To</label>
+            <input type="date" class="form-control" value="2026-03-03"/>
+          </div>
+          <div class="filter-group">
+            <label>Log Type</label>
+            <select class="form-control">
+              <option>All Types</option>
+              <option>Auth</option>
+              <option>Tenant</option>
+              <option>Billing</option>
+              <option>System</option>
+              <option>Error</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Level</label>
+            <select class="form-control">
+              <option>All Levels</option>
+              <option>Info</option>
+              <option>Warning</option>
+              <option>Error</option>
+              <option>Critical</option>
+            </select>
+          </div>
+          <div class="filter-group filter-search">
+            <label>Search</label>
+            <div class="search-wrap">
+              <i class="fa-solid fa-search"></i>
+              <input type="text" class="form-control" placeholder="Search logs..."/>
+            </div>
+          </div>
+          <button class="btn btn-secondary filter-btn"><i class="fa-solid fa-filter"></i> Apply</button>
+        </div>
+      </div>
+
+      <div class="card table-card">
+        <div class="table-header">
+          <span class="table-count">Showing <strong>10</strong> of 1,284 entries</span>
+          <div class="table-actions">
+            <button class="btn btn-ghost btn-sm"><i class="fa-solid fa-rotate"></i> Refresh</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Level</th>
+                <th>Type</th>
+                <th>User / Tenant</th>
+                <th>Message</th>
+                <th>IP Address</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mono">2026-03-03 14:52:10</td>
+                <td><span class="log-badge level-error">ERROR</span></td>
+                <td><span class="type-tag">System</span></td>
+                <td>—</td>
+                <td>Redis connection timeout after 30s retry</td>
+                <td class="mono">10.0.0.4</td>
+              </tr>
+              <tr>
+                <td class="mono">2026-03-03 14:48:03</td>
+                <td><span class="log-badge level-warn">WARN</span></td>
+                <td><span class="type-tag">Billing</span></td>
+                <td>fashionlk</td>
+                <td>Payment retry #2 for invoice INV-20441</td>
+                <td class="mono">203.94.12.7</td>
+              </tr>
+              <tr>
+                <td class="mono">2026-03-03 14:41:55</td>
+                <td><span class="log-badge level-info">INFO</span></td>
+                <td><span class="type-tag">Tenant</span></td>
+                <td>Admin / groceryhub</td>
+                <td>New tenant provisioned: schema groceryhub_lk created</td>
+                <td class="mono">45.120.88.2</td>
+              </tr>
+              <tr>
+                <td class="mono">2026-03-03 14:38:27</td>
+                <td><span class="log-badge level-info">INFO</span></td>
+                <td><span class="type-tag">Auth</span></td>
+                <td>nimal@siyatha.lk</td>
+                <td>Successful login from new device (Chrome/Windows)</td>
+                <td class="mono">112.134.55.9</td>
+              </tr>
+              <tr>
+                <td class="mono">2026-03-03 14:31:04</td>
+                <td><span class="log-badge level-critical">CRITICAL</span></td>
+                <td><span class="type-tag">System</span></td>
+                <td>—</td>
+                <td>Disk usage exceeded 90% on /var/data partition</td>
+                <td class="mono">10.0.0.1</td>
+              </tr>
+              <tr>
+                <td class="mono">2026-03-03 14:25:18</td>
+                <td><span class="log-badge level-warn">WARN</span></td>
+                <td><span class="type-tag">Auth</span></td>
+                <td>admin@teashop.lk</td>
+                <td>Failed login attempt #3 — account temporarily locked</td>
+                <td class="mono">197.22.44.10</td>
+              </tr>
+              <tr>
+                <td class="mono">2026-03-03 14:20:00</td>
+                <td><span class="log-badge level-info">INFO</span></td>
+                <td><span class="type-tag">Billing</span></td>
+                <td>electronicslk</td>
+                <td>Subscription upgraded from Starter to Growth plan</td>
+                <td class="mono">203.94.12.7</td>
+              </tr>
+              <tr>
+                <td class="mono">2026-03-03 14:12:47</td>
+                <td><span class="log-badge level-error">ERROR</span></td>
+                <td><span class="type-tag">Tenant</span></td>
+                <td>bakerycolmbo</td>
+                <td>Migration schema_v14 failed: column "barcode" already exists</td>
+                <td class="mono">10.0.0.3</td>
+              </tr>
+              <tr>
+                <td class="mono">2026-03-03 14:05:33</td>
+                <td><span class="log-badge level-info">INFO</span></td>
+                <td><span class="type-tag">System</span></td>
+                <td>—</td>
+                <td>Scheduled backup completed successfully (3.2 GB)</td>
+                <td class="mono">10.0.0.1</td>
+              </tr>
+              <tr>
+                <td class="mono">2026-03-03 13:58:12</td>
+                <td><span class="log-badge level-info">INFO</span></td>
+                <td><span class="type-tag">Auth</span></td>
+                <td>superadmin@lcc.lk</td>
+                <td>Super admin login — session started</td>
+                <td class="mono">45.120.88.2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footer">
+          <span class="page-info">Page 1 of 129</span>
+          <div class="pagination">
+            <button class="btn btn-ghost btn-sm" disabled><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="btn btn-primary btn-sm">1</button>
+            <button class="btn btn-ghost btn-sm">2</button>
+            <button class="btn btn-ghost btn-sm">3</button>
+            <button class="btn btn-ghost btn-sm"><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="../assets/js/layout.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
