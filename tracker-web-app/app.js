@@ -303,7 +303,7 @@ class UIManager {
         this.storage = new StorageManager(this.dataModel);
         this.groupFilesMap = this.createGroupFilesMap();
         this.promptConfig = {
-            template: 'Read the "Document-Series\\{{the-phase-folder-name}}\\{{sub-phase-folder-name}}\\{{group-folder-name}}\\{{task-file-name}}.md" document and implement its tasks.'
+            template: 'Think harder and do these and run flow.py again (python /e/My_GitHub_Repos/flow/flow.py):\n\n01. Good. Now, read the\n\n"Document-Series\\{{the-phase-folder-name}}\\{{sub-phase-folder-name}}\\{{group-folder-name}}\\{{task-file-name}}.md"\ndocument and implement its tasks for now. All the information and instructions will be there. After that, run flow.py again for my review.\n\nImportant: Update your to-do list for the listed tasks\nImportant: You must follow the currently implemented folder structure.\nImportant: You must use Subagents whenever necessary to manage the context window.\nImportant: Add the running flow.py task, especially to the tasks list\n\nVery Important: Do these and run flow.py again and wait for my review (python /e/My_GitHub_Repos/flow/flow.py).'
         };
         this.init();
         this.loadPromptConfig();
