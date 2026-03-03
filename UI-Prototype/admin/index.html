@@ -78,32 +78,15 @@
   <div class="main-wrapper" id="mainWrapper">
 
     <!-- Top Bar -->
-    <header class="top-bar">
-      <div class="top-bar-left">
-        <button class="btn btn-ghost btn-icon header-toggle-btn" id="sidebarToggle" title="Toggle Sidebar">
-          <i class="fa-solid fa-bars"></i>
-        </button>
-        <span class="top-bar-title">Platform Administration</span>
-      </div>
-      <div class="top-bar-right">
-        <button class="btn btn-ghost btn-icon" title="Notifications">
-          <i class="fa-solid fa-bell"></i>
-        </button>
-        <div class="top-bar-user">
-          <div class="avatar-circle">SA</div>
-          <span class="top-bar-username">Super Admin</span>
-        </div>
-      </div>
-    </header>
+    <header class="top-bar" id="adminTopBar" data-page-title="Platform Administration"></header>
 
     <!-- Main Content -->
     <main class="main-content">
       <div class="page-header">
         <div>
-          <h1 class="page-title">Platform Dashboard</h1>
           <p class="page-subtitle" id="pageDate">Loading...</p>
         </div>
-        <button class="btn btn-primary btn-sm">
+        <button class="btn btn-primary btn-sm" id="addTenantBtn" data-modal-open="addTenantModal">
           <i class="fa-solid fa-plus"></i> Add Tenant
         </button>
       </div>
@@ -244,9 +227,178 @@
   </div><!-- /.main-wrapper -->
 </div><!-- /.app-shell -->
 
+<!-- ============================================================
+     ADD TENANT MODAL
+     ============================================================ -->
+<div class="modal-overlay" id="addTenantModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <div class="modal-title-area">
+        <div class="modal-icon"><i class="fa-solid fa-store"></i></div>
+        <div>
+          <h2 class="modal-title" id="modalTitle">Add New Tenant</h2>
+          <p class="modal-subtitle">Register a new store / business on the platform</p>
+        </div>
+      </div>
+      <button class="modal-close-btn modal-close" id="closeAddTenantModal" title="Close" data-modal-close>
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+      <form id="addTenantForm" novalidate>
+
+        <!-- ── Section 1: Business Identity ── -->
+        <div class="form-section">
+          <h3 class="form-section-title">
+            <i class="fa-solid fa-building"></i> Business Identity
+          </h3>
+          <div class="form-grid-2">
+            <div class="form-group form-col-full">
+              <label class="form-label">Business Name <span class="req">*</span></label>
+              <input type="text" class="form-input" name="name" placeholder="e.g. Perera Mart" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Business Type <span class="req">*</span></label>
+              <select class="form-input" name="business_type" required>
+                <option value="">— Select Type —</option>
+                <option value="RETAIL">Retail</option>
+                <option value="WHOLESALE">Wholesale</option>
+                <option value="RESTAURANT">Restaurant</option>
+                <option value="PHARMACY">Pharmacy</option>
+                <option value="SUPERMARKET">Supermarket</option>
+                <option value="BOUTIQUE">Boutique</option>
+                <option value="ELECTRONICS">Electronics</option>
+                <option value="HARDWARE">Hardware</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Business Reg. Number</label>
+              <input type="text" class="form-input" name="business_reg" placeholder="SL BR number (optional)">
+            </div>
+            <div class="form-group">
+              <label class="form-label">VAT / Tax ID</label>
+              <input type="text" class="form-input" name="tax_id" placeholder="VAT Reg. No. (optional)">
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Section 2: Contact Details ── -->
+        <div class="form-section">
+          <h3 class="form-section-title">
+            <i class="fa-solid fa-address-card"></i> Contact Details
+          </h3>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Contact Email <span class="req">*</span></label>
+              <input type="email" class="form-input" name="contact_email" placeholder="owner@store.lk" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Contact Phone <span class="req">*</span></label>
+              <input type="tel" class="form-input" name="contact_phone" placeholder="+94 77 123 4567" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Section 3: Address ── -->
+        <div class="form-section">
+          <h3 class="form-section-title">
+            <i class="fa-solid fa-location-dot"></i> Address
+          </h3>
+          <div class="form-grid-2">
+            <div class="form-group form-col-full">
+              <label class="form-label">Address Line 1 <span class="req">*</span></label>
+              <input type="text" class="form-input" name="address_line1" placeholder="Street address" required>
+            </div>
+            <div class="form-group form-col-full">
+              <label class="form-label">Address Line 2</label>
+              <input type="text" class="form-input" name="address_line2" placeholder="Apartment, suite, floor, etc.">
+            </div>
+            <div class="form-group">
+              <label class="form-label">City <span class="req">*</span></label>
+              <input type="text" class="form-input" name="city" placeholder="e.g. Colombo" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Province <span class="req">*</span></label>
+              <select class="form-input" name="province" required>
+                <option value="">— Select Province —</option>
+                <option value="WP">Western Province</option>
+                <option value="CP">Central Province</option>
+                <option value="SP">Southern Province</option>
+                <option value="NP">Northern Province</option>
+                <option value="EP">Eastern Province</option>
+                <option value="NW">North Western Province</option>
+                <option value="NC">North Central Province</option>
+                <option value="UV">Uva Province</option>
+                <option value="SB">Sabaragamuwa Province</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Postal Code</label>
+              <input type="text" class="form-input" name="postal_code" placeholder="Optional">
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Section 4: Subscription ── -->
+        <div class="form-section">
+          <h3 class="form-section-title">
+            <i class="fa-solid fa-credit-card"></i> Subscription Plan
+          </h3>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Plan <span class="req">*</span></label>
+              <select class="form-input" name="plan" required>
+                <option value="FREE">Free — ₨0 / mo</option>
+                <option value="STARTER">Starter — ₨2,999 / mo</option>
+                <option value="PRO" selected>Pro — ₨9,999 / mo</option>
+                <option value="ENTERPRISE">Enterprise — ₨29,999 / mo</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Billing Cycle</label>
+              <select class="form-input" name="billing_cycle">
+                <option value="MONTHLY">Monthly</option>
+                <option value="ANNUAL">Annual (≈17% off)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Initial Status</label>
+              <select class="form-input" name="status">
+                <option value="TRIAL">Trial</option>
+                <option value="ACTIVE" selected>Active</option>
+              </select>
+            </div>
+          </div>
+          <!-- Plan feature hint -->
+          <div class="plan-hint" id="planHint">
+            <i class="fa-solid fa-circle-info"></i>
+            <span id="planHintText">Pro: up to 20 users, 10,000 products, 5 locations.</span>
+          </div>
+        </div>
+
+      </form>
+    </div><!-- /.modal-body -->
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+      <button type="button" class="btn btn-ghost" id="cancelAddTenant" data-modal-close>Cancel</button>
+      <button type="button" class="btn btn-primary" id="submitAddTenant">
+        <i class="fa-solid fa-plus"></i> Create Tenant
+      </button>
+    </div>
+
+  </div><!-- /.modal-dialog -->
+</div><!-- /#addTenantModal -->
+
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <script src="../assets/js/layout.js"></script>
-<script src="admin.js"></script>
+<script src="admin-header.js"></script>
+  <script src="admin.js"></script>
 </body>
 </html>

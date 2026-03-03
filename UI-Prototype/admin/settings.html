@@ -76,21 +76,11 @@
   </aside>
 
   <div class="main-wrapper">
-    <header class="top-bar">
-      <button class="sidebar-toggle" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
-      <div class="top-bar-left"><span class="page-title">Platform Settings</span></div>
-      <div class="top-bar-right">
-        <div class="admin-profile">
-          <div class="admin-avatar">SA</div>
-          <div class="admin-info"><span class="admin-name">Super Admin</span><span class="admin-email">admin@lcc.lk</span></div>
-        </div>
-      </div>
-    </header>
+    <header class="top-bar" id="adminTopBar" data-page-title="Platform Settings"></header>
 
     <main class="main-content">
       <div class="page-header">
         <div>
-          <h1 class="page-heading">Platform Settings</h1>
           <p class="page-sub">Configure global platform behaviour and defaults</p>
         </div>
       </div>
@@ -280,6 +270,7 @@
     });
   });
 </script>
+  <script src="admin-header.js"></script>
   <script src="admin.js"></script>
 </body>
 </html>

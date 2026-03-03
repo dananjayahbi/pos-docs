@@ -78,25 +78,11 @@
   </aside>
 
   <div class="main-wrapper">
-    <header class="top-bar">
-      <div class="top-bar-left">
-        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fa-solid fa-bars"></i></button>
-        <div class="breadcrumb">
-          <span class="breadcrumb-item">Admin</span>
-          <i class="fa-solid fa-chevron-right breadcrumb-sep"></i>
-          <span class="breadcrumb-item active">Platform Users</span>
-        </div>
-      </div>
-      <div class="top-bar-right">
-        <button class="icon-btn" title="Notifications"><i class="fa-solid fa-bell"></i><span class="badge-dot"></span></button>
-        <div class="admin-avatar">SA</div>
-      </div>
-    </header>
+    <header class="top-bar" id="adminTopBar" data-page-title="Platform Users"></header>
 
     <main class="main-content">
       <div class="page-header">
         <div class="page-header-left">
-          <h1 class="page-title">Platform Users</h1>
           <p class="page-subtitle">Manage super-admin, support, and billing users across LCC</p>
         </div>
         <div class="page-header-actions">
@@ -242,6 +228,7 @@
   </div>
 </div>
 <script src="../assets/js/layout.js"></script>
+  <script src="admin-header.js"></script>
   <script src="admin.js"></script>
 </body>
 </html>

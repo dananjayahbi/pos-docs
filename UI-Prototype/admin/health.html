@@ -76,19 +76,11 @@
   </aside>
 
   <div class="main-wrapper">
-    <header class="top-bar">
-      <button class="sidebar-toggle" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
-      <div class="top-bar-title">System Health</div>
-      <div class="top-bar-actions">
-        <button class="btn btn-sm btn-outline"><i class="fa-solid fa-rotate"></i> Refresh</button>
-        <div class="avatar-pill">SA</div>
-      </div>
-    </header>
+    <header class="top-bar" id="adminTopBar" data-page-title="System Health"></header>
 
     <main class="main-content">
       <div class="page-header">
         <div>
-          <h1 class="page-title">System Health</h1>
           <p class="page-subtitle">Real-time platform status and incident log</p>
         </div>
         <div class="status-timestamp"><i class="fa-regular fa-clock"></i> Last checked: just now</div>
@@ -276,6 +268,7 @@
   </div>
 </div>
 <script src="../assets/js/layout.js"></script>
+  <script src="admin-header.js"></script>
   <script src="admin.js"></script>
 </body>
 </html>

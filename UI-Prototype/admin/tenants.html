@@ -78,25 +78,11 @@
   </aside>
 
   <div class="main-wrapper">
-    <header class="top-bar">
-      <div class="top-bar-left">
-        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fa-solid fa-bars"></i></button>
-        <div class="breadcrumb">
-          <span class="breadcrumb-item">Admin</span>
-          <i class="fa-solid fa-chevron-right breadcrumb-sep"></i>
-          <span class="breadcrumb-item active">Tenants / Stores</span>
-        </div>
-      </div>
-      <div class="top-bar-right">
-        <button class="icon-btn" title="Notifications"><i class="fa-solid fa-bell"></i><span class="badge-dot"></span></button>
-        <div class="admin-avatar">SA</div>
-      </div>
-    </header>
+    <header class="top-bar" id="adminTopBar" data-page-title="Tenants / Stores"></header>
 
     <main class="main-content">
       <div class="page-header">
         <div class="page-header-left">
-          <h1 class="page-title">Tenants / Stores</h1>
           <p class="page-subtitle">Manage all registered tenant stores on the platform</p>
         </div>
         <div class="page-header-actions">
@@ -273,6 +259,7 @@
   </div>
 </div>
 <script src="../assets/js/layout.js"></script>
+  <script src="admin-header.js"></script>
   <script src="admin.js"></script>
 </body>
 </html>
