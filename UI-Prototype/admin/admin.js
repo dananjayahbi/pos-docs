@@ -119,6 +119,28 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector(".notif-count-pill")?.remove();
       return;
     }
+    // Individual item dismiss (×)
+    const dismissBtn = e.target.closest(".notif-dismiss");
+    if (dismissBtn) {
+      e.stopPropagation();
+      const item = dismissBtn.closest(".notif-item");
+      if (item) {
+        item.style.transition = "opacity .15s ease, max-height .2s ease";
+        item.style.overflow = "hidden";
+        item.style.opacity = "0";
+        item.style.maxHeight = item.offsetHeight + "px";
+        requestAnimationFrame(() => { item.style.maxHeight = "0"; });
+        setTimeout(() => {
+          item.remove();
+          updateBadge();
+          const { list } = getNotifEls();
+          if (list && !list.querySelector(".notif-item")) {
+            list.innerHTML = '<div class="notif-empty"><i class="fa-regular fa-bell-slash fa-lg"></i><br>No notifications</div>';
+          }
+        }, 200);
+      }
+      return;
+    }
     // Single item mark read
     const item = e.target.closest(".notif-item");
     if (item) {
@@ -253,6 +275,104 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.disabled  = false;
       submitBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Create Tenant';
     }, 900);
+  });
+
+  // ── TABLE SCROLL ARROWS (left & right) ──
+  // Right arrow: appears near right edge, scrolls right.
+  // Left arrow : appears near left edge, scrolls left.
+  // Both: track cursor Y, show only when scroll is possible in that direction.
+  // Single tap = 80px; click-and-hold = continuous 4px/frame drift.
+  const RIGHT_ZONE_PX = 90;
+  const LEFT_ZONE_PX  = 90;
+
+  function makeScrollBtn(card, wrapper, dir) {
+    // dir: 'right' | 'left'
+    const isRight = dir === 'right';
+
+    const btn = document.createElement('button');
+    btn.className = isRight ? 'table-scroll-btn' : 'table-scroll-btn-left';
+    btn.title = isRight ? 'Scroll right' : 'Scroll left';
+    btn.innerHTML = isRight
+      ? '<i class="fa-solid fa-chevron-right"></i>'
+      : '<i class="fa-solid fa-chevron-left"></i>';
+    card.appendChild(btn);
+
+    const canScroll = () => isRight
+      ? wrapper.scrollLeft + wrapper.clientWidth < wrapper.scrollWidth - 4
+      : wrapper.scrollLeft > 4;
+
+    // Cursor zone check helper (called from shared mousemove on card)
+    btn._checkZone = (e) => {
+      const rect = card.getBoundingClientRect();
+      const xFromEdge = isRight
+        ? rect.width - (e.clientX - rect.left)
+        : (e.clientX - rect.left);
+      const yInCard = e.clientY - rect.top;
+
+      if (xFromEdge < (isRight ? RIGHT_ZONE_PX : LEFT_ZONE_PX) && canScroll()) {
+        btn.style.top = yInCard + 'px';
+        btn.classList.add('tscroll-visible');
+      } else {
+        btn.classList.remove('tscroll-visible');
+      }
+    };
+
+    // Hide when scroll hits the boundary
+    wrapper.addEventListener('scroll', () => {
+      if (!canScroll()) btn.classList.remove('tscroll-visible');
+    }, { passive: true });
+
+    // Click & hold logic
+    let rafId     = null;
+    let holdTimer = null;
+    let holding   = false;
+
+    const stop = () => {
+      clearTimeout(holdTimer);
+      holdTimer = null;
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+      holding = false;
+    };
+
+    const drift = () => {
+      if (!holding) return;
+      wrapper.scrollLeft += isRight ? 4 : -4;
+      if (canScroll()) {
+        rafId = requestAnimationFrame(drift);
+      } else {
+        btn.classList.remove('tscroll-visible');
+        stop();
+      }
+    };
+
+    btn.addEventListener('mousedown', e => {
+      e.preventDefault();
+      wrapper.scrollBy({ left: isRight ? 80 : -80, behavior: 'smooth' });
+      holdTimer = setTimeout(() => { holding = true; drift(); }, 350);
+    });
+    btn.addEventListener('mouseup',    stop);
+    btn.addEventListener('mouseleave', stop);
+  }
+
+  document.querySelectorAll('.table-card').forEach(card => {
+    const wrapper = card.querySelector('.table-wrapper, .table-wrap');
+    if (!wrapper) return;
+
+    makeScrollBtn(card, wrapper, 'right');
+    makeScrollBtn(card, wrapper, 'left');
+
+    // Single shared mousemove checks both buttons
+    card.addEventListener('mousemove', e => {
+      card.querySelectorAll('.table-scroll-btn, .table-scroll-btn-left').forEach(b => {
+        if (b._checkZone) b._checkZone(e);
+      });
+    }, { passive: true });
+
+    card.addEventListener('mouseleave', () => {
+      card.querySelectorAll('.table-scroll-btn, .table-scroll-btn-left').forEach(b => {
+        b.classList.remove('tscroll-visible');
+      });
+    });
   });
 
 });

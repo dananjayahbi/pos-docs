@@ -67,6 +67,9 @@
           <p class="notif-body">${n.body}</p>
           <span class="notif-time">${n.time}</span>
         </div>
+        <button class="notif-dismiss" title="Dismiss" aria-label="Dismiss notification">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       </div>`).join('');
 
     return `
