@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quotations — LankaCommerce Cloud</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="../../assets/css/variables.css" />
+  <link rel="stylesheet" href="../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../assets/css/components.css" />
+  <link rel="stylesheet" href="../../assets/css/layout.css" />
+  <link rel="stylesheet" href="../erp.css" />
+  <link rel="stylesheet" href="orders.css" />
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <div class="main-wrapper" id="mainWrapper">
+    <header class="top-bar" id="erpTopBar" data-page-title="Quotations"></header>
+
+    <div class="page-content">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Quotations</h1>
+          <p class="page-subtitle" id="pageSubtitle">Loading quotations…</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-outline btn-sm" onclick="exportQuotations()">
+            <i class="fa-solid fa-file-export"></i>
+            Export
+          </button>
+          <button class="btn btn-primary btn-sm" onclick="newQuotation()">
+            <i class="fa-solid fa-plus"></i>
+            New Quotation
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI Cards Grid -->
+      <div class="kpi-grid" id="kpiGrid">
+        <div class="kpi-card skeleton-card"><div class="skeleton" style="height:44px;width:44px;border-radius:12px;"></div><div class="skeleton" style="height:28px;width:110px;margin-top:0.75rem;"></div><div class="skeleton" style="height:16px;width:80px;margin-top:0.4rem;"></div></div>
+        <div class="kpi-card skeleton-card"><div class="skeleton" style="height:44px;width:44px;border-radius:12px;"></div><div class="skeleton" style="height:28px;width:110px;margin-top:0.75rem;"></div><div class="skeleton" style="height:16px;width:80px;margin-top:0.4rem;"></div></div>
+        <div class="kpi-card skeleton-card"><div class="skeleton" style="height:44px;width:44px;border-radius:12px;"></div><div class="skeleton" style="height:28px;width:110px;margin-top:0.75rem;"></div><div class="skeleton" style="height:16px;width:80px;margin-top:0.4rem;"></div></div>
+        <div class="kpi-card skeleton-card"><div class="skeleton" style="height:44px;width:44px;border-radius:12px;"></div><div class="skeleton" style="height:28px;width:110px;margin-top:0.75rem;"></div><div class="skeleton" style="height:16px;width:80px;margin-top:0.4rem;"></div></div>
+      </div>
+
+      <!-- Quotations Panel Card -->
+      <div class="quotations-panel-card" style="background:#fff;border:1px solid var(--color-neutral-200);border-radius:12px;overflow:hidden;margin-top:1.25rem;">
+
+        <!-- Status Tabs -->
+        <div class="order-tabs" id="statusTabs">
+          <div class="order-tab active" data-tab="all" onclick="switchTab('all')">All <span class="tab-count" id="tabCount-all">0</span></div>
+          <div class="order-tab" data-tab="sent" onclick="switchTab('sent')">Sent <span class="tab-count" id="tabCount-sent">0</span></div>
+          <div class="order-tab" data-tab="accepted" onclick="switchTab('accepted')">Accepted <span class="tab-count" id="tabCount-accepted">0</span></div>
+          <div class="order-tab" data-tab="rejected" onclick="switchTab('rejected')">Rejected <span class="tab-count" id="tabCount-rejected">0</span></div>
+          <div class="order-tab" data-tab="expired" onclick="switchTab('expired')">Expired <span class="tab-count" id="tabCount-expired">0</span></div>
+          <div class="order-tab" data-tab="draft" onclick="switchTab('draft')">Draft <span class="tab-count" id="tabCount-draft">0</span></div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="orders-toolbar">
+          <div class="toolbar-search">
+            <i class="fa-solid fa-search toolbar-search-icon"></i>
+            <input type="text" id="searchInput" placeholder="Search quote # or customer name…" oninput="handleSearch()" />
+          </div>
+          <button class="btn btn-xs btn-outline" onclick="clearFilters()" title="Clear filters">
+            <i class="fa-solid fa-xmark"></i> Clear
+          </button>
+        </div>
+
+        <!-- Table -->
+        <div class="orders-table-wrap">
+          <table class="orders-table" id="quotationsTable">
+            <thead>
+              <tr>
+                <th class="sortable" onclick="sortBy('id')">Quote # <i class="fa-solid fa-sort" style="font-size:0.65rem;color:var(--color-neutral-400);"></i></th>
+                <th>Customer</th>
+                <th class="sortable" onclick="sortBy('created')">Created <i class="fa-solid fa-sort" style="font-size:0.65rem;color:var(--color-neutral-400);"></i></th>
+                <th>Valid Until</th>
+                <th class="sortable" onclick="sortBy('total')">Total <i class="fa-solid fa-sort" style="font-size:0.65rem;color:var(--color-neutral-400);"></i></th>
+                <th>Status</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="quotationsTableBody">
+              <tr>
+                <td colspan="7" style="text-align:center;padding:3rem;">
+                  <i class="fa-solid fa-spinner fa-spin" style="font-size:1.5rem;color:var(--color-neutral-300);"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- Pagination -->
+          <div class="pagination-row">
+            <div id="paginationInfo">Showing 0 of 0 quotations</div>
+            <div class="pagination-btns" id="paginationBtns"></div>
+          </div>
+        </div>
+
+      </div><!-- /.quotations-panel-card -->
+
+    </div><!-- /.page-content -->
+  </div><!-- /.main-wrapper -->
+</div><!-- /.app-shell -->
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="../../assets/js/utils.js"></script>
+<script src="../../assets/js/layout.js"></script>
+<script src="../erp-header.js"></script>
+<script src="../erp.js"></script>
+<script src="../../assets/js/toast.js"></script>
+<script src="../new-order-modal.js"></script>
+<script src="quotations.js"></script>
+</body>
+</html>

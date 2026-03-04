@@ -74,6 +74,10 @@ let sortDir = 'desc';
 let selectedOrderIds = new Set();
 let currentDetailOrder = null;
 
+// Modal state
+let _cancelOrderId = null;
+let _editOrderId   = null;
+
 // New order state
 let newOrderItems = [];
 let newOrderCustomer = null;
@@ -495,7 +499,7 @@ function applyBulkStatus() {
     if (o) o.status = status;
   });
   updateTabCounts();
-  renderKPIChips();
+  renderKPICards();
   applyFilters();
   clearSelection();
   showToast('success', 'Bulk Update', `${selectedOrderIds.size || 'Selected'} orders updated to "${status}"`);
@@ -525,17 +529,363 @@ document.addEventListener('click', () => {
 });
 
 function cancelOrderPrompt(id) {
-  if (!confirm(`Cancel order ${id}? This cannot be undone.`)) return;
+  _cancelOrderId = id;
+  const order = allOrders.find(o => o.id === id);
+  document.getElementById('cancelModalSubtitle').textContent =
+    `Order ${id}${order ? ' · ' + order.customer_name : ''}`;
+  document.getElementById('cancelReason').value = '';
+  document.getElementById('cancelNote').value = '';
+  document.getElementById('cancelOrderModal').classList.add('open');
+}
+
+function closeCancelModal() {
+  document.getElementById('cancelOrderModal').classList.remove('open');
+  _cancelOrderId = null;
+}
+
+function confirmCancelOrder() {
+  if (!_cancelOrderId) return;
+  const id = _cancelOrderId;
   updateStoredOrder(id, { status: 'cancelled' });
   const o = allOrders.find(x => x.id === id);
   if (o) o.status = 'cancelled';
-  updateTabCounts(); renderKPIChips(); applyFilters();
-  showToast('success','Order Cancelled',`Order ${id} has been cancelled.`);
+  updateTabCounts(); renderKPICards(); applyFilters();
+  // Refresh slide-over if it's showing this order
+  if (currentDetailOrder?.id === id) {
+    currentDetailOrder.status = 'cancelled';
+    document.getElementById('detailStatusBadge').innerHTML = statusBadgeHtml('cancelled');
+    const sel = document.getElementById('detailStatusSelect');
+    if (sel) sel.value = 'cancelled';
+  }
+  closeCancelModal();
+  showToast('success', 'Order Cancelled', `Order ${id} has been cancelled.`);
 }
 
-function generateInvoice(id) { showToast('info','Invoice',`Generating invoice for ${id}…`); }
-function printOrderById(id)  { showToast('info','Print',`Preparing print for ${id}…`); }
-function editOrderById(id)   { showToast('info','Edit',`Opening editor for ${id}…`); }
+function generateInvoice(id) {
+  const order = allOrders.find(o => o.id === id);
+  if (!order) return;
+
+  const invoiceNum = 'INV-' + order.id.replace('ORD-', '');
+  const addr = order.shipping_address;
+  const addrHtml = addr
+    ? `${addr.line1 || ''}${addr.city ? ', ' + addr.city : ''}${addr.district ? ', ' + addr.district : ''}${addr.province ? ', ' + addr.province : ''}`
+    : '';
+
+  const itemsHtml = (order.items || []).map(item => `
+    <tr>
+      <td style="padding:0.625rem 0;border-bottom:1px solid var(--color-neutral-100);">
+        <div style="font-weight:500;color:var(--color-neutral-900);">${item.name}</div>
+        ${item.variant ? `<div style="font-size:0.75rem;color:var(--color-neutral-500);margin-top:1px;">${item.variant}</div>` : ''}
+      </td>
+      <td style="text-align:center;padding:0.625rem 0;border-bottom:1px solid var(--color-neutral-100);color:var(--color-neutral-600);">${item.qty}</td>
+      <td style="text-align:right;padding:0.625rem 0;border-bottom:1px solid var(--color-neutral-100);color:var(--color-neutral-600);">${fmtLKR(item.unit_price)}</td>
+      <td style="text-align:right;padding:0.625rem 0;border-bottom:1px solid var(--color-neutral-100);font-weight:600;color:var(--color-neutral-900);">${fmtLKR(item.line_total)}</td>
+    </tr>`).join('');
+
+  const statusBadge = statusBadgeHtml(order.status);
+  const payStatusColor = order.payment_status === 'paid' ? '#16a34a'
+    : order.payment_status === 'partially_paid' ? '#d97706' : '#6b7280';
+  const payStatusLabel = (order.payment_status || 'pending').replace(/_/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
+
+  document.getElementById('invoiceModalBody').innerHTML = `
+    <div id="invoicePrintArea" style="font-family:inherit;font-size:0.875rem;line-height:1.5;">
+
+      <!-- Header -->
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:1.25rem;margin-bottom:1.25rem;border-bottom:2px solid var(--color-neutral-200);">
+        <div>
+          <div style="font-size:1.5rem;font-weight:800;color:#f97316;line-height:1;">LankaCommerce</div>
+          <div style="font-size:0.8125rem;color:var(--color-neutral-500);margin-top:0.25rem;">Cloud ERP · Thennakoon Textiles Pvt Ltd</div>
+          <div style="font-size:0.8125rem;color:var(--color-neutral-500);">No. 42, Galle Road, Colombo 03, Sri Lanka</div>
+          <div style="font-size:0.8125rem;color:var(--color-neutral-500);">+94 11 234 5678 · billing@thennakoon.lk</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:1.125rem;font-weight:700;color:var(--color-neutral-300);letter-spacing:0.05em;">INVOICE</div>
+          <div style="font-size:1.125rem;font-weight:700;color:#1d4ed8;margin-top:0.125rem;">${invoiceNum}</div>
+          <div style="font-size:0.8125rem;color:var(--color-neutral-500);margin-top:0.25rem;">Order: <span style="font-weight:600;color:var(--color-neutral-700);">${order.id}</span></div>
+          <div style="font-size:0.8125rem;color:var(--color-neutral-500);">Date: <span style="font-weight:500;">${fmtDate(order.ordered_at)}</span></div>
+        </div>
+      </div>
+
+      <!-- Bill To + Order Info -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem;">
+        <div style="background:var(--color-neutral-50);border-radius:10px;padding:0.875rem 1rem;">
+          <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--color-neutral-400);margin-bottom:0.5rem;">Bill To</div>
+          <div style="font-weight:700;color:var(--color-neutral-900);font-size:0.9375rem;">${order.customer_name || '—'}</div>
+          <div style="color:var(--color-neutral-600);font-size:0.8125rem;">${order.customer_phone || ''}</div>
+          ${addrHtml ? `<div style="color:var(--color-neutral-600);font-size:0.8125rem;margin-top:0.25rem;">${addrHtml}</div>` : ''}
+        </div>
+        <div style="background:var(--color-neutral-50);border-radius:10px;padding:0.875rem 1rem;">
+          <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--color-neutral-400);margin-bottom:0.5rem;">Order Info</div>
+          <div style="display:flex;justify-content:space-between;font-size:0.8125rem;padding:0.1875rem 0;"><span style="color:var(--color-neutral-500);">Source</span><span style="font-weight:500;text-transform:capitalize;">${order.source || '—'}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.8125rem;padding:0.1875rem 0;"><span style="color:var(--color-neutral-500);">Fulfillment</span><span style="font-weight:500;text-transform:capitalize;">${order.fulfillment_type || '—'}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.8125rem;padding:0.1875rem 0;"><span style="color:var(--color-neutral-500);">Payment</span><span style="font-weight:500;text-transform:capitalize;">${(order.payment_method || '').replace(/_/g,' ')}</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.8125rem;padding:0.1875rem 0;"><span style="color:var(--color-neutral-500);">Status</span>${statusBadge}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.8125rem;padding:0.1875rem 0;"><span style="color:var(--color-neutral-500);">Payment Status</span><span style="font-weight:600;color:${payStatusColor};">${payStatusLabel}</span></div>
+        </div>
+      </div>
+
+      <!-- Items Table -->
+      <div style="margin-bottom:1.25rem;">
+        <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--color-neutral-400);margin-bottom:0.625rem;">Order Items</div>
+        <table style="width:100%;border-collapse:collapse;">
+          <thead>
+            <tr style="border-bottom:2px solid var(--color-neutral-200);">
+              <th style="text-align:left;font-size:0.75rem;font-weight:700;color:var(--color-neutral-500);padding:0.375rem 0;text-transform:uppercase;letter-spacing:0.04em;">Item</th>
+              <th style="text-align:center;font-size:0.75rem;font-weight:700;color:var(--color-neutral-500);padding:0.375rem 0;text-transform:uppercase;letter-spacing:0.04em;width:60px;">Qty</th>
+              <th style="text-align:right;font-size:0.75rem;font-weight:700;color:var(--color-neutral-500);padding:0.375rem 0;text-transform:uppercase;letter-spacing:0.04em;width:110px;">Unit Price</th>
+              <th style="text-align:right;font-size:0.75rem;font-weight:700;color:var(--color-neutral-500);padding:0.375rem 0;text-transform:uppercase;letter-spacing:0.04em;width:110px;">Total</th>
+            </tr>
+          </thead>
+          <tbody>${itemsHtml}</tbody>
+        </table>
+      </div>
+
+      <!-- Totals -->
+      <div style="display:flex;justify-content:flex-end;margin-bottom:1.25rem;">
+        <table style="width:240px;font-size:0.875rem;">
+          <tr><td style="padding:0.25rem 0;color:var(--color-neutral-500);">Subtotal</td><td style="text-align:right;padding:0.25rem 0;">${fmtLKR(order.subtotal)}</td></tr>
+          ${order.discount ? `<tr><td style="padding:0.25rem 0;color:#16a34a;">Discount</td><td style="text-align:right;padding:0.25rem 0;color:#16a34a;font-weight:600;">- ${fmtLKR(order.discount)}</td></tr>` : ''}
+          ${order.shipping ? `<tr><td style="padding:0.25rem 0;color:var(--color-neutral-500);">Shipping</td><td style="text-align:right;padding:0.25rem 0;">${fmtLKR(order.shipping)}</td></tr>` : ''}
+          ${order.tax ? `<tr><td style="padding:0.25rem 0;color:var(--color-neutral-500);">Tax (VAT)</td><td style="text-align:right;padding:0.25rem 0;">${fmtLKR(order.tax)}</td></tr>` : ''}
+          <tr style="border-top:2px solid var(--color-neutral-900);">
+            <td style="padding:0.625rem 0;font-weight:700;color:var(--color-neutral-900);font-size:0.9375rem;">Total</td>
+            <td style="text-align:right;padding:0.625rem 0;font-weight:800;font-size:1rem;color:#f97316;">${fmtLKR(order.total)}</td>
+          </tr>
+        </table>
+      </div>
+
+      ${order.notes ? `
+      <div style="padding:0.75rem 1rem;background:var(--color-neutral-50);border-left:3px solid var(--color-neutral-300);border-radius:0 6px 6px 0;font-size:0.8125rem;color:var(--color-neutral-600);">
+        <strong style="color:var(--color-neutral-700);">Notes:</strong> ${order.notes}
+      </div>` : ''}
+
+      <!-- Footer -->
+      <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--color-neutral-200);display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-size:0.75rem;color:var(--color-neutral-400);">Generated by LankaCommerce Cloud ERP</div>
+        <div style="font-size:0.75rem;color:var(--color-neutral-400);">Thank you for your business</div>
+      </div>
+
+    </div>
+  `;
+
+  document.getElementById('invoiceModal').classList.add('open');
+}
+
+function closeInvoiceModal() {
+  document.getElementById('invoiceModal').classList.remove('open');
+}
+
+function printInvoice() {
+  const content = document.getElementById('invoicePrintArea')?.innerHTML;
+  if (!content) return;
+  const w = window.open('', '_blank', 'width=820,height=960');
+  w.document.write(`<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Invoice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; padding: 2.5rem; max-width: 760px; margin: 0 auto; color: #111; }
+    table { border-collapse: collapse; }
+    @media print { body { padding: 1.5rem; } @page { margin: 1cm; } }
+  </style>
+</head>
+<body>${content}</body>
+</html>`);
+  w.document.close();
+  w.focus();
+  setTimeout(() => { w.print(); }, 600);
+}
+
+function downloadInvoice() {
+  showToast('info', 'PDF Download', 'PDF export integration coming soon.');
+}
+
+function printOrderById(id)  { showToast('info', 'Print', `Preparing print view for ${id}…`); }
+
+// ── Edit Order Modal ──────────────────────────────────────────────────────────
+
+function editOrderById(id) {
+  const order = allOrders.find(o => o.id === id);
+  if (!order) { showToast('error', 'Not Found', `Order ${id} not found.`); return; }
+  openEditOrderModal(order);
+}
+
+function openEditOrderModal(order) {
+  _editOrderId = order.id;
+  document.getElementById('editOrderModalSubtitle').textContent =
+    `${order.id} · ${order.customer_name || ''}`;
+
+  const hasCourier = order.fulfillment_type === 'delivery';
+
+  document.getElementById('editOrderModalBody').innerHTML = `
+    <!-- Status row -->
+    <div class="form-row" style="margin-bottom:1rem;">
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">Order Status</label>
+        <select class="form-select" id="editStatus">
+          ${Object.entries(ORDER_STATUS).map(([val, cfg]) =>
+            `<option value="${val}" ${order.status === val ? 'selected' : ''}>${cfg.label}</option>`
+          ).join('')}
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">Payment Status</label>
+        <select class="form-select" id="editPaymentStatus">
+          <option value="paid"           ${order.payment_status === 'paid'           ? 'selected' : ''}>Paid</option>
+          <option value="partially_paid" ${order.payment_status === 'partially_paid' ? 'selected' : ''}>Partially Paid</option>
+          <option value="pending"        ${order.payment_status === 'pending'        ? 'selected' : ''}>Pending</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Customer row -->
+    <div class="form-row" style="margin-bottom:1rem;">
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">Customer Name</label>
+        <input class="form-input" id="editCustomerName" value="${order.customer_name || ''}" placeholder="Full name" />
+      </div>
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">Customer Phone</label>
+        <input class="form-input" id="editCustomerPhone" value="${order.customer_phone || ''}" placeholder="+94 XX XXX XXXX" />
+      </div>
+    </div>
+
+    <!-- Fulfillment + Payment Method row -->
+    <div class="form-row" style="margin-bottom:1rem;">
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">Fulfillment Type</label>
+        <select class="form-select" id="editFulfillment" onchange="toggleCourierFields(this.value)">
+          <option value="delivery" ${order.fulfillment_type === 'delivery' ? 'selected' : ''}>Delivery</option>
+          <option value="pickup"   ${order.fulfillment_type === 'pickup'   ? 'selected' : ''}>Pickup</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">Payment Method</label>
+        <select class="form-select" id="editPaymentMethod">
+          ${['cash','card','payhere','bank_transfer','cod','credit'].map(m =>
+            `<option value="${m}" ${order.payment_method === m ? 'selected' : ''}>${m.replace(/_/g,' ').replace(/\b\w/g, c => c.toUpperCase())}</option>`
+          ).join('')}
+        </select>
+      </div>
+    </div>
+
+    <!-- Shipping address (delivery only) -->
+    ${order.shipping_address ? `
+    <div class="form-group" id="editAddrGroup" style="${order.fulfillment_type === 'pickup' ? 'display:none;' : ''}">
+      <label class="form-label">Shipping Address</label>
+      <input class="form-input" id="editAddrLine1" value="${order.shipping_address.line1 || ''}" placeholder="Street address" style="margin-bottom:0.5rem;" />
+      <div class="form-row">
+        <input class="form-input" id="editAddrCity" value="${order.shipping_address.city || ''}" placeholder="City" />
+        <input class="form-input" id="editAddrDistrict" value="${order.shipping_address.district || ''}" placeholder="District" />
+      </div>
+    </div>` : ''}
+
+    <!-- Courier fields (delivery only) -->
+    <div id="editCourierGroup" style="${!hasCourier || order.fulfillment_type === 'pickup' ? 'display:none;' : ''}">
+      <div class="form-row" style="margin-bottom:1rem;">
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Courier</label>
+          <input class="form-input" id="editCourier" value="${order.courier || ''}" placeholder="Koombiyo, RajaYana…" />
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Waybill Number</label>
+          <input class="form-input" id="editWaybill" value="${order.waybill_number || ''}" placeholder="Tracking number" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Financials row -->
+    <div class="form-row" style="margin-bottom:1rem;">
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">Discount (₨)</label>
+        <input class="form-input" id="editDiscount" type="number" min="0" value="${order.discount || 0}" />
+      </div>
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">Shipping Fee (₨)</label>
+        <input class="form-input" id="editShipping" type="number" min="0" value="${order.shipping || 0}" />
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="form-group" style="margin-bottom:0;">
+      <label class="form-label">Notes</label>
+      <textarea class="form-textarea" id="editNotes" rows="3" placeholder="Internal order notes…">${order.notes || ''}</textarea>
+    </div>
+  `;
+
+  document.getElementById('editOrderModal').classList.add('open');
+}
+
+function toggleCourierFields(fulfillment) {
+  const courierGroup = document.getElementById('editCourierGroup');
+  const addrGroup    = document.getElementById('editAddrGroup');
+  const isDelivery   = fulfillment === 'delivery';
+  if (courierGroup) courierGroup.style.display = isDelivery ? '' : 'none';
+  if (addrGroup)    addrGroup.style.display    = isDelivery ? '' : 'none';
+}
+
+function closeEditOrderModal() {
+  document.getElementById('editOrderModal').classList.remove('open');
+  _editOrderId = null;
+}
+
+function saveEditedOrder() {
+  if (!_editOrderId) return;
+  const id = _editOrderId;
+  const origin = allOrders.find(x => x.id === id);
+  if (!origin) return;
+
+  const updates = {
+    status:          document.getElementById('editStatus').value,
+    payment_status:  document.getElementById('editPaymentStatus').value,
+    customer_name:   document.getElementById('editCustomerName').value.trim(),
+    customer_phone:  document.getElementById('editCustomerPhone').value.trim(),
+    fulfillment_type:document.getElementById('editFulfillment').value,
+    payment_method:  document.getElementById('editPaymentMethod').value,
+    notes:           document.getElementById('editNotes').value.trim(),
+    discount:        parseFloat(document.getElementById('editDiscount').value) || 0,
+    shipping:        parseFloat(document.getElementById('editShipping').value) || 0,
+  };
+
+  // Recalculate total
+  updates.total = (origin.subtotal || 0) - updates.discount + updates.shipping + (origin.tax || 0);
+
+  // Shipping address
+  const addrLine1    = document.getElementById('editAddrLine1');
+  const addrCity     = document.getElementById('editAddrCity');
+  const addrDistrict = document.getElementById('editAddrDistrict');
+  if (addrLine1 && origin.shipping_address) {
+    updates.shipping_address = {
+      ...origin.shipping_address,
+      line1:    addrLine1.value.trim(),
+      city:     addrCity    ? addrCity.value.trim()     : origin.shipping_address.city,
+      district: addrDistrict ? addrDistrict.value.trim() : origin.shipping_address.district,
+    };
+  }
+
+  // Courier / waybill
+  const courierEl = document.getElementById('editCourier');
+  const waybillEl = document.getElementById('editWaybill');
+  if (courierEl) updates.courier        = courierEl.value.trim();
+  if (waybillEl) updates.waybill_number = waybillEl.value.trim();
+
+  // Persist
+  updateStoredOrder(id, updates);
+  Object.assign(origin, updates);
+
+  updateTabCounts(); renderKPICards(); applyFilters();
+  showToast('success', 'Order Updated', `Order ${id} has been saved.`);
+
+  // Refresh slide-over if currently showing this order
+  if (currentDetailOrder?.id === id) openDetail(allOrders.find(x => x.id === id));
+
+  closeEditOrderModal();
+}
 
 // ── Row Click ─────────────────────────────────────────────────────────────────
 
@@ -724,11 +1074,14 @@ function updateOrderStatus() {
   document.getElementById('detailStatusBadge').innerHTML = statusBadgeHtml(newStatus);
   const o = allOrders.find(x => x.id === currentDetailOrder.id);
   if (o) o.status = newStatus;
-  updateTabCounts(); renderKPIChips(); applyFilters();
+  updateTabCounts(); renderKPICards(); applyFilters();
   showToast('success','Status Updated',`Order ${currentDetailOrder.id} → ${newStatus}`);
 }
 
-function editCurrentOrder() { showToast('info','Edit',`Opening full editor for ${currentDetailOrder?.id}…`); }
+function editCurrentOrder() {
+  if (!currentDetailOrder) return;
+  openEditOrderModal(currentDetailOrder);
+}
 function printOrder()       { showToast('info','Print',`Preparing print for ${currentDetailOrder?.id}…`); }
 
 function saveNotes() {
@@ -757,7 +1110,7 @@ function persistNewOrder(order) {
   allOrders.unshift(order);
   updateStoredOrder(order.id, order);
   updateTabCounts();
-  renderKPIChips();
+  renderKPICards();
   applyFilters();
 }
 

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoices — LankaCommerce Cloud</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="../../assets/css/variables.css" />
+  <link rel="stylesheet" href="../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../assets/css/components.css" />
+  <link rel="stylesheet" href="../../assets/css/layout.css" />
+  <link rel="stylesheet" href="../erp.css" />
+  <link rel="stylesheet" href="orders.css" />
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <div class="main-wrapper" id="mainWrapper">
+    <header class="top-bar" id="erpTopBar" data-page-title="Invoices"></header>
+
+    <div class="page-content">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Invoices</h1>
+          <p class="page-subtitle" id="pageSubtitle">Loading invoices…</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-outline btn-sm" onclick="exportInvoices()">
+            <i class="fa-solid fa-file-export"></i>
+            Export
+          </button>
+          <button class="btn btn-primary btn-sm" onclick="openNewInvoiceModal()">
+            <i class="fa-solid fa-plus"></i>
+            New Invoice
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI Cards Grid -->
+      <div class="kpi-grid" id="kpiGrid">
+        <div class="kpi-card skeleton-card"><div class="skeleton" style="height:44px;width:44px;border-radius:12px;"></div><div class="skeleton" style="height:28px;width:110px;margin-top:0.75rem;"></div><div class="skeleton" style="height:16px;width:80px;margin-top:0.4rem;"></div></div>
+        <div class="kpi-card skeleton-card"><div class="skeleton" style="height:44px;width:44px;border-radius:12px;"></div><div class="skeleton" style="height:28px;width:110px;margin-top:0.75rem;"></div><div class="skeleton" style="height:16px;width:80px;margin-top:0.4rem;"></div></div>
+        <div class="kpi-card skeleton-card"><div class="skeleton" style="height:44px;width:44px;border-radius:12px;"></div><div class="skeleton" style="height:28px;width:110px;margin-top:0.75rem;"></div><div class="skeleton" style="height:16px;width:80px;margin-top:0.4rem;"></div></div>
+        <div class="kpi-card skeleton-card"><div class="skeleton" style="height:44px;width:44px;border-radius:12px;"></div><div class="skeleton" style="height:28px;width:110px;margin-top:0.75rem;"></div><div class="skeleton" style="height:16px;width:80px;margin-top:0.4rem;"></div></div>
+      </div>
+
+      <!-- Invoices Panel Card -->
+      <div class="invoices-panel-card" style="background:#fff;border:1px solid var(--color-neutral-200);border-radius:12px;overflow:hidden;margin-top:1.25rem;">
+
+        <!-- Status Tabs -->
+        <div class="order-tabs" id="statusTabs">
+          <div class="order-tab active" data-tab="all" onclick="switchTab('all')">All <span class="tab-count" id="tabCount-all">0</span></div>
+          <div class="order-tab" data-tab="paid" onclick="switchTab('paid')">Paid <span class="tab-count" id="tabCount-paid">0</span></div>
+          <div class="order-tab" data-tab="issued" onclick="switchTab('issued')">Issued <span class="tab-count" id="tabCount-issued">0</span></div>
+          <div class="order-tab" data-tab="overdue" onclick="switchTab('overdue')">Overdue <span class="tab-count" id="tabCount-overdue">0</span></div>
+          <div class="order-tab" data-tab="draft" onclick="switchTab('draft')">Draft <span class="tab-count" id="tabCount-draft">0</span></div>
+          <div class="order-tab" data-tab="cancelled" onclick="switchTab('cancelled')">Cancelled <span class="tab-count" id="tabCount-cancelled">0</span></div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="orders-toolbar">
+          <div class="toolbar-search">
+            <i class="fa-solid fa-search toolbar-search-icon"></i>
+            <input type="text" id="searchInput" placeholder="Search invoice # or customer name…" oninput="handleSearch()" />
+          </div>
+          <button class="btn btn-xs btn-outline" onclick="clearFilters()" title="Clear filters">
+            <i class="fa-solid fa-xmark"></i> Clear
+          </button>
+        </div>
+
+        <!-- Table -->
+        <div class="orders-table-wrap">
+          <table class="orders-table" id="invoicesTable">
+            <thead>
+              <tr>
+                <th class="sortable" onclick="sortBy('id')">Invoice # <i class="fa-solid fa-sort" style="font-size:0.65rem;color:var(--color-neutral-400);"></i></th>
+                <th>Customer</th>
+                <th>Order Ref</th>
+                <th class="sortable" onclick="sortBy('issued')">Issued <i class="fa-solid fa-sort" style="font-size:0.65rem;color:var(--color-neutral-400);"></i></th>
+                <th>Due Date</th>
+                <th class="sortable" onclick="sortBy('total')">Total <i class="fa-solid fa-sort" style="font-size:0.65rem;color:var(--color-neutral-400);"></i></th>
+                <th>Balance Due</th>
+                <th>Status</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="invoicesTableBody">
+              <tr>
+                <td colspan="9" style="text-align:center;padding:3rem;">
+                  <i class="fa-solid fa-spinner fa-spin" style="font-size:1.5rem;color:var(--color-neutral-300);"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- Pagination -->
+          <div class="pagination-row">
+            <div id="paginationInfo">Showing 0 of 0 invoices</div>
+            <div class="pagination-btns" id="paginationBtns"></div>
+          </div>
+        </div>
+
+      </div><!-- /.invoices-panel-card -->
+
+    </div><!-- /.page-content -->
+  </div><!-- /.main-wrapper -->
+</div><!-- /.app-shell -->
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ── View Invoice Modal ─────────────────────────────────────────────────── -->
+<div class="modal-backdrop" id="viewInvoiceModal">
+  <div class="modal-box" style="max-width:760px;">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title"><i class="fa-solid fa-eye" style="color:#1d4ed8;margin-right:0.5rem;"></i>Invoice Details</div>
+        <div style="font-size:0.75rem;color:var(--color-neutral-400);margin-top:2px;" id="viewInvoiceSubtitle"></div>
+      </div>
+      <button class="modal-close" onclick="closeViewInvoiceModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body" id="viewInvoiceBody">
+      <!-- dynamically populated -->
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeViewInvoiceModal()">Close</button>
+      <button class="btn btn-outline" onclick="printInvoiceModal()"><i class="fa-solid fa-print"></i> Print</button>
+      <button class="btn btn-primary" onclick="downloadInvoicePDF()"><i class="fa-solid fa-download"></i> Download PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Record Payment Modal ───────────────────────────────────────────────── -->
+<div class="modal-backdrop" id="recordPaymentModal">
+  <div class="modal-box" style="max-width:540px;">
+    <div class="modal-header">
+      <div class="modal-title"><i class="fa-solid fa-credit-card" style="color:#16a34a;margin-right:0.5rem;"></i>Record Payment</div>
+      <button class="modal-close" onclick="closeRecordPaymentModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <!-- Invoice info row (read-only) -->
+      <div style="background:var(--color-neutral-50);border:1px solid var(--color-neutral-200);border-radius:8px;padding:0.875rem 1rem;margin-bottom:1.25rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.375rem;">
+          <span style="font-size:0.8125rem;color:var(--color-neutral-500);">Invoice</span>
+          <span style="font-size:0.8125rem;font-weight:700;color:var(--color-neutral-900);" id="rpInvoiceId">—</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.375rem;">
+          <span style="font-size:0.8125rem;color:var(--color-neutral-500);">Customer</span>
+          <span style="font-size:0.8125rem;font-weight:500;" id="rpCustomerName">—</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.375rem;">
+          <span style="font-size:0.8125rem;color:var(--color-neutral-500);">Invoice Total</span>
+          <span style="font-size:0.8125rem;font-weight:600;" id="rpInvoiceTotal">—</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--color-neutral-200);padding-top:0.375rem;margin-top:0.375rem;">
+          <span style="font-size:0.8125rem;font-weight:600;color:#d97706;">Balance Due</span>
+          <span style="font-size:1rem;font-weight:700;color:#d97706;" id="rpBalanceDue">—</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Amount to Pay (LKR) <span class="req">*</span></label>
+        <input type="number" class="form-input" id="rpAmount" min="1" placeholder="0.00" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Payment Method <span class="req">*</span></label>
+          <select class="form-select" id="rpMethod">
+            <option value="cash">Cash</option>
+            <option value="card_visa">Card (Visa)</option>
+            <option value="card_master">Card (Mastercard)</option>
+            <option value="bank_transfer">Bank Transfer</option>
+            <option value="mobile_frimi">Mobile (FriMi)</option>
+            <option value="cheque">Cheque</option>
+            <option value="store_credit">Store Credit</option>
+            <option value="split">Split Payment</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Payment Date <span class="req">*</span></label>
+          <input type="date" class="form-input" id="rpDate" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Receipt / Reference Number</label>
+        <input type="text" class="form-input" id="rpReceiptNumber" placeholder="e.g. TXN-12345 (optional)" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <textarea class="form-textarea" id="rpNotes" placeholder="Internal notes…" style="min-height:56px;"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeRecordPaymentModal()">Cancel</button>
+      <button class="btn btn-primary" style="background:#16a34a;border-color:#16a34a;" onclick="confirmRecordPayment()"><i class="fa-solid fa-check"></i> Record Payment</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Send Email Modal ───────────────────────────────────────────────────── -->
+<div class="modal-backdrop" id="sendEmailModal">
+  <div class="modal-box" style="max-width:540px;">
+    <div class="modal-header">
+      <div class="modal-title"><i class="fa-solid fa-envelope" style="color:#6b7280;margin-right:0.5rem;"></i>Send Invoice by Email</div>
+      <button class="modal-close" onclick="closeSendEmailModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">To <span class="req">*</span></label>
+        <input type="email" class="form-input" id="seToEmail" placeholder="customer@email.com" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">CC</label>
+        <input type="email" class="form-input" id="seCCEmail" placeholder="cc@email.com (optional)" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Subject <span class="req">*</span></label>
+        <input type="text" class="form-input" id="seSubject" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea class="form-textarea" id="seMessage" style="min-height:120px;"></textarea>
+      </div>
+      <div class="form-group">
+        <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.8125rem;font-weight:500;color:var(--color-neutral-700);cursor:pointer;">
+          <input type="checkbox" id="seAttachPDF" checked style="accent-color:#f97316;width:15px;height:15px;" />
+          Attach invoice as PDF
+        </label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeSendEmailModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmSendEmail()"><i class="fa-solid fa-paper-plane"></i> Send Email</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Cancel Invoice Modal ───────────────────────────────────────────────── -->
+<div class="modal-backdrop" id="cancelInvoiceModal">
+  <div class="modal-box" style="max-width:480px;">
+    <div class="modal-header">
+      <div class="modal-title" style="color:#dc2626;"><i class="fa-solid fa-ban" style="margin-right:0.5rem;"></i>Cancel Invoice</div>
+      <button class="modal-close" onclick="closeCancelInvoiceModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div style="background:#fee2e2;border:1px solid #fca5a5;border-radius:8px;padding:0.875rem 1rem;margin-bottom:1.25rem;">
+        <div style="font-weight:600;color:#dc2626;font-size:0.875rem;margin-bottom:0.25rem;"><i class="fa-solid fa-triangle-exclamation" style="margin-right:0.375rem;"></i>This action cannot be undone</div>
+        <div style="font-size:0.8125rem;color:#b91c1c;">Cancelling invoice <strong id="cancelInvoiceIdLabel">—</strong> will void it permanently. Any recorded payments will remain in the system.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Reason for Cancellation <span class="req">*</span></label>
+        <select class="form-select" id="cancelInvoiceReason">
+          <option value="">— Select reason —</option>
+          <option value="duplicate">Duplicate Invoice</option>
+          <option value="customer_request">Customer Request</option>
+          <option value="data_entry_error">Data Entry Error</option>
+          <option value="customer_cancelled">Customer Cancelled Order</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <textarea class="form-textarea" id="cancelInvoiceNotes" placeholder="Additional notes (optional)…" style="min-height:72px;"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeCancelInvoiceModal()">Keep Invoice</button>
+      <button class="btn btn-primary" style="background:#dc2626;border-color:#dc2626;" onclick="confirmCancelInvoice()"><i class="fa-solid fa-ban"></i> Confirm Cancellation</button>
+    </div>
+  </div>
+</div>
+
+<script src="../../assets/js/utils.js"></script>
+<script src="../../assets/js/layout.js"></script>
+<script src="../erp-header.js"></script>
+<script src="../erp.js"></script>
+<script src="../../assets/js/toast.js"></script>
+<script src="../new-order-modal.js"></script>
+<script src="../new-invoice-modal.js"></script>
+<script src="invoices.js"></script>
+</body>
+</html>

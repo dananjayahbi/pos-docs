@@ -33,6 +33,8 @@
   const PAGE_TITLES = {
     'dashboard.html':       'Dashboard',
     'orders.html':          'Sales Orders',
+    'invoices.html':        'Invoices',
+    'quotations.html':      'Quotations',
     'index.html':           'Overview',
     // Module-specific (matched by folder)
   };
@@ -98,8 +100,8 @@
       <div class="nav-section">
         <span class="nav-section-title">Commerce</span>
         ${item('sales/orders.html', 'fa-bag-shopping', 'Orders',           null, 'orders')}
-        ${item('sales/orders.html', 'fa-file-invoice',  'Invoices',          null, 'invoices')}
-        ${item('sales/orders.html', 'fa-file-lines',    'Quotations',        null, 'quotations')}
+        ${item('sales/invoices.html',   'fa-file-invoice', 'Invoices',   null, 'invoices')}
+        ${item('sales/quotations.html', 'fa-file-lines',  'Quotations', null, 'quotations')}
       </div>
 
       <div class="nav-section">
@@ -228,6 +230,8 @@
   const URL_NAV_RULES = [
     { test: function(p){ return p.endsWith('/dashboard.html'); },  key: 'dashboard'       },
     { test: function(p){ return p.endsWith('/orders.html');    },  key: 'orders'          },
+    { test: function(p){ return p.endsWith('/invoices.html');   },  key: 'invoices'        },
+    { test: function(p){ return p.endsWith('/quotations.html'); },  key: 'quotations'      },
     { test: function(p){ return /\/products\//i.test(p);     },  key: 'products'        },
     { test: function(p){ return /\/inventory\//i.test(p);    },  key: 'inventory'       },
     { test: function(p){ return /\/customers\//i.test(p);    },  key: 'customers'       },

@@ -1,0 +1,227 @@
+{
+  "quotations": [
+    {
+      "id": "QUO-2026-0001",
+      "customer_id": "CUS-003",
+      "customer_name": "Nimal Silva",
+      "customer_phone": "+94 71 456 7890",
+      "status": "sent",
+      "created_at": "2026-01-20T10:30:00",
+      "valid_until": "2026-02-20",
+      "items": [
+        { "name": "Black Trousers", "variant": "32 / Black", "qty": 2, "unit_price": 3500, "line_total": 7000 },
+        { "name": "Classic Polo Shirt", "variant": "M / White", "qty": 3, "unit_price": 2200, "line_total": 6600 }
+      ],
+      "subtotal": 13600,
+      "discount": 680,
+      "shipping": 0,
+      "tax": 0,
+      "total": 12920,
+      "notes": "Price valid for 30 days. Free delivery for orders above ₨ 10,000."
+    },
+    {
+      "id": "QUO-2026-0002",
+      "customer_id": "CUS-005",
+      "customer_name": "Randil Jayasuriya",
+      "customer_phone": "+94 78 345 6789",
+      "status": "sent",
+      "created_at": "2026-01-22T14:00:00",
+      "valid_until": "2026-02-22",
+      "items": [
+        { "name": "Corporate Polo Shirts (Branded)", "variant": "XL / Navy", "qty": 25, "unit_price": 2900, "line_total": 72500 }
+      ],
+      "subtotal": 72500,
+      "discount": 7250,
+      "shipping": 0,
+      "tax": 0,
+      "total": 65250,
+      "notes": "Corporate bulk pricing applied. Logo embroidery included. MOQ 25 units."
+    },
+    {
+      "id": "QUO-2026-0003",
+      "customer_id": "CUS-007",
+      "customer_name": "Sanduni Rathnayake",
+      "customer_phone": "+94 75 234 5670",
+      "status": "accepted",
+      "created_at": "2026-01-10T09:00:00",
+      "valid_until": "2026-02-10",
+      "items": [
+        { "name": "Ladies Formal Blazer", "variant": "S / Charcoal", "qty": 1, "unit_price": 14500, "line_total": 14500 },
+        { "name": "Pencil Skirt", "variant": "S / Black", "qty": 2, "unit_price": 4800, "line_total": 9600 }
+      ],
+      "subtotal": 24100,
+      "discount": 0,
+      "shipping": 350,
+      "tax": 0,
+      "total": 24450,
+      "notes": "Customer accepted. Convert to order when confirmed."
+    },
+    {
+      "id": "QUO-2026-0004",
+      "customer_id": "CUS-009",
+      "customer_name": "Malith Peiris",
+      "customer_phone": "+94 70 123 9876",
+      "status": "accepted",
+      "created_at": "2026-01-12T11:30:00",
+      "valid_until": "2026-02-12",
+      "items": [
+        { "name": "School Uniform Shirt", "variant": "Age 12 / White", "qty": 50, "unit_price": 850, "line_total": 42500 },
+        { "name": "School Uniform Trouser", "variant": "Age 12 / Grey", "qty": 50, "unit_price": 1100, "line_total": 55000 }
+      ],
+      "subtotal": 97500,
+      "discount": 9750,
+      "shipping": 0,
+      "tax": 0,
+      "total": 87750,
+      "notes": "Accepted — school procurement for new term. Delivery required by Feb 8."
+    },
+    {
+      "id": "QUO-2026-0005",
+      "customer_id": "CUS-011",
+      "customer_name": "Tharaka Dissanayake",
+      "customer_phone": "+94 74 567 2345",
+      "status": "rejected",
+      "created_at": "2026-01-05T10:00:00",
+      "valid_until": "2026-02-05",
+      "items": [
+        { "name": "Men's Leather Shoes", "variant": "43 / Brown", "qty": 10, "unit_price": 12000, "line_total": 120000 }
+      ],
+      "subtotal": 120000,
+      "discount": 12000,
+      "shipping": 0,
+      "tax": 0,
+      "total": 108000,
+      "notes": "Customer rejected — competitor offered lower price."
+    },
+    {
+      "id": "QUO-2026-0006",
+      "customer_id": "CUS-013",
+      "customer_name": "Roshan Kumara",
+      "customer_phone": "+94 76 345 6123",
+      "status": "rejected",
+      "created_at": "2025-12-28T09:30:00",
+      "valid_until": "2026-01-28",
+      "items": [
+        { "name": "Silk Saree Premium", "variant": "Multicolour / Gold Border", "qty": 5, "unit_price": 22000, "line_total": 110000 }
+      ],
+      "subtotal": 110000,
+      "discount": 0,
+      "shipping": 500,
+      "tax": 0,
+      "total": 110500,
+      "notes": "Rejected — budget constraints cited by customer."
+    },
+    {
+      "id": "QUO-2026-0007",
+      "customer_id": "CUS-004",
+      "customer_name": "Dilrukshi Fernando",
+      "customer_phone": "+94 76 887 2341",
+      "status": "expired",
+      "created_at": "2025-11-20T14:00:00",
+      "valid_until": "2025-12-20",
+      "items": [
+        { "name": "Cotton Kurti Set", "variant": "M / Green", "qty": 4, "unit_price": 4200, "line_total": 16800 },
+        { "name": "Palazzo Pants", "variant": "M / Coral", "qty": 4, "unit_price": 2800, "line_total": 11200 }
+      ],
+      "subtotal": 28000,
+      "discount": 1400,
+      "shipping": 0,
+      "tax": 0,
+      "total": 26600,
+      "notes": "Quote expired — customer did not respond in time."
+    },
+    {
+      "id": "QUO-2026-0008",
+      "customer_id": "CUS-014",
+      "customer_name": "Kavindi Mendis",
+      "customer_phone": "+94 78 901 2345",
+      "status": "expired",
+      "created_at": "2025-12-01T10:00:00",
+      "valid_until": "2025-12-31",
+      "items": [
+        { "name": "Party Dress Collection", "variant": "Assorted S/M", "qty": 3, "unit_price": 9500, "line_total": 28500 }
+      ],
+      "subtotal": 28500,
+      "discount": 0,
+      "shipping": 0,
+      "tax": 0,
+      "total": 28500,
+      "notes": "Expired — validity period passed without response."
+    },
+    {
+      "id": "QUO-2026-0009",
+      "customer_id": "CUS-006",
+      "customer_name": "Chamara Bandara",
+      "customer_phone": "+94 72 567 8901",
+      "status": "draft",
+      "created_at": "2026-01-28T16:00:00",
+      "valid_until": "2026-02-28",
+      "items": [
+        { "name": "Men's Business Shirt", "variant": "XL / Blue", "qty": 12, "unit_price": 3200, "line_total": 38400 }
+      ],
+      "subtotal": 38400,
+      "discount": 3840,
+      "shipping": 0,
+      "tax": 0,
+      "total": 34560,
+      "notes": "Draft — waiting for product price confirmation."
+    },
+    {
+      "id": "QUO-2026-0010",
+      "customer_id": "CUS-008",
+      "customer_name": "Priyanka Gunawardena",
+      "customer_phone": "+94 77 890 1234",
+      "status": "draft",
+      "created_at": "2026-01-29T10:00:00",
+      "valid_until": "2026-02-28",
+      "items": [
+        { "name": "Embroidered Saree", "variant": "Gold / Maroon", "qty": 2, "unit_price": 16500, "line_total": 33000 },
+        { "name": "Matching Blouse Cloth", "variant": "Maroon", "qty": 2, "unit_price": 3500, "line_total": 7000 }
+      ],
+      "subtotal": 40000,
+      "discount": 0,
+      "shipping": 500,
+      "tax": 0,
+      "total": 40500,
+      "notes": "Draft — needs review before sending to customer."
+    },
+    {
+      "id": "QUO-2026-0011",
+      "customer_id": "CUS-010",
+      "customer_name": "Ishara Wijesinghe",
+      "customer_phone": "+94 71 678 3456",
+      "status": "sent",
+      "created_at": "2026-01-24T11:00:00",
+      "valid_until": "2026-02-24",
+      "items": [
+        { "name": "Batik Shirt", "variant": "L / Multicolour", "qty": 8, "unit_price": 2600, "line_total": 20800 },
+        { "name": "Casual Shorts", "variant": "L / Khaki", "qty": 5, "unit_price": 1500, "line_total": 7500 }
+      ],
+      "subtotal": 28300,
+      "discount": 1415,
+      "shipping": 350,
+      "tax": 0,
+      "total": 27235,
+      "notes": "Sent via WhatsApp on 24 Jan."
+    },
+    {
+      "id": "QUO-2026-0012",
+      "customer_id": "CUS-012",
+      "customer_name": "Nadeeka Karunarathna",
+      "customer_phone": "+94 77 234 8901",
+      "status": "accepted",
+      "created_at": "2026-01-15T09:30:00",
+      "valid_until": "2026-02-15",
+      "items": [
+        { "name": "Ladies Casual Top", "variant": "M / Mint Green", "qty": 10, "unit_price": 1650, "line_total": 16500 },
+        { "name": "Denim Jeans", "variant": "28 / Blue", "qty": 5, "unit_price": 5200, "line_total": 26000 }
+      ],
+      "subtotal": 42500,
+      "discount": 4250,
+      "shipping": 0,
+      "tax": 0,
+      "total": 38250,
+      "notes": "Accepted — awaiting delivery address confirmation."
+    }
+  ]
+}
