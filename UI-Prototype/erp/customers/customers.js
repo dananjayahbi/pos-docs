@@ -3,7 +3,6 @@
 /* ════════════════════════════════════════════════════
    LANKACOMMERCE CLOUD — CUSTOMERS PAGE
    ════════════════════════════════════════════════════ */
-const { formatLKR, statusBadge, loadData, avatarInitials } = window.LCC || {};
 
 /* ─── Province → District map ─── */
 const PROVINCE_DISTRICTS = {

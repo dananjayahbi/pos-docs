@@ -1,6 +1,5 @@
 /* Page-specific scripts — orders.html */
 
-const { formatLKR, formatDate, timeAgo, loadData, avatarInitials } = window.LCC || {};
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -27,7 +26,7 @@ function initials(name) {
   return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
 }
 
-const STATUS_CONFIG = {
+const ORDER_STATUS = {
   pending:    { label: 'Pending',    cls: 'badge-pending',    icon: 'fa-clock' },
   confirmed:  { label: 'Confirmed',  cls: 'badge-confirmed',  icon: 'fa-circle-check' },
   processing: { label: 'Processing', cls: 'badge-processing', icon: 'fa-gear' },
@@ -52,7 +51,7 @@ const SOURCE_ICONS = {
 };
 
 function statusBadgeHtml(status) {
-  const s = STATUS_CONFIG[status] || { label: status, cls: 'badge-pending', icon: 'fa-circle' };
+  const s = ORDER_STATUS[status] || { label: status, cls: 'badge-pending', icon: 'fa-circle' };
   return `<span class="badge ${s.cls}">${s.label}</span>`;
 }
 
@@ -84,9 +83,9 @@ let newOrderCustomer = null;
 async function init() {
   try {
     const [ordersData, customersData, productsData] = await Promise.all([
-      loadData('../../data/orders.json'),
-      loadData('../../data/customers.json'),
-      loadData('../../data/products.json'),
+      loadData('data/orders.json'),
+      loadData('data/customers.json'),
+      loadData('data/products.json'),
     ]);
 
     // Merge with localStorage overrides
@@ -105,7 +104,7 @@ async function init() {
     allProducts  = productsData?.products  || [];
 
     updateTabCounts();
-    renderKPIChips();
+    renderKPICards();
     applyFilters();
     updateSubtitle();
 
@@ -134,57 +133,72 @@ async function init() {
   }
 }
 
-// ── KPI Chips ─────────────────────────────────────────────────────────────────
+// ── KPI Cards (dashboard-style) ───────────────────────────────────────────────
 
-function renderKPIChips() {
+function renderKPICards() {
   const now = new Date();
   const todayStr = now.toDateString();
   const weekAgo = new Date(now); weekAgo.setDate(now.getDate() - 7);
+  const monthAgo = new Date(now); monthAgo.setMonth(now.getMonth() - 1);
 
-  const todayOrders    = allOrders.filter(o => new Date(o.ordered_at).toDateString() === todayStr);
-  const weekOrders     = allOrders.filter(o => new Date(o.ordered_at) >= weekAgo);
-  const pendingOrders  = allOrders.filter(o => o.status === 'pending');
+  const todayOrders      = allOrders.filter(o => new Date(o.ordered_at).toDateString() === todayStr);
+  const weekOrders       = allOrders.filter(o => new Date(o.ordered_at) >= weekAgo);
+  const pendingOrders    = allOrders.filter(o => o.status === 'pending');
   const processingOrders = allOrders.filter(o => o.status === 'processing');
-  const cancelledOrders = allOrders.filter(o => o.status === 'cancelled');
+  const monthOrders      = allOrders.filter(o => new Date(o.ordered_at) >= monthAgo);
 
-  const todayTotal   = todayOrders.reduce((s, o) => s + (o.total || 0), 0);
-  const weekTotal    = weekOrders.reduce((s, o) => s + (o.total || 0), 0);
+  const todayRevenue   = todayOrders.reduce((s, o) => s + (o.total || 0), 0);
+  const monthRevenue   = monthOrders.reduce((s, o) => s + (o.total || 0), 0);
+  const weekRevenue    = weekOrders.reduce((s, o)  => s + (o.total || 0), 0);
+  const avgOrderValue  = allOrders.length ? (allOrders.reduce((s, o) => s + (o.total || 0), 0) / allOrders.length) : 0;
 
-  const chips = [
+  const cards = [
     {
-      icon: 'fa-solid fa-calendar-day', cls: 'orange',
-      value: todayOrders.length.toString(), sub: fmtLKR(todayTotal),
-      label: 'Today',
+      icon: 'fa-solid fa-money-bill-wave', iconClass: 'orange',
+      value: formatLKRShort(monthRevenue),
+      label: "Monthly Revenue",
+      sub: `${monthOrders.length} orders this month`,
+      change: fmtLKR(todayRevenue) + ' today',
+      changeType: 'up',
     },
     {
-      icon: 'fa-solid fa-calendar-week', cls: 'blue',
-      value: weekOrders.length.toString(), sub: fmtLKR(weekTotal),
-      label: 'This Week',
+      icon: 'fa-solid fa-bag-shopping', iconClass: 'blue',
+      value: allOrders.length.toString(),
+      label: 'Total Orders',
+      sub: 'All time',
+      change: weekOrders.length + ' this week',
+      changeType: 'up',
     },
     {
-      icon: 'fa-solid fa-clock', cls: 'amber',
-      value: pendingOrders.length.toString(), sub: 'Need action',
-      label: 'Pending',
+      icon: 'fa-solid fa-clock', iconClass: 'amber',
+      value: pendingOrders.length.toString(),
+      label: 'Pending Orders',
+      sub: 'Need attention',
+      change: processingOrders.length + ' processing',
+      changeType: pendingOrders.length > 5 ? 'down' : 'up',
     },
     {
-      icon: 'fa-solid fa-gear', cls: 'indigo',
-      value: processingOrders.length.toString(), sub: 'In progress',
-      label: 'Processing',
-    },
-    {
-      icon: 'fa-solid fa-ban', cls: 'red',
-      value: cancelledOrders.length.toString(), sub: 'Last 30 days',
-      label: 'Cancelled',
+      icon: 'fa-solid fa-chart-line', iconClass: 'green',
+      value: formatLKRShort(avgOrderValue),
+      label: 'Avg. Order Value',
+      sub: 'All time average',
+      change: formatLKRShort(weekRevenue / (weekOrders.length || 1)) + ' avg/week',
+      changeType: 'up',
     },
   ];
 
-  document.getElementById('kpiChips').innerHTML = chips.map(c => `
-    <div class="kpi-chip">
-      <div class="kpi-chip-icon ${c.cls}"><i class="${c.icon}"></i></div>
-      <div class="kpi-chip-info">
-        <div class="kpi-chip-value">${c.value}</div>
-        <div class="kpi-chip-label">${c.label}</div>
-        <div class="kpi-chip-sub">${c.sub}</div>
+  document.getElementById('kpiGrid').innerHTML = cards.map(c => `
+    <div class="kpi-card">
+      <div class="kpi-header">
+        <div class="kpi-icon ${c.iconClass}"><i class="${c.icon}"></i></div>
+        <span class="kpi-badge ${c.changeType}">${c.changeType === 'up'
+          ? '<i class="fa-solid fa-arrow-trend-up"></i>'
+          : '<i class="fa-solid fa-arrow-trend-down"></i>'} ${c.change}</span>
+      </div>
+      <div>
+        <div class="kpi-value">${c.value}</div>
+        <div class="kpi-label">${c.label}</div>
+        <div class="kpi-sub">${c.sub}</div>
       </div>
     </div>
   `).join('');
@@ -739,225 +753,6 @@ function updateStoredOrder(id, changes) {
 
 // ── New Order Modal ───────────────────────────────────────────────────────────
 
-function openNewOrderModal() {
-  newOrderItems = [];
-  newOrderCustomer = null;
-  document.getElementById('customerSearchInput').value = '';
-  document.getElementById('selectedCustomerId').value = '';
-  document.getElementById('selectedCustomerInfo').style.display = 'none';
-  document.getElementById('productSearchInput').value = '';
-  document.getElementById('productSuggestions').classList.remove('open');
-  document.getElementById('customerSuggestions').classList.remove('open');
-  document.getElementById('newOrderDiscount').value = '0';
-  document.getElementById('newOrderDelivery').value = '0';
-  document.getElementById('newOrderTaxEnabled').checked = false;
-  document.getElementById('newOrderNotes').value = '';
-  renderNewOrderItems();
-  recalcTotal();
-  document.getElementById('newOrderModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeNewOrderModal() {
-  document.getElementById('newOrderModal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-// Close modal on backdrop click
-document.getElementById('newOrderModal').addEventListener('click', function(e) {
-  if (e.target === this) closeNewOrderModal();
-});
-
-function searchCustomers(q) {
-  const sugg = document.getElementById('customerSuggestions');
-  if (!q.trim()) { sugg.classList.remove('open'); return; }
-  const matches = allCustomers.filter(c => {
-    const name = (c.first_name + ' ' + c.last_name).toLowerCase();
-    return name.includes(q.toLowerCase()) || (c.phone || '').includes(q);
-  }).slice(0, 6);
-
-  if (!matches.length) { sugg.classList.remove('open'); return; }
-
-  sugg.innerHTML = matches.map(c => `
-    <div class="cust-sugg-item" onclick="selectCustomer('${c.id}')">
-      <img class="cust-sugg-avatar" src="${c.avatar || ''}" alt="${c.first_name}" onerror="this.style.display='none'" />
-      <div>
-        <div class="cust-sugg-name">${c.first_name} ${c.last_name}</div>
-        <div class="cust-sugg-phone">${c.phone}</div>
-      </div>
-    </div>
-  `).join('');
-  sugg.classList.add('open');
-}
-
-function selectCustomer(id) {
-  const c = allCustomers.find(x => x.id === id);
-  if (!c) return;
-  newOrderCustomer = c;
-  document.getElementById('selectedCustomerId').value = id;
-  document.getElementById('customerSearchInput').value = c.first_name + ' ' + c.last_name;
-  document.getElementById('selectedCustomerName').textContent = c.first_name + ' ' + c.last_name;
-  document.getElementById('selectedCustomerPhone').textContent = c.phone;
-  document.getElementById('selectedCustomerInfo').style.display = 'block';
-  document.getElementById('customerSuggestions').classList.remove('open');
-}
-
-function searchProducts(q) {
-  const sugg = document.getElementById('productSuggestions');
-  if (!q.trim()) { sugg.classList.remove('open'); return; }
-  const matches = allProducts.filter(p => {
-    return p.name.toLowerCase().includes(q.toLowerCase()) ||
-      (p.sku || '').toLowerCase().includes(q.toLowerCase()) ||
-      (p.barcode || '').includes(q);
-  }).slice(0, 8);
-
-  if (!matches.length) { sugg.classList.remove('open'); return; }
-
-  sugg.innerHTML = matches.map(p => `
-    <div class="product-suggestion-item" onclick="addProductToOrder('${p.id}')">
-      <img class="sugg-img" src="${p.image || ''}" alt="${p.name}" onerror="this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=80&h=80&fit=crop'" />
-      <div>
-        <div class="sugg-name">${p.name}</div>
-        <div class="sugg-sku">${p.sku}</div>
-      </div>
-      <span class="sugg-price">${fmtLKR(p.sale_price || p.base_price)}</span>
-    </div>
-  `).join('');
-  sugg.classList.add('open');
-}
-
-function addProductToOrder(id) {
-  const prod = allProducts.find(p => p.id === id);
-  if (!prod) return;
-
-  const existing = newOrderItems.find(i => i.product_id === id);
-  if (existing) {
-    existing.qty++;
-    existing.line_total = existing.qty * existing.unit_price;
-  } else {
-    newOrderItems.push({
-      product_id: id,
-      name: prod.name,
-      sku: prod.sku,
-      image: prod.image,
-      unit_price: prod.sale_price || prod.base_price,
-      qty: 1,
-      line_total: prod.sale_price || prod.base_price,
-    });
-  }
-
-  document.getElementById('productSearchInput').value = '';
-  document.getElementById('productSuggestions').classList.remove('open');
-  renderNewOrderItems();
-  recalcTotal();
-}
-
-function removeNewOrderItem(idx) {
-  newOrderItems.splice(idx, 1);
-  renderNewOrderItems();
-  recalcTotal();
-}
-
-function updateNewOrderItemQty(idx, delta) {
-  newOrderItems[idx].qty = Math.max(1, newOrderItems[idx].qty + delta);
-  newOrderItems[idx].line_total = newOrderItems[idx].qty * newOrderItems[idx].unit_price;
-  renderNewOrderItems();
-  recalcTotal();
-}
-
-function setNewOrderItemQty(idx, val) {
-  const qty = Math.max(1, parseInt(val) || 1);
-  newOrderItems[idx].qty = qty;
-  newOrderItems[idx].line_total = qty * newOrderItems[idx].unit_price;
-  recalcTotal();
-}
-
-function renderNewOrderItems() {
-  const el = document.getElementById('newOrderItems');
-  if (!newOrderItems.length) {
-    el.innerHTML = `<div style="text-align:center;padding:1.5rem;color:var(--color-neutral-400);font-size:0.8125rem;border:1px dashed var(--color-neutral-200);border-radius:8px;">Search and add products above</div>`;
-    return;
-  }
-
-  el.innerHTML = newOrderItems.map((item, i) => `
-    <div class="new-order-item">
-      <img class="sugg-img" src="${item.image || ''}" alt="${item.name}" onerror="this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=80&h=80&fit=crop'" />
-      <div class="new-order-item-name">
-        <div>${item.name}</div>
-        <div class="new-order-item-sku">${item.sku} · ${fmtLKR(item.unit_price)} each</div>
-      </div>
-      <div class="qty-control">
-        <button class="qty-btn" onclick="updateNewOrderItemQty(${i}, -1)"><i class="fa-solid fa-minus"></i></button>
-        <input type="number" class="qty-input" value="${item.qty}" min="1" onchange="setNewOrderItemQty(${i}, this.value)" />
-        <button class="qty-btn" onclick="updateNewOrderItemQty(${i}, 1)"><i class="fa-solid fa-plus"></i></button>
-      </div>
-      <div style="font-weight:700;font-size:0.8125rem;min-width:72px;text-align:right;">${fmtLKR(item.line_total)}</div>
-      <button class="remove-item-btn" onclick="removeNewOrderItem(${i})" title="Remove"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-  `).join('');
-}
-
-function recalcTotal() {
-  const subtotal  = newOrderItems.reduce((s, i) => s + i.line_total, 0);
-  const discount  = parseFloat(document.getElementById('newOrderDiscount')?.value || 0);
-  const delivery  = parseFloat(document.getElementById('newOrderDelivery')?.value || 0);
-  const taxEnabled = document.getElementById('newOrderTaxEnabled')?.checked;
-  const taxRate   = taxEnabled ? 0.18 : 0;
-  const taxAmt    = (subtotal - discount) * taxRate;
-  const total     = subtotal - discount + taxAmt + delivery;
-
-  document.getElementById('sumSubtotal').textContent = fmtLKR(subtotal);
-  document.getElementById('sumDiscount').textContent = `– ${fmtLKR(discount)}`;
-  document.getElementById('sumTax').textContent      = fmtLKR(taxAmt);
-  document.getElementById('sumDelivery').textContent = fmtLKR(delivery);
-  document.getElementById('sumTotal').textContent    = fmtLKR(total);
-}
-
-function buildNewOrder(status) {
-  if (!newOrderCustomer) { showToast('warning','Customer Required','Please select a customer.'); return null; }
-  if (!newOrderItems.length) { showToast('warning','Items Required','Please add at least one product.'); return null; }
-
-  const subtotal  = newOrderItems.reduce((s, i) => s + i.line_total, 0);
-  const discount  = parseFloat(document.getElementById('newOrderDiscount').value || 0);
-  const delivery  = parseFloat(document.getElementById('newOrderDelivery').value || 0);
-  const taxEnabled = document.getElementById('newOrderTaxEnabled').checked;
-  const taxAmt    = taxEnabled ? (subtotal - discount) * 0.18 : 0;
-  const total     = subtotal - discount + taxAmt + delivery;
-
-  const id = 'ORD-' + new Date().getFullYear() + '-' + String(allOrders.length + 100).padStart(4, '0');
-  return {
-    id,
-    customer_id:     newOrderCustomer.id,
-    customer_name:   newOrderCustomer.first_name + ' ' + newOrderCustomer.last_name,
-    customer_phone:  newOrderCustomer.phone,
-    source:          document.getElementById('newOrderSource').value,
-    status,
-    items:           newOrderItems.map(i => ({ ...i })),
-    subtotal, discount, shipping: delivery, tax: taxAmt, total,
-    payment_method:  document.getElementById('newOrderPayMethod').value,
-    payment_status:  'pending',
-    ordered_at:      new Date().toISOString(),
-    confirmed_at:    status === 'confirmed' ? new Date().toISOString() : null,
-    notes:           document.getElementById('newOrderNotes').value,
-  };
-}
-
-function saveOrderAsDraft() {
-  const order = buildNewOrder('pending');
-  if (!order) return;
-  persistNewOrder(order);
-  closeNewOrderModal();
-  showToast('success','Draft Saved',`Order ${order.id} saved as draft.`);
-}
-
-function confirmNewOrder() {
-  const order = buildNewOrder('confirmed');
-  if (!order) return;
-  persistNewOrder(order);
-  closeNewOrderModal();
-  showToast('success','Order Confirmed',`Order ${order.id} has been confirmed!`);
-}
-
 function persistNewOrder(order) {
   allOrders.unshift(order);
   updateStoredOrder(order.id, order);
@@ -999,3 +794,6 @@ document.addEventListener('click', (e) => {
 // ── Init ──────────────────────────────────────────────────────────────────────
 
 init();
+
+// Wire new order modal callback
+window._nomOnConfirm = function(order, isDraft) { persistNewOrder(order); };

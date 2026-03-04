@@ -11,73 +11,16 @@
   <link rel="stylesheet" href="../../assets/css/base.css"/>
   <link rel="stylesheet" href="../../assets/css/components.css"/>
   <link rel="stylesheet" href="../../assets/css/layout.css"/>
+  <link rel="stylesheet" href="../erp.css"/>
   <link rel="stylesheet" href="hr.css" />
 </head>
 <body>
+
 <div class="app-shell">
+  <aside class="sidebar" id="sidebar"></aside>
 
-<div id="sidebar-overlay" class="sidebar-overlay"></div>
-
-<!-- SIDEBAR -->
-<aside class="sidebar" id="sidebar">
-  <div class="sidebar-logo">
-    <div class="sidebar-logo-icon"><i class="fa-solid fa-store"></i></div>
-    <div class="sidebar-logo-text">
-      <div class="sidebar-logo-name">LankaCommerce</div>
-      <div class="sidebar-logo-sub">Sandbox Business</div>
-    </div>
-  </div>
-  <nav class="sidebar-nav">
-    <div class="nav-section-label">Main</div>
-    <a href="../dashboard.html" class="nav-item"><i class="fa-solid fa-chart-pie nav-icon"></i><span class="nav-label">Dashboard</span></a>
-
-    <div class="nav-section-label">Commerce</div>
-    <a href="../sales/orders.html" class="nav-item"><i class="fa-solid fa-bag-shopping nav-icon"></i><span class="nav-label">Sales</span></a>
-
-    <div class="nav-section-label">Catalog</div>
-    <a href="../products/index.html" class="nav-item"><i class="fa-solid fa-box nav-icon"></i><span class="nav-label">Products</span></a>
-    <a href="../inventory/index.html" class="nav-item"><i class="fa-solid fa-boxes-stacked nav-icon"></i><span class="nav-label">Inventory</span></a>
-
-    <div class="nav-section-label">Relationships</div>
-    <a href="../customers/index.html" class="nav-item"><i class="fa-solid fa-users nav-icon"></i><span class="nav-label">Customers</span></a>
-    <a href="../vendors/index.html" class="nav-item"><i class="fa-solid fa-truck-ramp-box nav-icon"></i><span class="nav-label">Vendors</span></a>
-
-    <div class="nav-section-label">Finance</div>
-    <a href="../accounting/index.html" class="nav-item"><i class="fa-solid fa-calculator nav-icon"></i><span class="nav-label">Accounting</span></a>
-
-    <div class="nav-section-label">HR</div>
-    <a href="../hr/index.html" class="nav-item active"><i class="fa-solid fa-id-card nav-icon"></i><span class="nav-label">Human Resources</span></a>
-
-    <div class="nav-section-label">Reports</div>
-    <a href="../reports/index.html" class="nav-item"><i class="fa-solid fa-chart-column nav-icon"></i><span class="nav-label">Reports</span></a>
-
-    <div class="nav-section-label">Admin</div>
-    <a href="../settings/index.html" class="nav-item"><i class="fa-solid fa-gear nav-icon"></i><span class="nav-label">Settings</span></a>
-  </nav>
-  <div class="sidebar-footer">
-    <a href="../../pos/index.html" class="nav-item"><i class="fa-solid fa-cash-register nav-icon"></i><span class="nav-label">Open POS</span></a>
-    <a href="../../webstore/index.html" class="nav-item" target="_blank"><i class="fa-solid fa-globe nav-icon"></i><span class="nav-label">Webstore</span></a>
-  </div>
-</aside>
-
-<!-- MAIN WRAPPER -->
-<div class="main-wrapper">
-
-  <!-- TOP BAR -->
-  <header class="top-bar" id="header">
-    <div class="header-left">
-      <button class="header-toggle-btn" title="Toggle sidebar"><i class="fa-solid fa-bars"></i></button>
-      <div class="header-breadcrumb">
-        <span class="bc-item">ERP</span>
-        <i class="fa-solid fa-chevron-right bc-sep"></i>
-        <span class="bc-item active">Human Resources</span>
-      </div>
-    </div>
-    <div class="header-right">
-      <button class="header-icon-btn"><i class="fa-regular fa-bell"></i><span class="notif-dot"></span></button>
-      <div class="header-avatar">AS</div>
-    </div>
-  </header>
+  <div class="main-wrapper" id="mainWrapper">
+    <header class="top-bar" id="erpTopBar" data-page-title="HR &amp; Payroll"></header>
 
   <!-- MAIN CONTENT -->
   <main class="main-content">
@@ -265,7 +208,14 @@
 </div><!-- /.main-wrapper -->
 </div><!-- /.app-shell -->
 
+  </div><!-- /.main-wrapper -->
+</div><!-- /.app-shell -->
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
 <script src="../../assets/js/layout.js"></script>
+<script src="../erp-header.js"></script>
+<script src="../erp.js"></script>
 
   <script src="hr.js"></script>
 </body>

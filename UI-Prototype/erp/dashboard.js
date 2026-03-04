@@ -1,7 +1,5 @@
 /* Page-specific scripts — dashboard.html */
 
-const { formatLKR, formatLKRShort, formatDate, timeAgo, statusBadge, loadData, truncate, avatarInitials } = window.LCC;
-
 // Greeting
 (function() {
   const h = new Date().getHours();
@@ -18,52 +16,56 @@ const { formatLKR, formatLKRShort, formatDate, timeAgo, statusBadge, loadData, t
 // ── Load Dashboard Data ──
 async function loadDashboard() {
   const [dashboardData, ordersData, productsData] = await Promise.all([
-    loadData('../data/dashboard.json'),
-    loadData('../data/orders.json'),
-    loadData('../data/products.json'),
+    loadData('data/dashboard.json'),
+    loadData('data/orders.json'),
+    loadData('data/products.json'),
   ]);
 
   if (dashboardData) {
     renderKPIs(dashboardData);
     renderCharts(dashboardData);
-    renderActivity(dashboardData.activity_feed);
+    renderActivity(dashboardData.dashboard?.recent_activities);
   }
 
   if (ordersData) renderRecentOrders(ordersData.orders.slice(0, 10));
-  if (productsData) renderLowStock(productsData.products.filter(p => p.stock_qty <= p.reorder_point));
+  if (productsData) renderLowStock(productsData.products.filter(p => p.stock_total <= p.low_stock_threshold));
 }
 
 // ── KPI Cards ──
 function renderKPIs(data) {
-  const kpiData = data.kpi || {};
+  const kpiData = data.dashboard?.today || {};
+  const lowStockCount = data.dashboard?.low_stock_alerts?.length || 3;
   const cards = [
     {
       icon: 'fa-solid fa-money-bill-wave', iconClass: 'orange',
-      value: formatLKRShort(kpiData.today_revenue || 124500),
+      value: formatLKRShort(kpiData.revenue || 124500),
       label: "Today's Revenue",
       sub: "All channels",
-      change: '+12.4%', changeType: 'up',
+      change: (kpiData.revenue_change != null ? (kpiData.revenue_change >= 0 ? '+' : '') + kpiData.revenue_change + '%' : '+12.4%'),
+      changeType: (kpiData.revenue_change != null ? (kpiData.revenue_change >= 0 ? 'up' : 'down') : 'up'),
     },
     {
       icon: 'fa-solid fa-bag-shopping', iconClass: 'blue',
-      value: (kpiData.today_orders || 34).toString(),
+      value: (kpiData.orders || 34).toString(),
       label: "Today's Orders",
       sub: "ERP + POS + Webstore",
-      change: '+5.2%', changeType: 'up',
+      change: (kpiData.orders_change != null ? (kpiData.orders_change >= 0 ? '+' : '') + kpiData.orders_change : '+5'),
+      changeType: (kpiData.orders_change != null ? (kpiData.orders_change >= 0 ? 'up' : 'down') : 'up'),
     },
     {
       icon: 'fa-solid fa-users', iconClass: 'green',
       value: (kpiData.new_customers || 7).toString(),
       label: 'New Customers',
-      sub: 'This week',
-      change: '+2', changeType: 'up',
+      sub: 'Today',
+      change: (kpiData.pending_approvals != null ? kpiData.pending_approvals + ' pending' : '+2'),
+      changeType: 'up',
     },
     {
       icon: 'fa-solid fa-boxes-stacked', iconClass: 'red',
-      value: (kpiData.low_stock_count || 3).toString(),
+      value: lowStockCount.toString(),
       label: 'Low Stock Items',
       sub: 'Need reorder',
-      change: '3 critical', changeType: 'down',
+      change: lowStockCount + ' critical', changeType: 'down',
     },
   ];
 
@@ -84,9 +86,9 @@ function renderKPIs(data) {
 
 // ── Revenue Chart ──
 function renderCharts(data) {
-  const labels = data.chart_7d?.labels || ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-  const revenue = data.chart_7d?.revenue || [45000, 67000, 82000, 55000, 90000, 110000, 95000];
-  const orders  = data.chart_7d?.orders  || [18, 24, 31, 22, 35, 42, 38];
+  const labels = data.dashboard?.revenue_chart?.labels || ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const revenue = data.dashboard?.revenue_chart?.values || [45000, 67000, 82000, 55000, 90000, 110000, 95000];
+  const orders  = data.dashboard?.revenue_chart?.orders  || [18, 24, 31, 22, 35, 42, 38];
 
   const ctx1 = document.getElementById('revenueChart').getContext('2d');
   new Chart(ctx1, {
@@ -170,13 +172,13 @@ function renderRecentOrders(orders) {
   document.getElementById('recentOrdersBody').innerHTML = orders.map(o => `
     <tr>
       <td>
-        <a href="sales/orders.html?id=${o.id}" class="order-id">${o.order_number}</a>
+        <a href="sales/orders.html?id=${o.id}" class="order-id">${o.id}</a>
         <div style="font-size:0.7rem;color:var(--color-neutral-400);margin-top:1px;">
           <i class="fa-solid ${sourceIcon[o.source] || 'fa-bag-shopping'}"></i> ${o.source}
         </div>
       </td>
       <td style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.customer_name}</td>
-      <td style="font-weight:600;">${formatLKR(o.total_amount)}</td>
+      <td style="font-weight:600;">${formatLKR(o.total)}</td>
       <td>${statusBadge(o.status)}</td>
     </tr>
   `).join('');
@@ -197,7 +199,7 @@ function renderLowStock(products) {
         <div class="stock-name">${p.name}</div>
         <div class="stock-sku">${p.sku}</div>
       </div>
-      <div class="stock-qty ${p.stock_qty === 0 ? 'zero' : 'low'}">${p.stock_qty === 0 ? 'Out' : p.stock_qty + ' left'}</div>
+      <div class="stock-qty ${p.stock_total === 0 ? 'zero' : 'low'}">${p.stock_total === 0 ? 'Out' : p.stock_total + ' left'}</div>
     </div>
   `).join('');
 }
@@ -210,7 +212,7 @@ function renderActivity(feed) {
       <div class="activity-dot ${item.type || 'system'}"></div>
       <div>
         <div class="activity-text">${item.text}</div>
-        <div class="activity-time">${timeAgo(item.timestamp)}</div>
+        <div class="activity-time">${timeAgo(item.time)}</div>
       </div>
     </div>
   `).join('');

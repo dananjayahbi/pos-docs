@@ -11,194 +11,19 @@
   <link rel="stylesheet" href="../assets/css/base.css" />
   <link rel="stylesheet" href="../assets/css/components.css" />
   <link rel="stylesheet" href="../assets/css/layout.css" />
+  <link rel="stylesheet" href="erp.css"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="dashboard.css" />
 </head>
 <body>
 
-<div id="sidebar-overlay" class="sidebar-overlay"></div>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar"></aside>
 
-<!-- ──────────────── SIDEBAR ──────────────── -->
-<aside class="sidebar" id="sidebar">
-  <div class="sidebar-logo">
-    <div class="sidebar-logo-icon"><i class="fa-solid fa-store"></i></div>
-    <div class="sidebar-logo-text">
-      <div class="sidebar-logo-name">LankaCommerce</div>
-      <div class="sidebar-logo-sub">Sandbox Business</div>
-    </div>
-  </div>
+  <div class="main-wrapper" id="mainWrapper">
+    <header class="top-bar" id="erpTopBar" data-page-title="Dashboard"></header>
 
-  <nav class="sidebar-nav">
-    <div class="nav-section-label">Main</div>
-
-    <a href="dashboard.html" class="nav-item active">
-      <i class="fa-solid fa-chart-pie nav-icon"></i>
-      <span class="nav-label">Dashboard</span>
-    </a>
-
-    <div class="nav-section-label">Commerce</div>
-
-    <a href="sales/orders.html" class="nav-item">
-      <i class="fa-solid fa-bag-shopping nav-icon"></i>
-      <span class="nav-label">Orders</span>
-      <span class="nav-badge">12</span>
-    </a>
-
-    <a href="sales/orders.html" class="nav-item">
-      <i class="fa-solid fa-file-invoice nav-icon"></i>
-      <span class="nav-label">Invoices</span>
-    </a>
-
-    <a href="sales/orders.html" class="nav-item">
-      <i class="fa-solid fa-file-lines nav-icon"></i>
-      <span class="nav-label">Quotations</span>
-    </a>
-
-    <div class="nav-section-label">Catalog</div>
-
-    <a href="products/index.html" class="nav-item">
-      <i class="fa-solid fa-box nav-icon"></i>
-      <span class="nav-label">Products</span>
-    </a>
-
-    <a href="inventory/index.html" class="nav-item">
-      <i class="fa-solid fa-boxes-stacked nav-icon"></i>
-      <span class="nav-label">Inventory</span>
-      <span class="nav-badge badge-error">3</span>
-    </a>
-
-    <a href="products/index.html" class="nav-item">
-      <i class="fa-solid fa-tags nav-icon"></i>
-      <span class="nav-label">Categories</span>
-    </a>
-
-    <div class="nav-section-label">Relationships</div>
-
-    <a href="customers/index.html" class="nav-item">
-      <i class="fa-solid fa-users nav-icon"></i>
-      <span class="nav-label">Customers</span>
-    </a>
-
-    <a href="vendors/index.html" class="nav-item">
-      <i class="fa-solid fa-truck-ramp-box nav-icon"></i>
-      <span class="nav-label">Vendors</span>
-    </a>
-
-    <a href="vendors/index.html" class="nav-item">
-      <i class="fa-solid fa-cart-flatbed nav-icon"></i>
-      <span class="nav-label">Purchase Orders</span>
-    </a>
-
-    <div class="nav-section-label">Finance</div>
-
-    <a href="accounting/index.html" class="nav-item">
-      <i class="fa-solid fa-calculator nav-icon"></i>
-      <span class="nav-label">Accounting</span>
-    </a>
-
-    <a href="accounting/index.html" class="nav-item">
-      <i class="fa-solid fa-receipt nav-icon"></i>
-      <span class="nav-label">Expenses</span>
-    </a>
-
-    <div class="nav-section-label">HR</div>
-
-    <a href="hr/index.html" class="nav-item">
-      <i class="fa-solid fa-id-card nav-icon"></i>
-      <span class="nav-label">Employees</span>
-    </a>
-
-    <a href="hr/index.html" class="nav-item">
-      <i class="fa-regular fa-clock nav-icon"></i>
-      <span class="nav-label">Attendance</span>
-    </a>
-
-    <a href="hr/index.html" class="nav-item">
-      <i class="fa-solid fa-money-check-dollar nav-icon"></i>
-      <span class="nav-label">Payroll</span>
-    </a>
-
-    <div class="nav-section-label">Reports</div>
-
-    <a href="reports/index.html" class="nav-item">
-      <i class="fa-solid fa-chart-column nav-icon"></i>
-      <span class="nav-label">Reports</span>
-    </a>
-
-    <div class="nav-section-label">Admin</div>
-
-    <a href="settings/index.html" class="nav-item">
-      <i class="fa-solid fa-gear nav-icon"></i>
-      <span class="nav-label">Settings</span>
-    </a>
-  </nav>
-
-  <div class="sidebar-footer">
-    <a href="../pos/index.html" class="nav-item">
-      <i class="fa-solid fa-cash-register nav-icon"></i>
-      <span class="nav-label">Open POS</span>
-    </a>
-    <a href="../webstore/index.html" class="nav-item" target="_blank">
-      <i class="fa-solid fa-globe nav-icon"></i>
-      <span class="nav-label">Webstore</span>
-    </a>
-  </div>
-</aside>
-
-<!-- ──────────────── HEADER ──────────────── -->
-<header class="header" id="header">
-  <div class="header-left">
-    <button class="header-toggle-btn" title="Toggle sidebar">
-      <i class="fa-solid fa-bars"></i>
-    </button>
-    <div class="header-breadcrumb">
-      <span class="breadcrumb-item">LankaCommerce Cloud</span>
-      <i class="fa-solid fa-chevron-right breadcrumb-sep"></i>
-      <span class="breadcrumb-item active">Dashboard</span>
-    </div>
-  </div>
-
-  <div class="header-right">
-    <!-- Search -->
-    <div class="header-search">
-      <i class="fa-solid fa-search header-search-icon"></i>
-      <input type="text" class="header-search-input" placeholder="Quick search…" />
-      <span class="header-search-shortcut">⌘K</span>
-    </div>
-
-    <!-- Notifications -->
-    <div class="header-icon-btn" style="position:relative;">
-      <i class="fa-solid fa-bell"></i>
-      <span style="position:absolute;top:4px;right:4px;width:8px;height:8px;background:#ef4444;border-radius:50%;border:2px solid #fff;"></span>
-    </div>
-
-    <!-- Quick links -->
-    <a href="../pos/index.html" class="btn btn-sm btn-outline" title="Open POS terminal">
-      <i class="fa-solid fa-cash-register"></i>
-      <span>POS</span>
-    </a>
-
-    <!-- User Avatar -->
-    <div class="header-avatar" data-dropdown="userDropdown" title="Account menu">
-      <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=64&h=64&fit=crop&crop=face" alt="Admin" />
-    </div>
-    <div class="dropdown-menu" id="userDropdown">
-      <div class="dropdown-header">
-        <div style="font-weight:600;font-size:0.875rem;">Tenant Admin</div>
-        <div style="font-size:0.75rem;color:var(--color-neutral-500);">admin@sandbox.lcc.lk</div>
-      </div>
-      <div class="dropdown-divider"></div>
-      <a href="settings/index.html" class="dropdown-item"><i class="fa-solid fa-gear"></i> Settings</a>
-      <a href="settings/index.html#profile" class="dropdown-item"><i class="fa-solid fa-user-circle"></i> My Profile</a>
-      <div class="dropdown-divider"></div>
-      <a href="../auth/login.html" class="dropdown-item text-error"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a>
-    </div>
-  </div>
-</header>
-
-<!-- ──────────────── MAIN ──────────────── -->
-<main class="main-wrapper" id="mainWrapper">
-  <div class="page-content">
+<div class="page-content">
 
     <!-- Page Header -->
     <div class="page-header">
@@ -211,7 +36,7 @@
           <i class="fa-solid fa-filter"></i>
           Filter: Today
         </button>
-        <button class="btn btn-primary btn-sm">
+        <button class="btn btn-primary btn-sm" onclick="openNewOrderModal()">
           <i class="fa-solid fa-plus"></i>
           New Order
         </button>
@@ -354,14 +179,21 @@
     </div>
 
   </div>
-</main>
+
+  </div><!-- /.main-wrapper -->
+</div><!-- /.app-shell -->
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <!-- Toast container -->
 <div class="toast-container" id="toastContainer"></div>
 
 <script src="../assets/js/utils.js"></script>
 <script src="../assets/js/layout.js"></script>
+<script src="erp-header.js"></script>
+<script src="erp.js"></script>
 <script src="../assets/js/toast.js"></script>
+<script src="new-order-modal.js"></script>
 
   <script src="dashboard.js"></script>
 </body>

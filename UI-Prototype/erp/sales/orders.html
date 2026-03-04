@@ -11,191 +11,18 @@
   <link rel="stylesheet" href="../../assets/css/base.css" />
   <link rel="stylesheet" href="../../assets/css/components.css" />
   <link rel="stylesheet" href="../../assets/css/layout.css" />
+  <link rel="stylesheet" href="../erp.css"/>
   <link rel="stylesheet" href="orders.css" />
 </head>
 <body>
 
-<div id="sidebar-overlay" class="sidebar-overlay"></div>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar"></aside>
 
-<!-- ──────────────── SIDEBAR ──────────────── -->
-<aside class="sidebar" id="sidebar">
-  <div class="sidebar-logo">
-    <div class="sidebar-logo-icon"><i class="fa-solid fa-store"></i></div>
-    <div class="sidebar-logo-text">
-      <div class="sidebar-logo-name">LankaCommerce</div>
-      <div class="sidebar-logo-sub">Sandbox Business</div>
-    </div>
-  </div>
+  <div class="main-wrapper" id="mainWrapper">
+    <header class="top-bar" id="erpTopBar" data-page-title="Sales Orders"></header>
 
-  <nav class="sidebar-nav">
-    <div class="nav-section-label">Main</div>
-
-    <a href="../dashboard.html" class="nav-item">
-      <i class="fa-solid fa-chart-pie nav-icon"></i>
-      <span class="nav-label">Dashboard</span>
-    </a>
-
-    <div class="nav-section-label">Commerce</div>
-
-    <a href="orders.html" class="nav-item active">
-      <i class="fa-solid fa-bag-shopping nav-icon"></i>
-      <span class="nav-label">Orders</span>
-      <span class="nav-badge">12</span>
-    </a>
-
-    <a href="orders.html" class="nav-item">
-      <i class="fa-solid fa-file-invoice nav-icon"></i>
-      <span class="nav-label">Invoices</span>
-    </a>
-
-    <a href="orders.html" class="nav-item">
-      <i class="fa-solid fa-file-lines nav-icon"></i>
-      <span class="nav-label">Quotations</span>
-    </a>
-
-    <div class="nav-section-label">Catalog</div>
-
-    <a href="../products/index.html" class="nav-item">
-      <i class="fa-solid fa-box nav-icon"></i>
-      <span class="nav-label">Products</span>
-    </a>
-
-    <a href="../inventory/index.html" class="nav-item">
-      <i class="fa-solid fa-boxes-stacked nav-icon"></i>
-      <span class="nav-label">Inventory</span>
-      <span class="nav-badge badge-error">3</span>
-    </a>
-
-    <a href="../products/index.html" class="nav-item">
-      <i class="fa-solid fa-tags nav-icon"></i>
-      <span class="nav-label">Categories</span>
-    </a>
-
-    <div class="nav-section-label">Relationships</div>
-
-    <a href="../customers/index.html" class="nav-item">
-      <i class="fa-solid fa-users nav-icon"></i>
-      <span class="nav-label">Customers</span>
-    </a>
-
-    <a href="../vendors/index.html" class="nav-item">
-      <i class="fa-solid fa-truck-ramp-box nav-icon"></i>
-      <span class="nav-label">Vendors</span>
-    </a>
-
-    <a href="../vendors/index.html" class="nav-item">
-      <i class="fa-solid fa-cart-flatbed nav-icon"></i>
-      <span class="nav-label">Purchase Orders</span>
-    </a>
-
-    <div class="nav-section-label">Finance</div>
-
-    <a href="../accounting/index.html" class="nav-item">
-      <i class="fa-solid fa-calculator nav-icon"></i>
-      <span class="nav-label">Accounting</span>
-    </a>
-
-    <a href="../accounting/index.html" class="nav-item">
-      <i class="fa-solid fa-receipt nav-icon"></i>
-      <span class="nav-label">Expenses</span>
-    </a>
-
-    <div class="nav-section-label">HR</div>
-
-    <a href="../hr/index.html" class="nav-item">
-      <i class="fa-solid fa-id-card nav-icon"></i>
-      <span class="nav-label">Employees</span>
-    </a>
-
-    <a href="../hr/index.html" class="nav-item">
-      <i class="fa-regular fa-clock nav-icon"></i>
-      <span class="nav-label">Attendance</span>
-    </a>
-
-    <a href="../hr/index.html" class="nav-item">
-      <i class="fa-solid fa-money-check-dollar nav-icon"></i>
-      <span class="nav-label">Payroll</span>
-    </a>
-
-    <div class="nav-section-label">Reports</div>
-
-    <a href="../reports/index.html" class="nav-item">
-      <i class="fa-solid fa-chart-column nav-icon"></i>
-      <span class="nav-label">Reports</span>
-    </a>
-
-    <div class="nav-section-label">Admin</div>
-
-    <a href="../settings/index.html" class="nav-item">
-      <i class="fa-solid fa-gear nav-icon"></i>
-      <span class="nav-label">Settings</span>
-    </a>
-  </nav>
-
-  <div class="sidebar-footer">
-    <a href="../../pos/index.html" class="nav-item">
-      <i class="fa-solid fa-cash-register nav-icon"></i>
-      <span class="nav-label">Open POS</span>
-    </a>
-    <a href="../../webstore/index.html" class="nav-item" target="_blank">
-      <i class="fa-solid fa-globe nav-icon"></i>
-      <span class="nav-label">Webstore</span>
-    </a>
-  </div>
-</aside>
-
-<!-- ──────────────── HEADER ──────────────── -->
-<header class="header" id="header">
-  <div class="header-left">
-    <button class="header-toggle-btn" title="Toggle sidebar">
-      <i class="fa-solid fa-bars"></i>
-    </button>
-    <div class="header-breadcrumb">
-      <span class="breadcrumb-item">LankaCommerce Cloud</span>
-      <i class="fa-solid fa-chevron-right breadcrumb-sep"></i>
-      <span class="breadcrumb-item">Commerce</span>
-      <i class="fa-solid fa-chevron-right breadcrumb-sep"></i>
-      <span class="breadcrumb-item active">Sales Orders</span>
-    </div>
-  </div>
-
-  <div class="header-right">
-    <div class="header-search">
-      <i class="fa-solid fa-search header-search-icon"></i>
-      <input type="text" class="header-search-input" placeholder="Quick search…" />
-      <span class="header-search-shortcut">⌘K</span>
-    </div>
-
-    <div class="header-icon-btn" style="position:relative;">
-      <i class="fa-solid fa-bell"></i>
-      <span style="position:absolute;top:4px;right:4px;width:8px;height:8px;background:#ef4444;border-radius:50%;border:2px solid #fff;"></span>
-    </div>
-
-    <a href="../../pos/index.html" class="btn btn-sm btn-outline" title="Open POS terminal">
-      <i class="fa-solid fa-cash-register"></i>
-      <span>POS</span>
-    </a>
-
-    <div class="header-avatar" data-dropdown="userDropdown" title="Account menu">
-      <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=64&h=64&fit=crop&crop=face" alt="Admin" />
-    </div>
-    <div class="dropdown-menu" id="userDropdown">
-      <div class="dropdown-header">
-        <div style="font-weight:600;font-size:0.875rem;">Tenant Admin</div>
-        <div style="font-size:0.75rem;color:var(--color-neutral-500);">admin@sandbox.lcc.lk</div>
-      </div>
-      <div class="dropdown-divider"></div>
-      <a href="../settings/index.html" class="dropdown-item"><i class="fa-solid fa-gear"></i> Settings</a>
-      <a href="../settings/index.html#profile" class="dropdown-item"><i class="fa-solid fa-user-circle"></i> My Profile</a>
-      <div class="dropdown-divider"></div>
-      <a href="../../auth/login.html" class="dropdown-item text-error"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a>
-    </div>
-  </div>
-</header>
-
-<!-- ──────────────── MAIN ──────────────── -->
-<main class="main-wrapper" id="mainWrapper">
-  <div class="page-content">
+<div class="page-content">
 
     <!-- Page Header -->
     <div class="page-header">
@@ -215,54 +42,57 @@
       </div>
     </div>
 
-    <!-- KPI Summary Chips -->
-    <div class="kpi-chips" id="kpiChips">
-      <div class="kpi-chip" id="chipLoading" style="min-width:200px;">
-        <div class="kpi-chip-icon orange"><i class="fa-solid fa-spinner fa-spin"></i></div>
-        <div class="kpi-chip-info"><div class="kpi-chip-value">Loading…</div></div>
+    <!-- KPI Cards Grid -->
+    <div class="kpi-grid" id="kpiGrid">
+      <div class="kpi-card skeleton-card"><div class="skeleton" style="height:44px;width:44px;border-radius:12px;"></div><div class="skeleton" style="height:28px;width:110px;margin-top:0.75rem;"></div><div class="skeleton" style="height:16px;width:80px;margin-top:0.4rem;"></div></div>
+      <div class="kpi-card skeleton-card"><div class="skeleton" style="height:44px;width:44px;border-radius:12px;"></div><div class="skeleton" style="height:28px;width:110px;margin-top:0.75rem;"></div><div class="skeleton" style="height:16px;width:80px;margin-top:0.4rem;"></div></div>
+      <div class="kpi-card skeleton-card"><div class="skeleton" style="height:44px;width:44px;border-radius:12px;"></div><div class="skeleton" style="height:28px;width:110px;margin-top:0.75rem;"></div><div class="skeleton" style="height:16px;width:80px;margin-top:0.4rem;"></div></div>
+      <div class="kpi-card skeleton-card"><div class="skeleton" style="height:44px;width:44px;border-radius:12px;"></div><div class="skeleton" style="height:28px;width:110px;margin-top:0.75rem;"></div><div class="skeleton" style="height:16px;width:80px;margin-top:0.4rem;"></div></div>
+    </div>
+
+    <!-- Orders Panel Card: Tabs + Toolbar + Table -->
+    <div class="orders-panel-card">
+
+      <!-- Tabs -->
+      <div class="order-tabs" id="orderTabs">
+        <div class="order-tab active" data-tab="all">All <span class="tab-count" id="tabCount-all">0</span></div>
+        <div class="order-tab" data-tab="pending">Pending <span class="tab-count" id="tabCount-pending">0</span></div>
+        <div class="order-tab" data-tab="confirmed">Confirmed <span class="tab-count" id="tabCount-confirmed">0</span></div>
+        <div class="order-tab" data-tab="processing">Processing <span class="tab-count" id="tabCount-processing">0</span></div>
+        <div class="order-tab" data-tab="shipped">Shipped <span class="tab-count" id="tabCount-shipped">0</span></div>
+        <div class="order-tab" data-tab="delivered">Delivered <span class="tab-count" id="tabCount-delivered">0</span></div>
+        <div class="order-tab" data-tab="cancelled">Cancelled <span class="tab-count" id="tabCount-cancelled">0</span></div>
+        <div class="order-tab" data-tab="returned">Returned <span class="tab-count" id="tabCount-returned">0</span></div>
       </div>
-    </div>
 
-    <!-- Tabs -->
-    <div class="order-tabs" id="orderTabs">
-      <div class="order-tab active" data-tab="all">All <span class="tab-count" id="tabCount-all">0</span></div>
-      <div class="order-tab" data-tab="pending">Pending <span class="tab-count" id="tabCount-pending">0</span></div>
-      <div class="order-tab" data-tab="confirmed">Confirmed <span class="tab-count" id="tabCount-confirmed">0</span></div>
-      <div class="order-tab" data-tab="processing">Processing <span class="tab-count" id="tabCount-processing">0</span></div>
-      <div class="order-tab" data-tab="shipped">Shipped <span class="tab-count" id="tabCount-shipped">0</span></div>
-      <div class="order-tab" data-tab="delivered">Delivered <span class="tab-count" id="tabCount-delivered">0</span></div>
-      <div class="order-tab" data-tab="cancelled">Cancelled <span class="tab-count" id="tabCount-cancelled">0</span></div>
-      <div class="order-tab" data-tab="returned">Returned <span class="tab-count" id="tabCount-returned">0</span></div>
-    </div>
-
-    <!-- Toolbar -->
-    <div class="orders-toolbar">
-      <div class="toolbar-search">
-        <i class="fa-solid fa-search toolbar-search-icon"></i>
-        <input type="text" id="searchInput" placeholder="Search order # or customer name…" oninput="handleSearch()" />
+      <!-- Toolbar -->
+      <div class="orders-toolbar">
+        <div class="toolbar-search">
+          <i class="fa-solid fa-search toolbar-search-icon"></i>
+          <input type="text" id="searchInput" placeholder="Search order # or customer name…" oninput="handleSearch()" />
+        </div>
+        <select class="toolbar-select" id="sourceFilter" onchange="applyFilters()">
+          <option value="">All Sources</option>
+          <option value="pos">POS</option>
+          <option value="webstore">Webstore</option>
+          <option value="manual">Manual</option>
+          <option value="whatsapp">WhatsApp</option>
+        </select>
+        <input type="date" class="toolbar-date" id="dateFrom" title="From date" onchange="applyFilters()" />
+        <input type="date" class="toolbar-date" id="dateTo" title="To date" onchange="applyFilters()" />
+        <select class="toolbar-select" id="paymentFilter" onchange="applyFilters()">
+          <option value="">All Payments</option>
+          <option value="paid">Paid</option>
+          <option value="partially_paid">Partially Paid</option>
+          <option value="pending">Unpaid/Pending</option>
+        </select>
+        <button class="btn btn-xs btn-outline" onclick="clearFilters()" title="Clear filters">
+          <i class="fa-solid fa-xmark"></i> Clear
+        </button>
       </div>
-      <select class="toolbar-select" id="sourceFilter" onchange="applyFilters()">
-        <option value="">All Sources</option>
-        <option value="pos">POS</option>
-        <option value="webstore">Webstore</option>
-        <option value="manual">Manual</option>
-        <option value="whatsapp">WhatsApp</option>
-      </select>
-      <input type="date" class="toolbar-date" id="dateFrom" title="From date" onchange="applyFilters()" />
-      <input type="date" class="toolbar-date" id="dateTo" title="To date" onchange="applyFilters()" />
-      <select class="toolbar-select" id="paymentFilter" onchange="applyFilters()">
-        <option value="">All Payments</option>
-        <option value="paid">Paid</option>
-        <option value="partially_paid">Partially Paid</option>
-        <option value="pending">Unpaid/Pending</option>
-      </select>
-      <button class="btn btn-xs btn-outline" onclick="clearFilters()" title="Clear filters">
-        <i class="fa-solid fa-xmark"></i> Clear
-      </button>
-    </div>
 
-    <!-- Bulk Actions Bar -->
-    <div class="bulk-actions-bar" id="bulkActionsBar">
+      <!-- Bulk Actions Bar -->
+      <div class="bulk-actions-bar" id="bulkActionsBar">
       <span class="bulk-selected-count" id="bulkCount">0</span>
       <span style="color:var(--color-neutral-600);">orders selected</span>
       <div style="display:flex;gap:0.5rem;margin-left:auto;">
@@ -316,8 +146,9 @@
       </div>
     </div>
 
-  </div>
-</main>
+    </div><!-- /.orders-panel-card -->
+
+  </div><!-- /.page-content -->
 
 <!-- ──────────────── ORDER DETAIL SLIDE-OVER ──────────────── -->
 <div class="slideover-overlay" id="detailOverlay" onclick="closeDetail()"></div>
@@ -348,115 +179,20 @@
   </div>
 </div>
 
-<!-- ──────────────── NEW ORDER MODAL ──────────────── -->
-<div class="modal-backdrop" id="newOrderModal">
-  <div class="modal-box">
-    <div class="modal-header">
-      <div class="modal-title"><i class="fa-solid fa-plus" style="color:#f97316;margin-right:0.5rem;"></i>New Sales Order</div>
-      <button class="modal-close" onclick="closeNewOrderModal()"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div class="modal-body">
+  </div><!-- /.main-wrapper -->
+</div><!-- /.app-shell -->
 
-      <!-- Customer -->
-      <div class="form-group" style="position:relative;">
-        <label class="form-label">Customer <span class="req">*</span></label>
-        <input type="text" class="form-input" id="customerSearchInput" placeholder="Search customer by name or phone…" autocomplete="off" oninput="searchCustomers(this.value)" />
-        <div class="customer-suggestions" id="customerSuggestions"></div>
-        <input type="hidden" id="selectedCustomerId" />
-        <div id="selectedCustomerInfo" style="display:none;margin-top:0.375rem;padding:0.5rem 0.75rem;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;font-size:0.8125rem;">
-          <span id="selectedCustomerName" style="font-weight:600;color:#ea580c;"></span>
-          <span id="selectedCustomerPhone" style="color:var(--color-neutral-500);margin-left:0.5rem;"></span>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Source</label>
-          <select class="form-select" id="newOrderSource">
-            <option value="manual">Manual</option>
-            <option value="pos">POS</option>
-            <option value="webstore">Webstore</option>
-            <option value="whatsapp">WhatsApp</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Payment Method</label>
-          <select class="form-select" id="newOrderPayMethod">
-            <option value="cash">Cash</option>
-            <option value="card">Credit/Debit Card</option>
-            <option value="bank_transfer">Bank Transfer</option>
-            <option value="payhere">PayHere</option>
-            <option value="webxpay">WebXPay</option>
-            <option value="cod">Cash on Delivery</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Add Products -->
-      <div class="form-group">
-        <label class="form-label">Add Products <span class="req">*</span></label>
-        <div class="product-search-wrap">
-          <input type="text" class="form-input" id="productSearchInput" placeholder="Search by product name or barcode…" autocomplete="off" oninput="searchProducts(this.value)" />
-          <div class="product-suggestions" id="productSuggestions"></div>
-        </div>
-      </div>
-
-      <!-- Order Items List -->
-      <div id="newOrderItems" class="new-order-items"></div>
-
-      <!-- Per-order fields -->
-      <div class="form-row" style="margin-top:0.75rem;">
-        <div class="form-group">
-          <label class="form-label">Discount (LKR)</label>
-          <input type="number" class="form-input" id="newOrderDiscount" min="0" value="0" oninput="recalcTotal()" placeholder="0.00" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Delivery Charge (LKR)</label>
-          <input type="number" class="form-input" id="newOrderDelivery" min="0" value="0" oninput="recalcTotal()" placeholder="0.00" />
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label" style="display:flex;align-items:center;gap:0.5rem;">
-            <input type="checkbox" id="newOrderTaxEnabled" onchange="recalcTotal()" style="accent-color:#f97316;width:15px;height:15px;" />
-            Apply Tax (18% VAT)
-          </label>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Order Notes</label>
-          <textarea class="form-textarea" id="newOrderNotes" placeholder="Internal notes…" style="min-height:52px;"></textarea>
-        </div>
-      </div>
-
-      <!-- Order Summary -->
-      <div class="new-order-summary">
-        <div class="new-order-summary-row"><span>Subtotal</span><span id="sumSubtotal">₨ 0.00</span></div>
-        <div class="new-order-summary-row"><span>Discount</span><span id="sumDiscount" style="color:#16a34a;">- ₨ 0.00</span></div>
-        <div class="new-order-summary-row"><span>Tax (VAT)</span><span id="sumTax">₨ 0.00</span></div>
-        <div class="new-order-summary-row"><span>Delivery</span><span id="sumDelivery">₨ 0.00</span></div>
-        <div class="new-order-summary-row total"><span>Total</span><span id="sumTotal" style="color:#f97316;">₨ 0.00</span></div>
-      </div>
-
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeNewOrderModal()">Cancel</button>
-      <button class="btn btn-outline" onclick="saveOrderAsDraft()">
-        <i class="fa-solid fa-floppy-disk"></i> Save as Draft
-      </button>
-      <button class="btn btn-primary" onclick="confirmNewOrder()">
-        <i class="fa-solid fa-check"></i> Confirm Order
-      </button>
-    </div>
-  </div>
-</div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <!-- Toast -->
 <div class="toast-container" id="toastContainer"></div>
 
 <script src="../../assets/js/utils.js"></script>
 <script src="../../assets/js/layout.js"></script>
+<script src="../erp-header.js"></script>
+<script src="../erp.js"></script>
 <script src="../../assets/js/toast.js"></script>
+<script src="../new-order-modal.js"></script>
 
   <script src="orders.js"></script>
 </body>

@@ -11,50 +11,16 @@
   <link rel="stylesheet" href="../../assets/css/base.css"/>
   <link rel="stylesheet" href="../../assets/css/components.css"/>
   <link rel="stylesheet" href="../../assets/css/layout.css"/>
+  <link rel="stylesheet" href="../erp.css"/>
   <link rel="stylesheet" href="reports.css" />
 </head>
 <body>
-  <div class="app-shell">
 
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <div class="sidebar-logo">
-          <span class="logo-text" style="color:var(--color-primary-500);font-weight:800;font-size:1.5rem;">LCC</span>
-          <span class="logo-subtitle" style="font-size:0.7rem;color:var(--color-text-secondary);display:block;line-height:1;">LankaCommerce Cloud</span>
-        </div>
-        <button class="sidebar-toggle" id="sidebarToggle"><i class="fa fa-bars"></i></button>
-      </div>
-      <nav class="sidebar-nav">
-        <ul class="nav-list">
-          <li class="nav-item"><a href="../dashboard.html" class="nav-link"><i class="fa fa-gauge nav-icon"></i><span class="nav-label">Dashboard</span></a></li>
-          <li class="nav-item"><a href="../products/index.html" class="nav-link"><i class="fa fa-box nav-icon"></i><span class="nav-label">Products</span></a></li>
-          <li class="nav-item"><a href="../inventory/index.html" class="nav-link"><i class="fa fa-warehouse nav-icon"></i><span class="nav-label">Inventory</span></a></li>
-          <li class="nav-item"><a href="../sales/orders.html" class="nav-link"><i class="fa fa-cart-shopping nav-icon"></i><span class="nav-label">Sales</span></a></li>
-          <li class="nav-item"><a href="../customers/index.html" class="nav-link"><i class="fa fa-users nav-icon"></i><span class="nav-label">Customers</span></a></li>
-          <li class="nav-item"><a href="../vendors/index.html" class="nav-link"><i class="fa fa-truck nav-icon"></i><span class="nav-label">Vendors</span></a></li>
-          <li class="nav-item"><a href="../hr/index.html" class="nav-link"><i class="fa fa-id-card nav-icon"></i><span class="nav-label">HR</span></a></li>
-          <li class="nav-item"><a href="../accounting/index.html" class="nav-link"><i class="fa fa-file-invoice-dollar nav-icon"></i><span class="nav-label">Accounting</span></a></li>
-          <li class="nav-item active"><a href="../reports/index.html" class="nav-link active"><i class="fa fa-chart-bar nav-icon"></i><span class="nav-label">Reports</span></a></li>
-          <li class="nav-item"><a href="../settings/index.html" class="nav-link"><i class="fa fa-gear nav-icon"></i><span class="nav-label">Settings</span></a></li>
-        </ul>
-      </nav>
-    </aside>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar"></aside>
 
-    <div class="main-wrapper">
-      <header class="top-bar">
-        <div class="top-bar-left">
-          <button class="sidebar-toggle-mobile" id="sidebarToggleMobile"><i class="fa fa-bars"></i></button>
-          <div class="breadcrumb">
-            <span class="breadcrumb-item">ERP</span>
-            <i class="fa fa-chevron-right breadcrumb-sep"></i>
-            <span class="breadcrumb-item active">Reports &amp; Analytics</span>
-          </div>
-        </div>
-        <div class="top-bar-right">
-          <button class="btn btn-ghost btn-sm"><i class="fa fa-bell"></i></button>
-          <div class="avatar-sm">AD</div>
-        </div>
-      </header>
+  <div class="main-wrapper" id="mainWrapper">
+    <header class="top-bar" id="erpTopBar" data-page-title="Reports"></header>
 
       <main class="main-content">
 
@@ -141,7 +107,14 @@
 
       </main>
     </div>
-  </div>
-  <script src="../../assets/js/layout.js"></script>
+
+  </div><!-- /.main-wrapper -->
+</div><!-- /.app-shell -->
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<script src="../../assets/js/layout.js"></script>
+<script src="../erp-header.js"></script>
+<script src="../erp.js"></script>
 </body>
 </html>
