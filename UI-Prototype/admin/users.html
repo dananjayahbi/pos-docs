@@ -81,48 +81,47 @@
     <header class="top-bar" id="adminTopBar" data-page-title="Platform Users"></header>
 
     <main class="main-content">
-      <div class="page-header">
-        <div class="page-header-left">
-        </div>
-        <div class="page-header-actions">
-          <button class="btn btn-primary"><i class="fa-solid fa-envelope"></i> Invite User</button>
-        </div>
-      </div>
+
 
       <!-- Stats Row -->
       <div class="stats-row">
-        <div class="stat-card"><div class="stat-value">24</div><div class="stat-label">Total Users</div></div>
-        <div class="stat-card"><div class="stat-value text-danger">4</div><div class="stat-label">Super Admins</div></div>
-        <div class="stat-card"><div class="stat-value text-primary">11</div><div class="stat-label">Support Staff</div></div>
-        <div class="stat-card"><div class="stat-value text-warning">9</div><div class="stat-label">Billing Agents</div></div>
+        <div class="stat-card"><div class="stat-value" id="statTotalUsers">24</div><div class="stat-label">Total Users</div></div>
+        <div class="stat-card"><div class="stat-value text-danger" id="statSuperAdmins">4</div><div class="stat-label">Super Admins</div></div>
+        <div class="stat-card"><div class="stat-value text-primary" id="statSupportStaff">11</div><div class="stat-label">Support Staff</div></div>
+        <div class="stat-card"><div class="stat-value text-warning" id="statBillingAgents">9</div><div class="stat-label">Billing Agents</div></div>
       </div>
 
       <!-- Filter Bar -->
       <div class="filter-bar">
         <div class="search-box">
           <i class="fa-solid fa-magnifying-glass search-icon"></i>
-          <input type="text" class="search-input" placeholder="Search name or email…"/>
+          <input type="text" class="search-input" id="userSearchInput" placeholder="Search name or email…"/>
         </div>
-        <select class="filter-select">
+        <select class="filter-select" id="roleFilterSelect">
           <option value="">All Roles</option>
-          <option>Super Admin</option>
-          <option>Support</option>
-          <option>Billing</option>
+          <option value="SUPER_ADMIN">Super Admin</option>
+          <option value="SUPPORT">Support</option>
+          <option value="BILLING">Billing</option>
         </select>
-        <select class="filter-select">
+        <select class="filter-select" id="statusFilterSelect">
           <option value="">All Status</option>
-          <option>Active</option>
-          <option>Inactive</option>
-          <option>Pending</option>
+          <option value="ACTIVE">Active</option>
+          <option value="INACTIVE">Inactive</option>
+          <option value="PENDING">Pending</option>
         </select>
-        <button class="btn btn-outline btn-sm"><i class="fa-solid fa-filter-circle-xmark"></i> Clear</button>
+        <button class="btn btn-outline btn-sm" id="clearFiltersBtn"><i class="fa-solid fa-filter-circle-xmark"></i> Clear</button>
       </div>
 
       <!-- Users Table -->
       <div class="table-card">
         <div class="table-header">
-          <span class="table-count">Showing 7 of 24 users</span>
-          <button class="btn btn-outline btn-sm"><i class="fa-solid fa-download"></i> Export</button>
+          <span class="table-count" id="tableCountLabel">Showing 7 of 24 users</span>
+          <div class="table-header-actions">
+            <button class="btn btn-outline btn-sm"><i class="fa-solid fa-download"></i> Export</button>
+            <button class="btn btn-primary btn-sm" id="inviteUserBtn" data-modal-open="inviteUserModal">
+              <i class="fa-solid fa-envelope"></i> Invite User
+            </button>
+          </div>
         </div>
         <div class="table-wrapper">
           <table class="data-table users-table">
@@ -138,7 +137,7 @@
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="userTableBody">
               <tr>
                 <td><input type="checkbox"/></td>
                 <td><div class="user-cell"><div class="user-avatar ua-red">KP</div><div><div class="user-name">Kavinda Perera</div><div class="user-id">UID-001</div></div></div></td>
@@ -213,8 +212,8 @@
           </table>
         </div>
         <div class="table-footer">
-          <span class="pagination-info">Page 1 of 3 &nbsp;·&nbsp; 24 total records</span>
-          <div class="pagination">
+          <span class="pagination-info" id="paginationInfo">Page 1 of 3 &nbsp;·&nbsp; 24 total records</span>
+          <div class="pagination" id="paginationControls">
             <button class="page-btn" disabled><i class="fa-solid fa-chevron-left"></i></button>
             <button class="page-btn active">1</button>
             <button class="page-btn">2</button>
@@ -226,8 +225,287 @@
     </main>
   </div>
 </div>
+
+<!-- ============================================================
+     SIDEBAR OVERLAY (mobile)
+     ============================================================ -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- ============================================================
+     INVITE USER MODAL
+     ============================================================ -->
+<div class="modal-overlay" id="inviteUserModal" role="dialog" aria-modal="true" aria-labelledby="inviteUserModalTitle">
+  <div class="modal-dialog modal-md">
+    <div class="modal-header">
+      <div class="modal-title-area">
+        <div class="modal-icon modal-icon--invite"><i class="fa-solid fa-envelope-open-text"></i></div>
+        <div>
+          <h2 class="modal-title" id="inviteUserModalTitle">Invite Platform User</h2>
+          <p class="modal-subtitle">Send an invitation to a new admin or support member</p>
+        </div>
+      </div>
+      <button class="modal-close-btn" title="Close" data-modal-close>
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form id="inviteUserForm" novalidate>
+
+        <!-- Section 1: Identity -->
+        <div class="form-section">
+          <h3 class="form-section-title"><i class="fa-solid fa-user"></i> User Identity</h3>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Full Name <span class="req">*</span></label>
+              <input type="text" class="form-input" id="inviteFullName" name="full_name"
+                     placeholder="e.g. Kavinda Perera" required autocomplete="off"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address <span class="req">*</span></label>
+              <input type="email" class="form-input" id="inviteEmail" name="email"
+                     placeholder="user@lcc.lk" required autocomplete="off"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Role & Access -->
+        <div class="form-section">
+          <h3 class="form-section-title"><i class="fa-solid fa-shield-halved"></i> Role &amp; Access</h3>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Platform Role <span class="req">*</span></label>
+              <select class="form-input" id="inviteRole" name="role" required>
+                <option value="">— Select Role —</option>
+                <option value="SUPER_ADMIN">Super Admin</option>
+                <option value="SUPPORT">Support Staff</option>
+                <option value="BILLING">Billing Agent</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Initial Status</label>
+              <select class="form-input" id="inviteStatus" name="status">
+                <option value="PENDING" selected>Pending (awaits acceptance)</option>
+                <option value="ACTIVE">Active (direct access)</option>
+              </select>
+            </div>
+          </div>
+          <!-- Role hint card -->
+          <div class="role-hint" id="roleHintBox" style="display:none">
+            <i class="fa-solid fa-circle-info"></i>
+            <span id="roleHintText"></span>
+          </div>
+        </div>
+
+        <!-- Section 3: Contact (optional) -->
+        <div class="form-section">
+          <h3 class="form-section-title"><i class="fa-solid fa-phone"></i> Contact <span class="optional-label">(Optional)</span></h3>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <input type="tel" class="form-input" id="invitePhone" name="phone"
+                     placeholder="+94 77 123 4567"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Department / Team</label>
+              <input type="text" class="form-input" id="inviteDept" name="department"
+                     placeholder="e.g. Customer Support"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4: Invite Message (optional) -->
+        <div class="form-section">
+          <h3 class="form-section-title"><i class="fa-solid fa-message"></i> Invitation Message <span class="optional-label">(Optional)</span></h3>
+          <div class="form-group">
+            <textarea class="form-input form-textarea" id="inviteMessage" name="message"
+                      rows="3" placeholder="Add a personal note to the invitation email…"></textarea>
+          </div>
+        </div>
+
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-ghost" data-modal-close id="cancelInviteUser">Cancel</button>
+      <button type="button" class="btn btn-primary" id="submitInviteUser">
+        <i class="fa-solid fa-paper-plane"></i> Send Invitation
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     VIEW USER MODAL
+     ============================================================ -->
+<div class="modal-overlay" id="viewUserModal" role="dialog" aria-modal="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-header">
+      <div class="modal-title-area">
+        <div class="modal-icon modal-icon--view"><i class="fa-solid fa-eye"></i></div>
+        <div>
+          <h2 class="modal-title" id="viewUserNameTitle">User Details</h2>
+          <p class="modal-subtitle" id="viewUserIdSubtitle">—</p>
+        </div>
+      </div>
+      <button class="modal-close-btn" title="Close" data-modal-close>
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <!-- Top meta strip -->
+      <div class="view-meta-strip">
+        <div class="view-meta-item">
+          <span class="view-meta-label"><i class="fa-solid fa-shield-halved"></i> Role</span>
+          <span id="viewUserRole">—</span>
+        </div>
+        <div class="view-meta-item">
+          <span class="view-meta-label"><i class="fa-solid fa-circle-dot"></i> Status</span>
+          <span id="viewUserStatus">—</span>
+        </div>
+        <div class="view-meta-item">
+          <span class="view-meta-label"><i class="fa-solid fa-clock"></i> Last Login</span>
+          <span id="viewUserLastLogin">—</span>
+        </div>
+      </div>
+      <!-- Detail grid -->
+      <div class="view-detail-grid">
+        <div class="view-detail-section">
+          <h4 class="view-section-title"><i class="fa-solid fa-address-card"></i> Contact Info</h4>
+          <div class="view-field-list">
+            <div class="view-field"><span class="vf-label">Email</span><span class="vf-value" id="viewUserEmail">—</span></div>
+            <div class="view-field"><span class="vf-label">Phone</span><span class="vf-value" id="viewUserPhone">—</span></div>
+          </div>
+        </div>
+        <div class="view-detail-section">
+          <h4 class="view-section-title"><i class="fa-solid fa-building"></i> Assignment</h4>
+          <div class="view-field-list">
+            <div class="view-field"><span class="vf-label">Department</span><span class="vf-value" id="viewUserDept">—</span></div>
+            <div class="view-field"><span class="vf-label">Scope</span><span class="vf-value">— Platform —</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-ghost" data-modal-close>Close</button>
+      <button type="button" class="btn btn-outline" id="viewToEditUserBtn">
+        <i class="fa-solid fa-pen"></i> Edit User
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     EDIT USER MODAL
+     ============================================================ -->
+<div class="modal-overlay" id="editUserModal" role="dialog" aria-modal="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-header">
+      <div class="modal-title-area">
+        <div class="modal-icon modal-icon--edit"><i class="fa-solid fa-pen"></i></div>
+        <div>
+          <h2 class="modal-title">Edit User</h2>
+          <p class="modal-subtitle" id="editUserSubtitle">Update user information</p>
+        </div>
+      </div>
+      <button class="modal-close-btn" title="Close" data-modal-close>
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form id="editUserForm" novalidate>
+        <div class="form-section">
+          <h3 class="form-section-title"><i class="fa-solid fa-user"></i> Identity</h3>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Full Name <span class="req">*</span></label>
+              <input type="text" class="form-input" id="editUserName" name="full_name" required/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address <span class="req">*</span></label>
+              <input type="email" class="form-input" id="editUserEmail" name="email" required/>
+            </div>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3 class="form-section-title"><i class="fa-solid fa-shield-halved"></i> Role &amp; Status</h3>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Platform Role</label>
+              <select class="form-input" id="editUserRole" name="role">
+                <option value="SUPER_ADMIN">Super Admin</option>
+                <option value="SUPPORT">Support Staff</option>
+                <option value="BILLING">Billing Agent</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Status</label>
+              <select class="form-input" id="editUserStatus" name="status">
+                <option value="ACTIVE">Active</option>
+                <option value="INACTIVE">Inactive</option>
+                <option value="PENDING">Pending</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3 class="form-section-title"><i class="fa-solid fa-phone"></i> Contact <span class="optional-label">(Optional)</span></h3>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <input type="tel" class="form-input" id="editUserPhone" name="phone" placeholder="+94 77 123 4567"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Department / Team</label>
+              <input type="text" class="form-input" id="editUserDept" name="department"/>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-ghost" data-modal-close>Cancel</button>
+      <button type="button" class="btn btn-primary" id="submitEditUser">
+        <i class="fa-solid fa-floppy-disk"></i> Save Changes
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     CONFIRM ACTION MODAL (activate / deactivate / revoke)
+     ============================================================ -->
+<div class="modal-overlay" id="confirmUserActionModal" role="dialog" aria-modal="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-header">
+      <div class="modal-title-area">
+        <div class="modal-icon" id="confirmUserModalIcon">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <div>
+          <h2 class="modal-title" id="confirmUserModalTitle">Confirm Action</h2>
+        </div>
+      </div>
+      <button class="modal-close-btn" title="Close" data-modal-close>
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p class="confirm-modal-msg" id="confirmUserModalMsg">Are you sure you want to proceed?</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-ghost" data-modal-close>Cancel</button>
+      <button type="button" class="btn btn-danger" id="confirmUserModalBtn">
+        <i class="fa-solid fa-check"></i> Confirm
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Sidebar overlay (mobile) -->
+<div class="sidebar-overlay" id="sidebarOverlay" style="display:none"></div>
+
 <script src="../assets/js/layout.js"></script>
   <script src="admin-header.js"></script>
   <script src="admin.js"></script>
+  <script src="users.js"></script>
 </body>
 </html>

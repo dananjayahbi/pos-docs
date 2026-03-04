@@ -238,7 +238,7 @@
                   <small>Disables tenant access and shows a maintenance page</small>
                 </span>
                 <div class="toggle-switch danger">
-                  <input type="checkbox"/>
+                  <input type="checkbox" id="maintenanceModeToggle"/>
                   <span class="slider"></span>
                 </div>
               </label>
@@ -258,6 +258,60 @@
     </main>
   </div>
 </div>
+<!-- Sidebar overlay (mobile) -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- ============================================================
+     MAINTENANCE MODE CONFIRMATION MODAL
+     ============================================================ -->
+<div class="modal-overlay" id="maintenanceModeModal" role="dialog" aria-modal="true" aria-labelledby="mmModalTitle">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-header">
+      <div class="modal-title-area">
+        <div class="modal-icon modal-icon--danger"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <div>
+          <h2 class="modal-title" id="mmModalTitle">Enable Maintenance Mode</h2>
+          <p class="modal-subtitle">This action affects all tenants</p>
+        </div>
+      </div>
+      <button class="modal-close-btn" id="mmModalCloseBtn" title="Close" data-modal-close>
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <!-- Warning box -->
+      <div class="mm-warning-box">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <div>
+          <strong>Platform-wide impact</strong>
+          <p>All tenant storefronts and ERP dashboards will immediately show a maintenance page. Active sessions will be interrupted.</p>
+        </div>
+      </div>
+      <!-- Confirm input -->
+      <div class="mm-confirm-field">
+        <label class="mm-confirm-label" for="maintenanceConfirmInput">
+          Type <code>confirm</code> below to proceed
+        </label>
+        <input
+          type="text"
+          id="maintenanceConfirmInput"
+          class="form-control mm-confirm-input"
+          placeholder='Type "confirm"'
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <span class="mm-input-hint" id="mmInputHint"></span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-ghost" id="mmCancelBtn" data-modal-close>Cancel</button>
+      <button type="button" class="btn btn-danger" id="maintenanceConfirmBtn" disabled>
+        <i class="fa-solid fa-wrench"></i> Enable Maintenance Mode
+      </button>
+    </div>
+  </div>
+</div>
+
 <script src="../assets/js/layout.js"></script>
 <script>
   document.querySelectorAll('.settings-nav-item').forEach(link => {
@@ -272,5 +326,6 @@
 </script>
   <script src="admin-header.js"></script>
   <script src="admin.js"></script>
+  <script src="settings.js"></script>
 </body>
 </html>

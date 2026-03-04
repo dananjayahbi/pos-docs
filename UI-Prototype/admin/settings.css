@@ -75,3 +75,138 @@
   .settings-nav { position: static; flex-direction: row; flex-wrap: wrap; }
   .form-grid { grid-template-columns: 1fr; }
 }
+
+/* ── Maintenance Mode Modal ─────────────────────────────────── */
+.mm-warning-box {
+  display: flex;
+  gap: 0.75rem;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  color: #c2410c;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+.mm-warning-box > i {
+  font-size: 1.15rem;
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+  color: #ea580c;
+}
+.mm-warning-box strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+  color: #9a3412;
+}
+.mm-warning-box p {
+  margin: 0;
+  color: #9a3412;
+}
+.mm-confirm-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.mm-confirm-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-primary, #111827);
+}
+.mm-confirm-label code {
+  background: #f3f4f6;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  color: #dc2626;
+  font-family: ui-monospace, monospace;
+}
+.mm-confirm-input {
+  transition: border-color 0.15s, box-shadow 0.15s;
+  letter-spacing: 0.04em;
+}
+.mm-confirm-input.mm-input-valid {
+  border-color: #22c55e !important;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15) !important;
+}
+.mm-input-hint {
+  font-size: 0.78rem;
+  min-height: 1em;
+  color: #6b7280;
+  transition: color 0.15s;
+}
+.mm-input-hint.mm-hint-ok {
+  color: #16a34a;
+}
+.modal-icon--danger {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+.btn-danger {
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+}
+.btn-danger:hover:not(:disabled) { background: #b91c1c; }
+.btn-danger:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ── Maintenance Active Banner ────────────────────────────── */
+.maintenance-active-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  padding: 0.85rem 1.1rem;
+  color: #b91c1c;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+  margin-top: 0.5rem;
+}
+.maintenance-active-banner > i {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  color: #ef4444;
+}
+.maintenance-active-banner > span {
+  flex: 1;
+  line-height: 1.5;
+}
+.maintenance-active-banner strong {
+  color: #991b1b;
+}
+.btn-mm-disable {
+  background: #b91c1c;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.btn-mm-disable:hover { background: #991b1b; }
+
+/* ── Settings-page toast animation reuse ──────────────────── */
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
