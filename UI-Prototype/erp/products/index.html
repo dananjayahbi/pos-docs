@@ -46,58 +46,107 @@
       </div>
     </div>
 
-    <!-- Stats Bar -->
-    <div class="stats-bar" id="statsBar">
-      <div class="stat-pill">
-        <span class="stat-dot orange"></span>
-        <span class="stat-label">Total Products</span>
-        <span class="stat-value" id="statTotal">—</span>
+    <!-- Stats Cards -->
+    <div class="kpi-grid" id="statsBar">
+      <div class="kpi-card">
+        <div class="kpi-icon-wrap kpi-orange">
+          <i class="fa-solid fa-box-open"></i>
+        </div>
+        <div class="kpi-body">
+          <div class="kpi-label">Total Products</div>
+          <div class="kpi-value" id="statTotal">—</div>
+          <div class="kpi-sub" id="statArchivedSub">—</div>
+        </div>
       </div>
-      <div class="stat-pill">
-        <span class="stat-dot green"></span>
-        <span class="stat-label">Active</span>
-        <span class="stat-value" id="statActive">—</span>
+      <div class="kpi-card">
+        <div class="kpi-icon-wrap kpi-green">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <div class="kpi-body">
+          <div class="kpi-label">Active Products</div>
+          <div class="kpi-value" id="statActive">—</div>
+          <div class="kpi-sub" id="statActivePercent">—</div>
+        </div>
       </div>
-      <div class="stat-pill">
-        <span class="stat-dot gray"></span>
-        <span class="stat-label">Draft</span>
-        <span class="stat-value" id="statDraft">—</span>
+      <div class="kpi-card">
+        <div class="kpi-icon-wrap kpi-gray">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </div>
+        <div class="kpi-body">
+          <div class="kpi-label">Draft Products</div>
+          <div class="kpi-value" id="statDraft">—</div>
+          <div class="kpi-sub" id="statDraftSub">Not yet published</div>
+        </div>
       </div>
-      <div class="stat-pill">
-        <span class="stat-dot amber"></span>
-        <span class="stat-label">Low Stock</span>
-        <span class="stat-value" id="statLowStock">—</span>
+      <div class="kpi-card">
+        <div class="kpi-icon-wrap kpi-amber">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <div class="kpi-body">
+          <div class="kpi-label">Low Stock Alerts</div>
+          <div class="kpi-value" id="statLowStock">—</div>
+          <div class="kpi-sub" id="statLowStockSub">Need restocking</div>
+        </div>
       </div>
     </div>
 
-    <!-- Toolbar -->
-    <div class="toolbar">
-      <div class="toolbar-search">
-        <i class="fa-solid fa-search toolbar-search-icon"></i>
-        <input type="text" id="searchInput" placeholder="Search by name or SKU…" autocomplete="off" />
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <div class="filter-bar-row">
+        <!-- Search (left, grows) -->
+        <div class="filter-search-wrap">
+          <i class="fa-solid fa-magnifying-glass filter-search-icon"></i>
+          <input type="text" class="filter-search-input" id="searchInput" placeholder="Search products by name, SKU, or barcode…" autocomplete="off" />
+        </div>
+        <!-- Right controls -->
+        <div class="filter-controls-right">
+          <button class="filter-reset-btn" id="btnResetFilters" title="Reset all filters" style="display:none;">
+            <i class="fa-solid fa-rotate-left"></i> Clear Filters
+          </button>
+          <div class="toolbar-divider"></div>
+          <div class="view-toggle">
+            <button class="view-btn active" id="viewListBtn" title="List view"><i class="fa-solid fa-list"></i></button>
+            <button class="view-btn" id="viewGridBtn" title="Grid view"><i class="fa-solid fa-grip"></i></button>
+          </div>
+        </div>
       </div>
-      <div class="toolbar-selects">
-        <select class="toolbar-select" id="filterCategory">
-          <option value="">All Categories</option>
-        </select>
-        <select class="toolbar-select" id="filterType">
-          <option value="">All Types</option>
-          <option value="simple">Simple</option>
-          <option value="variable">Variable</option>
-          <option value="bundle">Bundle</option>
-          <option value="composite">Composite</option>
-        </select>
-        <select class="toolbar-select" id="filterStatus">
-          <option value="">All Status</option>
-          <option value="active">Active</option>
-          <option value="draft">Draft</option>
-          <option value="archived">Archived</option>
-        </select>
-      </div>
-      <div class="toolbar-divider"></div>
-      <div class="view-toggle">
-        <button class="view-btn active" id="viewListBtn" title="List view"><i class="fa-solid fa-list"></i></button>
-        <button class="view-btn" id="viewGridBtn" title="Grid view"><i class="fa-solid fa-grid-2"></i></button>
+      <div class="filter-bar-row filter-row-selects">
+        <div class="filter-chip-label"><i class="fa-solid fa-sliders"></i> Filters:</div>
+        <div class="filter-select-wrap">
+          <label class="filter-select-label">Category</label>
+          <select class="filter-select-input" id="filterCategory">
+            <option value="">All Categories</option>
+          </select>
+        </div>
+        <div class="filter-select-wrap">
+          <label class="filter-select-label">Type</label>
+          <select class="filter-select-input" id="filterType">
+            <option value="">All Types</option>
+            <option value="simple">Simple</option>
+            <option value="variable">Variable</option>
+            <option value="bundle">Bundle</option>
+            <option value="composite">Composite</option>
+          </select>
+        </div>
+        <div class="filter-select-wrap">
+          <label class="filter-select-label">Status</label>
+          <select class="filter-select-input" id="filterStatus">
+            <option value="">All Status</option>
+            <option value="active">Active</option>
+            <option value="draft">Draft</option>
+            <option value="archived">Archived</option>
+          </select>
+        </div>
+        <div class="filter-select-wrap">
+          <label class="filter-select-label">Stock</label>
+          <select class="filter-select-input" id="filterStock">
+            <option value="">All Stock</option>
+            <option value="in_stock">In Stock</option>
+            <option value="low_stock">Low Stock</option>
+            <option value="out_of_stock">Out of Stock</option>
+          </select>
+        </div>
+        <div id="filterActiveCount" class="filter-active-badge" style="display:none;"></div>
       </div>
     </div>
 
@@ -159,6 +208,134 @@
 
   </div><!-- /page-content -->
 </main>
+
+
+<!-- ══════════════════════════════════════
+     MODAL: Import Products
+════════════════════════════════════════ -->
+<div class="modal-backdrop" id="importModalBackdrop">
+  <div class="modal" style="max-width:560px;" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <div class="modal-title"><i class="fa-solid fa-file-import" style="color:#4f46e5;margin-right:0.5rem;"></i>Import Products</div>
+      <button class="modal-close" id="closeImportModal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+
+      <!-- Step indicator -->
+      <div class="import-steps">
+        <div class="import-step active" id="importStep1Ind">
+          <div class="step-num">1</div>
+          <div class="step-label">Upload File</div>
+        </div>
+        <div class="import-step-connector"></div>
+        <div class="import-step" id="importStep2Ind">
+          <div class="step-num">2</div>
+          <div class="step-label">Preview</div>
+        </div>
+        <div class="import-step-connector"></div>
+        <div class="import-step" id="importStep3Ind">
+          <div class="step-num">3</div>
+          <div class="step-label">Import</div>
+        </div>
+      </div>
+
+      <!-- Step 1: Upload -->
+      <div id="importStep1">
+        <div class="import-dropzone" id="importDropzone">
+          <div class="import-dropzone-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+          <div class="import-dropzone-title">Drag &amp; drop your file here</div>
+          <div class="import-dropzone-sub">Supports CSV, XLS, XLSX files (max 5MB)</div>
+          <label class="btn btn-outline" style="cursor:pointer;margin-top:0.75rem;">
+            <i class="fa-solid fa-folder-open"></i> Browse File
+            <input type="file" id="importFileInput" accept=".csv,.xls,.xlsx" style="display:none;" />
+          </label>
+          <div id="importFileName" style="margin-top:0.75rem;font-size:0.8125rem;color:var(--color-neutral-600);display:none;"></div>
+        </div>
+
+        <div style="margin-top:1.25rem;padding:0.875rem 1rem;background:var(--color-neutral-50);border:1px solid var(--color-neutral-200);border-radius:var(--radius);">
+          <div style="font-size:0.8125rem;font-weight:600;color:var(--color-neutral-700);margin-bottom:0.5rem;"><i class="fa-solid fa-circle-info" style="color:#4f46e5;margin-right:0.375rem;"></i>Required Columns</div>
+          <div style="display:flex;flex-wrap:wrap;gap:0.375rem;">
+            <span style="background:#dbeafe;color:#1d4ed8;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.72rem;font-weight:600;">name</span>
+            <span style="background:#dbeafe;color:#1d4ed8;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.72rem;font-weight:600;">sku</span>
+            <span style="background:#dbeafe;color:#1d4ed8;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.72rem;font-weight:600;">base_price</span>
+            <span style="background:#dbeafe;color:#1d4ed8;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.72rem;font-weight:600;">category</span>
+            <span style="background:#e0f2fe;color:#0369a1;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.72rem;font-weight:600;">product_type</span>
+            <span style="background:#e0f2fe;color:#0369a1;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.72rem;font-weight:600;">status</span>
+            <span style="background:#e0f2fe;color:#0369a1;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.72rem;font-weight:600;">stock_total</span>
+          </div>
+          <div style="font-size:0.75rem;color:var(--color-neutral-500);margin-top:0.5rem;">Blue = required · Light blue = optional</div>
+        </div>
+
+        <div style="margin-top:0.875rem;display:flex;align-items:center;gap:0.5rem;font-size:0.8125rem;">
+          <i class="fa-solid fa-download" style="color:#4f46e5;"></i>
+          <a href="#" onclick="downloadImportTemplate(event)" style="color:#4f46e5;text-decoration:none;font-weight:500;">Download sample template</a>
+          <span style="color:var(--color-neutral-400);">(CSV format)</span>
+        </div>
+      </div>
+
+      <!-- Step 2: Preview (hidden by default) -->
+      <div id="importStep2" style="display:none;">
+        <div id="importPreviewSummary" style="padding:0.75rem 1rem;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:var(--radius);margin-bottom:1rem;font-size:0.8125rem;color:#166534;font-weight:500;">
+          <i class="fa-solid fa-circle-check" style="margin-right:0.375rem;"></i><span id="importPreviewMsg">Ready to import</span>
+        </div>
+        <div style="max-height:260px;overflow-y:auto;border:1px solid var(--color-neutral-200);border-radius:var(--radius);">
+          <table style="width:100%;border-collapse:collapse;font-size:0.78125rem;">
+            <thead>
+              <tr style="background:var(--color-neutral-50);position:sticky;top:0;">
+                <th style="padding:0.5rem 0.75rem;text-align:left;font-weight:600;color:var(--color-neutral-500);border-bottom:1px solid var(--color-neutral-200);">Name</th>
+                <th style="padding:0.5rem 0.75rem;text-align:left;font-weight:600;color:var(--color-neutral-500);border-bottom:1px solid var(--color-neutral-200);">SKU</th>
+                <th style="padding:0.5rem 0.75rem;text-align:left;font-weight:600;color:var(--color-neutral-500);border-bottom:1px solid var(--color-neutral-200);">Category</th>
+                <th style="padding:0.5rem 0.75rem;text-align:right;font-weight:600;color:var(--color-neutral-500);border-bottom:1px solid var(--color-neutral-200);">Price</th>
+                <th style="padding:0.5rem 0.75rem;text-align:center;font-weight:600;color:var(--color-neutral-500);border-bottom:1px solid var(--color-neutral-200);">Status</th>
+              </tr>
+            </thead>
+            <tbody id="importPreviewBody"></tbody>
+          </table>
+        </div>
+        <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--color-neutral-500);">* In live system, data will be validated and duplicates flagged.</div>
+      </div>
+
+      <!-- Step 3: Result (hidden by default) -->
+      <div id="importStep3" style="display:none;">
+        <div style="text-align:center;padding:2rem 1rem;">
+          <div style="font-size:3rem;margin-bottom:1rem;" id="importResultIcon">🎉</div>
+          <div style="font-size:1.125rem;font-weight:700;color:var(--color-neutral-900);margin-bottom:0.5rem;" id="importResultTitle">Import Successful!</div>
+          <div style="font-size:0.875rem;color:var(--color-neutral-600);" id="importResultMsg">Products have been imported successfully and are now available in your catalog.</div>
+        </div>
+      </div>
+
+    </div><!-- /modal-body -->
+    <div class="modal-footer" id="importModalFooter">
+      <button class="btn btn-outline" id="cancelImportModal">Cancel</button>
+      <button class="btn btn-primary" id="importNextBtn" disabled>
+        <i class="fa-solid fa-arrow-right"></i> Next
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     MODAL: View Product Details
+════════════════════════════════════════ -->
+<div class="modal-backdrop" id="viewProductModalBackdrop">
+  <div class="modal" style="max-width:680px;" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="viewProductModalTitle">Product Details</div>
+        <div style="font-size:0.75rem;color:var(--color-neutral-400);margin-top:1px;" id="viewProductModalSub"></div>
+      </div>
+      <button class="modal-close" id="closeViewProductModal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body" id="viewProductModalBody">
+      <!-- Populated by JS -->
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" id="cancelViewProductModal">Close</button>
+      <button class="btn btn-outline" id="viewProductEditBtn"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+    </div>
+  </div>
+</div>
 
 
 <!-- ══════════════════════════════════════

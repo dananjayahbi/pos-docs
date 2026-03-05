@@ -76,28 +76,24 @@ function saveToStorage(products) {
 // ── Boot ─────────────────────────────────────────────────────────
 
 async function init() {
-  const stored = loadFromStorage();
-
-  if (stored && stored.length > 0) {
-    allProducts = stored;
-    // Categories from products
-    buildCategoriesFromProducts();
-    boot();
-  } else {
-    try {
-      const res  = await fetch('../../data/products.json');
-      const data = await res.json();
-      allProducts = data.products || [];
-      categories  = data.categories || [];
-      saveToStorage(allProducts);
-    } catch (e) {
-      console.warn('Could not load products.json, using demo data.', e);
-      allProducts = DEMO_PRODUCTS;
-      categories  = DEMO_CATEGORIES;
-      saveToStorage(allProducts);
+  try {
+    const res  = await fetch('../../data/products.json');
+    const data = await res.json();
+    allProducts = data.products || [];
+    categories  = data.categories || [];
+    saveToStorage(allProducts);
+  } catch (e) {
+    console.warn('Could not load products.json, using demo data.', e);
+    const stored = loadFromStorage();
+    if (stored && stored.length > 0) {
+      allProducts = stored;
+      buildCategoriesFromProducts();
+    } else {
+      allProducts = DEMO_PRODUCTS || [];
+      categories  = DEMO_CATEGORIES || [];
     }
-    boot();
   }
+  boot();
 }
 
 function buildCategoriesFromProducts() {
@@ -139,31 +135,47 @@ function updateStats() {
   const total     = allProducts.length;
   const active    = allProducts.filter(p => p.status === 'active').length;
   const draft     = allProducts.filter(p => p.status === 'draft').length;
+  const archived  = allProducts.filter(p => p.status === 'archived').length;
   const lowStock  = allProducts.filter(p => {
     const qty = p.stock_total ?? 0;
-    return qty <= (p.low_stock_threshold ?? 10);
+    return qty > 0 && qty <= (p.low_stock_threshold ?? 10);
   }).length;
+  const outOfStock = allProducts.filter(p => (p.stock_total ?? 0) <= 0).length;
 
   document.getElementById('statTotal').textContent    = total;
   document.getElementById('statActive').textContent   = active;
   document.getElementById('statDraft').textContent    = draft;
   document.getElementById('statLowStock').textContent = lowStock;
+
+  const archivedSub = document.getElementById('statArchivedSub');
+  if (archivedSub) archivedSub.textContent = archived > 0 ? `${archived} archived` : 'None archived';
+
+  const activePercent = document.getElementById('statActivePercent');
+  if (activePercent) activePercent.textContent = total > 0 ? Math.round((active / total) * 100) + '% of catalog' : '—';
+
+  const lowStockSub = document.getElementById('statLowStockSub');
+  if (lowStockSub) lowStockSub.textContent = outOfStock > 0 ? `${outOfStock} out of stock` : 'All in stock';
 }
 
 // ── Filter / Sort ─────────────────────────────────────────────────
 
 function applyFilters() {
-  const q        = document.getElementById('searchInput').value.trim().toLowerCase();
-  const catVal   = document.getElementById('filterCategory').value;
-  const typeVal  = document.getElementById('filterType').value;
-  const statVal  = document.getElementById('filterStatus').value;
+  const q         = document.getElementById('searchInput').value.trim().toLowerCase();
+  const catVal    = document.getElementById('filterCategory').value;
+  const typeVal   = document.getElementById('filterType').value;
+  const statVal   = document.getElementById('filterStatus').value;
+  const stockVal  = document.getElementById('filterStock') ? document.getElementById('filterStock').value : '';
 
   filtered = allProducts.filter(p => {
-    const matchQ    = !q || p.name.toLowerCase().includes(q) || (p.sku||'').toLowerCase().includes(q);
+    const matchQ    = !q || p.name.toLowerCase().includes(q) || (p.sku||'').toLowerCase().includes(q) || (p.barcode||'').toLowerCase().includes(q);
     const matchCat  = !catVal  || p.category === catVal;
     const matchType = !typeVal || p.product_type === typeVal;
     const matchStat = !statVal || p.status === statVal;
-    return matchQ && matchCat && matchType && matchStat;
+    let matchStock  = true;
+    if (stockVal === 'in_stock')     matchStock = (p.stock_total ?? 0) > (p.low_stock_threshold ?? 10);
+    if (stockVal === 'low_stock')    matchStock = (p.stock_total ?? 0) > 0 && (p.stock_total ?? 0) <= (p.low_stock_threshold ?? 10);
+    if (stockVal === 'out_of_stock') matchStock = (p.stock_total ?? 0) <= 0;
+    return matchQ && matchCat && matchType && matchStat && matchStock;
   });
 
   // Sort
@@ -179,6 +191,23 @@ function applyFilters() {
   currentPage = 1;
   selectedIds.clear();
   updateBulkBar();
+
+  // Show/hide reset button and active filter count badge
+  const hasFilter = q || catVal || typeVal || statVal || stockVal;
+  const resetBtn  = document.getElementById('btnResetFilters');
+  if (resetBtn) resetBtn.style.display = hasFilter ? '' : 'none';
+
+  const activeBadge = document.getElementById('filterActiveCount');
+  if (activeBadge) {
+    const count = [q, catVal, typeVal, statVal, stockVal].filter(Boolean).length;
+    if (count > 0) {
+      activeBadge.textContent = count + ' filter' + (count > 1 ? 's' : '') + ' active';
+      activeBadge.style.display = '';
+    } else {
+      activeBadge.style.display = 'none';
+    }
+  }
+
   renderView();
 }
 
@@ -244,8 +273,8 @@ function renderTable() {
       <td><span class="status-badge ${statusCls}">${esc(p.status || 'draft')}</span></td>
       <td>
         <div class="row-actions">
+          <button class="action-btn" title="View Details" onclick="openViewProductModal('${p.id}')"><i class="fa-solid fa-eye"></i></button>
           <button class="action-btn edit" title="Edit" onclick="openEditModal('${p.id}')"><i class="fa-solid fa-pen"></i></button>
-          <button class="action-btn" title="View" onclick="viewProduct('${p.id}')"><i class="fa-solid fa-eye"></i></button>
           <button class="action-btn delete" title="Delete" onclick="openDeleteModal('${p.id}')"><i class="fa-solid fa-trash"></i></button>
         </div>
       </td>
@@ -301,8 +330,8 @@ function renderGrid() {
         </div>
       </div>
       <div class="product-card-actions">
+        <button class="action-btn" title="View Details" onclick="openViewProductModal('${p.id}')"><i class="fa-solid fa-eye"></i></button>
         <button class="action-btn edit" title="Edit" onclick="openEditModal('${p.id}')"><i class="fa-solid fa-pen"></i></button>
-        <button class="action-btn" title="View" onclick="viewProduct('${p.id}')"><i class="fa-solid fa-eye"></i></button>
         <button class="action-btn delete" title="Delete" onclick="openDeleteModal('${p.id}')"><i class="fa-solid fa-trash"></i></button>
       </div>
     </div>`;
@@ -538,12 +567,7 @@ function bulkDelete() {
   if (typeof showToast !== 'undefined') showToast('Selected products deleted.', 'error');
 }
 
-// ── View product (stub) ───────────────────────────────────────────
-
-function viewProduct(id) {
-  const p = allProducts.find(x => x.id === id);
-  if (p) alert(`Viewing: ${p.name}\nSKU: ${p.sku || '—'}\nPrice: ${formatLKR(p.base_price)}\nStock: ${p.stock_total}`);
-}
+// ── View product — handled by openViewProductModal below ────────────
 
 // ── Escape HTML ───────────────────────────────────────────────────
 
@@ -557,10 +581,8 @@ function bindEvents() {
   // Add Product button
   document.getElementById('btnAddProduct').addEventListener('click', openAddModal);
 
-  // Import / Export stubs
-  document.getElementById('btnImport').addEventListener('click', () => {
-    alert('Import feature coming soon. Accepts CSV / XLSX files.');
-  });
+  // Import / Export
+  document.getElementById('btnImport')?.addEventListener('click', openImportModal);
   document.getElementById('btnExport').addEventListener('click', () => {
     const csv = productsToCSV(filtered);
     downloadCSV(csv, 'lcc-products.csv');
@@ -586,6 +608,18 @@ function bindEvents() {
   document.getElementById('filterCategory').addEventListener('change', applyFilters);
   document.getElementById('filterType').addEventListener('change', applyFilters);
   document.getElementById('filterStatus').addEventListener('change', applyFilters);
+  document.getElementById('filterStock')?.addEventListener('change', applyFilters);
+
+  // Reset filters button
+  document.getElementById('btnResetFilters')?.addEventListener('click', function() {
+    document.getElementById('searchInput').value = '';
+    document.getElementById('filterCategory').value = '';
+    document.getElementById('filterType').value = '';
+    document.getElementById('filterStatus').value = '';
+    const filterStock = document.getElementById('filterStock');
+    if (filterStock) filterStock.value = '';
+    applyFilters();
+  });
 
   // Sort columns
   document.querySelectorAll('.products-table thead th[data-sort]').forEach(th => {
@@ -644,8 +678,16 @@ function bindEvents() {
 
   // Keyboard close
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { closeProductModal(); closeDeleteModal(); }
+    if (e.key === 'Escape') {
+      closeProductModal();
+      closeDeleteModal();
+      closeImportModal();
+      closeViewProductModal();
+    }
   });
+
+  bindImportModalEvents();
+  bindViewProductModalEvents();
 }
 
 // ── View switch ───────────────────────────────────────────────────
@@ -796,6 +838,278 @@ const DEMO_PRODUCTS = [
     created_at: '2026-01-05T08:00:00Z'
   }
 ];
+
+// ── Import Modal ──────────────────────────────────────────────────
+
+let _importStep  = 1;
+let _importFile  = null;
+let _importRows  = [];
+
+function openImportModal() {
+  _importStep = 1;
+  _importFile = null;
+  _importRows = [];
+  showImportStep(1);
+  document.getElementById('importFileInput').value = '';
+  document.getElementById('importFileName').style.display = 'none';
+  document.getElementById('importNextBtn').disabled = true;
+  document.getElementById('importNextBtn').innerHTML = '<i class="fa-solid fa-arrow-right"></i> Next';
+  document.getElementById('importNextBtn').onclick = null;
+  document.getElementById('cancelImportModal').style.display = '';
+  document.getElementById('importModalBackdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeImportModal() {
+  const backdrop = document.getElementById('importModalBackdrop');
+  if (backdrop) { backdrop.classList.remove('open'); }
+  document.body.style.overflow = '';
+}
+
+function showImportStep(step) {
+  _importStep = step;
+  [1, 2, 3].forEach(function(s) {
+    const panel = document.getElementById('importStep' + s);
+    const ind   = document.getElementById('importStep' + s + 'Ind');
+    if (panel) panel.style.display = s === step ? '' : 'none';
+    if (ind) {
+      ind.classList.remove('active', 'done');
+      if (s < step) ind.classList.add('done');
+      if (s === step) ind.classList.add('active');
+    }
+  });
+}
+
+function downloadImportTemplate(e) {
+  e.preventDefault();
+  const csv = 'name,sku,category,product_type,status,base_price,sale_price,cost_price,stock_total,description\n' +
+    '"Sample Product","SKU-001","Men\'s Clothing","simple","active","1500","1299","600","50","Sample description"\n';
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'lcc_products_import_template.csv';
+  a.click();
+}
+
+function handleImportFileSelect(file) {
+  if (!file) return;
+  _importFile = file;
+  const nameEl = document.getElementById('importFileName');
+  nameEl.textContent = '\ud83d\udcc4 ' + file.name + ' (' + (file.size / 1024).toFixed(1) + ' KB)';
+  nameEl.style.display = '';
+  document.getElementById('importNextBtn').disabled = false;
+
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const lines = ev.target.result.split('\n').filter(Boolean);
+    const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+    _importRows = lines.slice(1).map(function(line) {
+      const vals = line.split(',').map(v => v.trim().replace(/^"|"$/g, ''));
+      const row = {};
+      headers.forEach((h, i) => { row[h] = vals[i] || ''; });
+      return row;
+    }).filter(r => r.name || r.sku);
+  };
+  reader.readAsText(file);
+}
+
+function bindImportModalEvents() {
+  const fileInput = document.getElementById('importFileInput');
+  fileInput?.addEventListener('change', function() {
+    if (this.files[0]) handleImportFileSelect(this.files[0]);
+  });
+
+  const dropzone = document.getElementById('importDropzone');
+  if (dropzone) {
+    dropzone.addEventListener('dragover', function(e) { e.preventDefault(); this.classList.add('drag-over'); });
+    dropzone.addEventListener('dragleave', function() { this.classList.remove('drag-over'); });
+    dropzone.addEventListener('drop', function(e) {
+      e.preventDefault();
+      this.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file) { document.getElementById('importFileInput').files = e.dataTransfer.files; handleImportFileSelect(file); }
+    });
+  }
+
+  document.getElementById('closeImportModal')?.addEventListener('click', closeImportModal);
+  document.getElementById('cancelImportModal')?.addEventListener('click', closeImportModal);
+  document.getElementById('importModalBackdrop')?.addEventListener('click', function(e) { if (e.target === this) closeImportModal(); });
+
+  document.getElementById('importNextBtn')?.addEventListener('click', function() {
+    if (_importStep === 1) {
+      const tbody = document.getElementById('importPreviewBody');
+      if (_importRows.length > 0 && tbody) {
+        tbody.innerHTML = _importRows.slice(0, 10).map(r => `
+          <tr>
+            <td style="padding:0.5rem 0.75rem;border-bottom:1px solid var(--color-neutral-100);">${r.name || '\u2014'}</td>
+            <td style="padding:0.5rem 0.75rem;border-bottom:1px solid var(--color-neutral-100);font-family:monospace;font-size:0.75rem;">${r.sku || '\u2014'}</td>
+            <td style="padding:0.5rem 0.75rem;border-bottom:1px solid var(--color-neutral-100);">${r.category || '\u2014'}</td>
+            <td style="padding:0.5rem 0.75rem;border-bottom:1px solid var(--color-neutral-100);text-align:right;">\u20a8 ${parseFloat(r.base_price||0).toLocaleString('en-LK')}</td>
+            <td style="padding:0.5rem 0.75rem;border-bottom:1px solid var(--color-neutral-100);text-align:center;"><span class="status-badge ${r.status==='active'?'status-active':'status-draft'}">${r.status||'draft'}</span></td>
+          </tr>
+        `).join('');
+        const msgEl = document.getElementById('importPreviewMsg');
+        if (msgEl) msgEl.textContent = `${_importRows.length} product(s) ready to import${_importRows.length > 10 ? ' (showing first 10)' : ''}`;
+      } else {
+        if (tbody) tbody.innerHTML = '<tr><td colspan="5" style="padding:1.5rem;text-align:center;color:var(--color-neutral-400);">No valid rows found in file</td></tr>';
+        const msgEl = document.getElementById('importPreviewMsg');
+        if (msgEl) {
+          msgEl.parentElement.style.background = '#fef2f2';
+          msgEl.parentElement.style.borderColor = '#fecaca';
+          msgEl.parentElement.style.color = '#b91c1c';
+          msgEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation" style="margin-right:0.375rem;"></i>No valid product rows found.';
+        }
+      }
+      showImportStep(2);
+      this.innerHTML = '<i class="fa-solid fa-file-import"></i> Confirm Import';
+    } else if (_importStep === 2) {
+      this.disabled = true;
+      this.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Importing\u2026';
+      const btn = this;
+      setTimeout(() => {
+        showImportStep(3);
+        document.getElementById('cancelImportModal').style.display = 'none';
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Done';
+        btn.disabled = false;
+        btn.onclick = closeImportModal;
+        if (window.Toast) Toast.success('Import Successful', `${_importRows.length} product(s) imported successfully.`);
+        else if (typeof showToast === 'function') showToast(`${_importRows.length} product(s) imported`, 'success');
+      }, 1200);
+    }
+  });
+}
+
+
+// ── View Product Modal ────────────────────────────────────────────
+
+let _viewProductId = null;
+
+function openViewProductModal(id) {
+  const p = allProducts.find(pr => pr.id === id);
+  if (!p) return;
+  _viewProductId = id;
+
+  document.getElementById('viewProductModalTitle').textContent = p.name;
+  document.getElementById('viewProductModalSub').textContent   = `SKU: ${p.sku || '\u2014'} \u00b7 ${p.product_type || 'simple'} \u00b7 ${p.category || 'Uncategorized'}`;
+
+  const variantsHTML = p.variants && p.variants.length ? `
+    <div style="margin-top:1.25rem;">
+      <div style="font-size:0.75rem;font-weight:700;color:var(--color-neutral-400);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.625rem;">Variants (${p.variants.length})</div>
+      <div style="border:1px solid var(--color-neutral-200);border-radius:var(--radius);overflow:hidden;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.78125rem;">
+          <thead>
+            <tr style="background:var(--color-neutral-50);">
+              <th style="padding:0.5rem 0.75rem;text-align:left;font-weight:600;color:var(--color-neutral-500);border-bottom:1px solid var(--color-neutral-200);">SKU</th>
+              <th style="padding:0.5rem 0.75rem;text-align:left;font-weight:600;color:var(--color-neutral-500);border-bottom:1px solid var(--color-neutral-200);">Attributes</th>
+              <th style="padding:0.5rem 0.75rem;text-align:right;font-weight:600;color:var(--color-neutral-500);border-bottom:1px solid var(--color-neutral-200);">Price</th>
+              <th style="padding:0.5rem 0.75rem;text-align:right;font-weight:600;color:var(--color-neutral-500);border-bottom:1px solid var(--color-neutral-200);">Stock</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${p.variants.map(v => `
+              <tr style="border-bottom:1px solid var(--color-neutral-100);">
+                <td style="padding:0.5rem 0.75rem;font-family:monospace;font-size:0.75rem;color:var(--color-neutral-600);">${v.sku || '\u2014'}</td>
+                <td style="padding:0.5rem 0.75rem;">${Object.entries(v.attributes||{}).map(([k,val]) => `<span style="background:#f3f4f6;padding:0.1rem 0.4rem;border-radius:3px;font-size:0.7rem;margin-right:0.25rem;">${k}: ${val}</span>`).join('')}</td>
+                <td style="padding:0.5rem 0.75rem;text-align:right;font-weight:600;">\u20a8 ${Number(v.price||0).toLocaleString('en-LK')}</td>
+                <td style="padding:0.5rem 0.75rem;text-align:right;">${v.stock ?? '\u2014'}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  ` : '';
+
+  const salePriceDisplay = p.sale_price
+    ? '\u20a8 ' + Number(p.sale_price).toLocaleString('en-LK')
+    : '<span style="color:var(--color-neutral-400);font-size:0.875rem;">Not set</span>';
+  const costPriceDisplay = p.cost_price
+    ? '\u20a8 ' + Number(p.cost_price).toLocaleString('en-LK')
+    : '<span style="color:var(--color-neutral-400);font-size:0.875rem;">Not set</span>';
+
+  const saleBg     = p.sale_price && p.sale_price < p.base_price ? '#dcfce7' : 'var(--color-neutral-50)';
+  const saleBorder = p.sale_price && p.sale_price < p.base_price ? '#bbf7d0' : 'var(--color-neutral-200)';
+
+  document.getElementById('viewProductModalBody').innerHTML = `
+    <div style="display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1.5rem;flex-wrap:wrap;">
+      <img src="${imgSrc(p)}" alt="${esc(p.name)}" style="width:96px;height:96px;object-fit:cover;border-radius:10px;flex-shrink:0;border:1px solid var(--color-neutral-200);"
+           onerror="this.src='https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=200&h=200&fit=crop';" />
+      <div style="flex:1;min-width:160px;">
+        <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.5rem;">
+          <span class="status-badge ${statusBadgeClass(p.status)}">${p.status || 'draft'}</span>
+          <span class="type-badge ${typeBadgeClass(p.product_type)}">${p.product_type || 'simple'}</span>
+          ${p.tags && p.tags.length ? p.tags.map(t => `<span style="background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;padding:0.15rem 0.5rem;border-radius:99px;font-size:0.7rem;font-weight:600;">${t}</span>`).join('') : ''}
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.375rem 1rem;font-size:0.8125rem;">
+          <div><span style="color:var(--color-neutral-400);font-weight:500;">Brand:</span> <span style="color:var(--color-neutral-800);">${p.brand || '\u2014'}</span></div>
+          <div><span style="color:var(--color-neutral-400);font-weight:500;">Barcode:</span> <span style="color:var(--color-neutral-800);font-family:monospace;font-size:0.75rem;">${p.barcode || '\u2014'}</span></div>
+          <div><span style="color:var(--color-neutral-400);font-weight:500;">Tax Class:</span> <span style="color:var(--color-neutral-800);">${p.tax_class || '\u2014'}</span></div>
+          <div><span style="color:var(--color-neutral-400);font-weight:500;">Unit:</span> <span style="color:var(--color-neutral-800);">${p.unit_of_measure || '\u2014'}</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-bottom:1.25rem;">
+      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:var(--radius);padding:0.75rem;text-align:center;">
+        <div style="font-size:0.7rem;font-weight:600;color:#c2410c;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.25rem;">Base Price</div>
+        <div style="font-size:1.25rem;font-weight:800;color:#c2410c;">\u20a8 ${Number(p.base_price||0).toLocaleString('en-LK')}</div>
+      </div>
+      <div style="background:${saleBg};border:1px solid ${saleBorder};border-radius:var(--radius);padding:0.75rem;text-align:center;">
+        <div style="font-size:0.7rem;font-weight:600;color:var(--color-neutral-400);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.25rem;">Sale Price</div>
+        <div style="font-size:1.25rem;font-weight:800;color:var(--color-neutral-700);">${salePriceDisplay}</div>
+      </div>
+      <div style="background:var(--color-neutral-50);border:1px solid var(--color-neutral-200);border-radius:var(--radius);padding:0.75rem;text-align:center;">
+        <div style="font-size:0.7rem;font-weight:600;color:var(--color-neutral-400);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.25rem;">Cost Price</div>
+        <div style="font-size:1.25rem;font-weight:800;color:var(--color-neutral-700);">${costPriceDisplay}</div>
+      </div>
+    </div>
+
+    <div style="background:var(--color-neutral-50);border:1px solid var(--color-neutral-200);border-radius:var(--radius);padding:0.875rem 1rem;margin-bottom:1.25rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;">
+      <div>
+        <div style="font-size:0.75rem;font-weight:600;color:var(--color-neutral-400);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.25rem;">Stock</div>
+        <div style="font-size:1.5rem;font-weight:800;color:${(p.stock_total||0) <= 0 ? '#dc2626' : (p.stock_total||0) <= (p.low_stock_threshold||10) ? '#d97706' : '#16a34a'};">
+          ${p.stock_total ?? 0} <span style="font-size:0.875rem;font-weight:500;color:var(--color-neutral-500);">units</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:0.75rem;font-weight:600;color:var(--color-neutral-400);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.25rem;">Reorder Point</div>
+        <div style="font-size:1.125rem;font-weight:700;color:var(--color-neutral-700);">${p.low_stock_threshold ?? 10} units</div>
+      </div>
+      <div>
+        <div style="font-size:0.75rem;font-weight:600;color:var(--color-neutral-400);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:0.25rem;">Visibility</div>
+        <div style="display:flex;flex-direction:column;gap:0.25rem;">
+          <span style="font-size:0.75rem;"><i class="fa-solid fa-cash-register" style="color:${p.is_pos_visible ? '#f97316' : '#d1d5db'};margin-right:0.25rem;"></i>${p.is_pos_visible ? 'Visible on POS' : 'Hidden from POS'}</span>
+          <span style="font-size:0.75rem;"><i class="fa-solid fa-globe" style="color:${p.is_webstore_visible ? '#1d4ed8' : '#d1d5db'};margin-right:0.25rem;"></i>${p.is_webstore_visible ? 'Visible on Webstore' : 'Hidden from Webstore'}</span>
+        </div>
+      </div>
+    </div>
+
+    ${p.description ? `<div style="font-size:0.8125rem;color:var(--color-neutral-600);line-height:1.6;margin-bottom:1.25rem;padding:0.75rem 1rem;background:var(--color-neutral-50);border-radius:var(--radius);border:1px solid var(--color-neutral-200);"><span style="font-weight:600;color:var(--color-neutral-700);">Description:</span> ${p.description}</div>` : ''}
+
+    ${variantsHTML}
+  `;
+
+  document.getElementById('viewProductModalBackdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeViewProductModal() {
+  const backdrop = document.getElementById('viewProductModalBackdrop');
+  if (backdrop) backdrop.classList.remove('open');
+  document.body.style.overflow = '';
+  _viewProductId = null;
+}
+
+function bindViewProductModalEvents() {
+  document.getElementById('closeViewProductModal')?.addEventListener('click', closeViewProductModal);
+  document.getElementById('cancelViewProductModal')?.addEventListener('click', closeViewProductModal);
+  document.getElementById('viewProductModalBackdrop')?.addEventListener('click', function(e) { if (e.target === this) closeViewProductModal(); });
+  document.getElementById('viewProductEditBtn')?.addEventListener('click', function() {
+    closeViewProductModal();
+    if (_viewProductId) openEditModal(_viewProductId);
+  });
+}
+
 
 // ── Bootstrap ─────────────────────────────────────────────────────
 init();
