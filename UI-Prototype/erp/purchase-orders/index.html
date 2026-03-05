@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Purchase Orders — LankaCommerce Cloud</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"/>
+  <link rel="stylesheet" href="../../assets/css/variables.css"/>
+  <link rel="stylesheet" href="../../assets/css/base.css"/>
+  <link rel="stylesheet" href="../../assets/css/components.css"/>
+  <link rel="stylesheet" href="../../assets/css/layout.css"/>
+  <link rel="stylesheet" href="../erp.css"/>
+  <link rel="stylesheet" href="purchase-orders.css"/>
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <div class="main-wrapper" id="mainWrapper">
+    <header class="top-bar" id="erpTopBar" data-page-title="Purchase Orders"></header>
+
+    <main class="main-content">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Purchase Orders</h1>
+          <p class="page-subtitle">Manage supplier purchase orders and payments</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-outline btn-sm" id="btnExport"><i class="fa-solid fa-file-export"></i> Export</button>
+          <button class="btn btn-primary btn-sm" id="btnAddPO"><i class="fa-solid fa-plus"></i> New PO</button>
+        </div>
+      </div>
+
+      <!-- KPI Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-icon blue"><i class="fa-solid fa-cart-flatbed"></i></div>
+          <div>
+            <div class="kpi-label">Total POs</div>
+            <div class="kpi-value" id="statTotalPO">—</div>
+            <div class="kpi-sub">All purchase orders</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon orange"><i class="fa-solid fa-hourglass-half"></i></div>
+          <div>
+            <div class="kpi-label">Pending / Approved</div>
+            <div class="kpi-value" id="statPendingPO">—</div>
+            <div class="kpi-sub">Awaiting processing</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon red"><i class="fa-solid fa-clock-rotate-left"></i></div>
+          <div>
+            <div class="kpi-label">Outstanding Balance</div>
+            <div class="kpi-value" id="statBalance">—</div>
+            <div class="kpi-sub">Unpaid + partial</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon green"><i class="fa-solid fa-circle-check"></i></div>
+          <div>
+            <div class="kpi-label">Total Order Value</div>
+            <div class="kpi-value" id="statTotalValue">—</div>
+            <div class="kpi-sub">All-time PO value</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <div class="search-wrap">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="searchInput" placeholder="Search by PO ID or vendor name…"/>
+        </div>
+        <select id="filterStatus">
+          <option value="">All Statuses</option>
+          <option value="draft">Draft</option>
+          <option value="pending">Pending</option>
+          <option value="approved">Approved</option>
+          <option value="received">Received</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+        <select id="filterPayment">
+          <option value="">All Payments</option>
+          <option value="unpaid">Unpaid</option>
+          <option value="partial">Partial</option>
+          <option value="paid">Paid</option>
+        </select>
+        <button class="btn btn-ghost btn-sm" onclick="clearFilters()"><i class="fa-solid fa-xmark"></i> Clear</button>
+      </div>
+
+      <!-- PO Table -->
+      <div class="table-card">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>PO ID</th>
+              <th>Vendor</th>
+              <th>Order Date</th>
+              <th>Expected Date</th>
+              <th>Items</th>
+              <th>Total (LKR)</th>
+              <th>Status</th>
+              <th>Payment</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="poBody">
+            <tr><td colspan="9" style="text-align:center;padding:2rem;color:var(--color-neutral-400);">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination-bar">
+        <span id="paginationInfo">Showing 0–0 of 0 orders</span>
+        <div class="pagination-btns" id="paginationBtns"></div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ========== EXPORT MODAL ========== -->
+<div class="modal-overlay" id="exportModal">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header">
+      <h3 class="modal-title"><i class="fa-solid fa-file-export" style="color:var(--color-primary-500);"></i> Export Purchase Orders</h3>
+      <button class="modal-close" onclick="closeExportModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Format</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="exportFmt" value="csv" checked/><span><i class="fa-solid fa-file-csv"></i> CSV (Excel)</span></label>
+          <label class="radio-option"><input type="radio" name="exportFmt" value="json"/><span><i class="fa-solid fa-code"></i> JSON</span></label>
+        </div>
+      </div>
+      <div class="form-group" style="margin-top:.75rem;">
+        <label class="form-label">Scope</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="exportScope" value="filtered" checked/><span>Current filter results</span></label>
+          <label class="radio-option"><input type="radio" name="exportScope" value="all"/><span>All purchase orders</span></label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-sm" onclick="closeExportModal()">Cancel</button>
+      <button class="btn btn-primary btn-sm" onclick="doExport()"><i class="fa-solid fa-download"></i> Download</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== ADD / EDIT PO MODAL ========== -->
+<div class="modal-overlay" id="poModal">
+  <div class="modal" style="max-width:580px;">
+    <div class="modal-header">
+      <h3 class="modal-title" id="poModalTitle">New Purchase Order</h3>
+      <button class="modal-close" onclick="closePOModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <form id="poForm">
+      <div class="modal-body">
+        <div class="form-section-title">Vendor &amp; Dates</div>
+        <div class="form-group"><label class="form-label required">Vendor Name</label><input type="text" id="fVendorName" class="form-control" placeholder="e.g. Silva Electronics Ltd" required/></div>
+        <div class="form-grid-2" style="margin-top:.75rem;">
+          <div class="form-group"><label class="form-label required">Order Date</label><input type="date" id="fOrderDate" class="form-control" required/></div>
+          <div class="form-group"><label class="form-label">Expected Delivery</label><input type="date" id="fExpectedDate" class="form-control"/></div>
+        </div>
+        <div class="form-section-title" style="margin-top:1rem;">Order Details</div>
+        <div class="form-grid-3">
+          <div class="form-group"><label class="form-label">Items Count</label><input type="number" id="fItemsCount" class="form-control" placeholder="e.g. 5" min="1"/></div>
+          <div class="form-group"><label class="form-label required">Total Amount (LKR)</label><input type="number" id="fTotalAmount" class="form-control" placeholder="e.g. 125000" min="0" required/></div>
+          <div class="form-group"><label class="form-label">Paid Amount (LKR)</label><input type="number" id="fPaidAmount" class="form-control" placeholder="0" min="0" value="0"/></div>
+        </div>
+        <div class="form-grid-2" style="margin-top:.75rem;">
+          <div class="form-group"><label class="form-label">Status</label>
+            <select id="fStatus" class="form-control">
+              <option value="draft">Draft</option><option value="pending" selected>Pending</option>
+              <option value="approved">Approved</option><option value="received">Received</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">Payment Status</label>
+            <select id="fPaymentStatus" class="form-control">
+              <option value="unpaid" selected>Unpaid</option>
+              <option value="partial">Partial</option>
+              <option value="paid">Paid</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-section-title" style="margin-top:1rem;">Notes</div>
+        <div class="form-group"><textarea id="fNotes" class="form-control" rows="2" placeholder="Additional notes…"></textarea></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost btn-sm" onclick="closePOModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary btn-sm" id="poModalSaveBtn"><i class="fa-solid fa-plus"></i> Create PO</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ========== DELETE MODAL ========== -->
+<div class="modal-overlay" id="deletePOModal">
+  <div class="modal" style="max-width:400px;">
+    <div class="modal-header">
+      <h3 class="modal-title" style="color:#dc2626;"><i class="fa-solid fa-triangle-exclamation"></i> Delete Purchase Order</h3>
+      <button class="modal-close" onclick="closeDeleteModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body" style="text-align:center;padding:1.5rem 1.25rem;">
+      <div style="width:52px;height:52px;border-radius:50%;background:#fef2f2;color:#dc2626;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin:0 auto 1rem;"><i class="fa-solid fa-trash"></i></div>
+      <p style="font-size:.88rem;color:var(--color-neutral-600);line-height:1.6;">Are you sure you want to delete<br/><strong id="deletePOId">this order</strong>?<br/><span style="font-size:.75rem;color:var(--color-neutral-400);">This cannot be undone.</span></p>
+    </div>
+    <div class="modal-footer" style="justify-content:center;gap:.75rem;">
+      <button class="btn btn-ghost btn-sm" onclick="closeDeleteModal()">Cancel</button>
+      <button class="btn btn-danger btn-sm" onclick="confirmDeletePO()"><i class="fa-solid fa-trash"></i> Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PO DETAIL DRAWER ========== -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closePODrawer()"></div>
+<div class="po-drawer" id="poDrawer">
+  <div class="vd-header" id="poDrawerHeader"></div>
+  <div class="vd-body" id="poDrawerBody"></div>
+  <div class="vd-footer" id="poDrawerFooter"></div>
+</div>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="../../assets/js/utils.js"></script>
+<script src="../../assets/js/layout.js"></script>
+<script src="../erp-header.js"></script>
+<script src="../erp.js"></script>
+<script src="../../assets/js/toast.js"></script>
+<script src="purchase-orders.js"></script>
+</body>
+</html>

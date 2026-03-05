@@ -43,8 +43,10 @@
     'products':   'Products',
     'inventory':  'Inventory',
     'customers':  'Customers',
-    'vendors':    'Vendors',
+    'vendors':          'Vendors',
+    'purchase-orders':  'Purchase Orders',
     'accounting': 'Accounting',
+    'expenses':   'Expenses',
     'hr':         'HR &amp; Payroll',
     'reports':    'Reports',
     'settings':   'Store Settings',
@@ -115,13 +117,13 @@
         <span class="nav-section-title">Relationships</span>
         ${item('customers/index.html', 'fa-users',          'Customers',        null, 'customers')}
         ${item('vendors/index.html',   'fa-truck-ramp-box', 'Vendors',           null, 'vendors')}
-        ${item('vendors/index.html',   'fa-cart-flatbed',   'Purchase Orders',   null, 'purchase-orders')}
+        ${item('purchase-orders/index.html',   'fa-cart-flatbed',   'Purchase Orders',   null, 'purchase-orders')}
       </div>
 
       <div class="nav-section">
         <span class="nav-section-title">Finance</span>
         ${item('accounting/index.html', 'fa-calculator', 'Accounting', null, 'accounting')}
-        ${item('accounting/index.html', 'fa-receipt',    'Expenses',    null, 'expenses')}
+        ${item('expenses/index.html',    'fa-receipt',    'Expenses',    null, 'expenses')}
       </div>
 
       <div class="nav-section">
@@ -237,7 +239,9 @@
     { test: function(p){ return /\/inventory\//i.test(p);    },  key: 'inventory'       },
     { test: function(p){ return /\/customers\//i.test(p);    },  key: 'customers'       },
     { test: function(p){ return /\/vendors\//i.test(p);      },  key: 'vendors'         },
+    { test: function(p){ return /\/purchase-orders\//i.test(p); },  key: 'purchase-orders' },
     { test: function(p){ return /\/accounting\//i.test(p);   },  key: 'accounting'      },
+    { test: function(p){ return /\/expenses\//i.test(p);    },  key: 'expenses'        },
     { test: function(p){ return /\/hr\//i.test(p);           },  key: 'employees'       },
     { test: function(p){ return /\/reports\//i.test(p);      },  key: 'reports'         },
     { test: function(p){ return /\/settings\//i.test(p);     },  key: 'settings'        },
