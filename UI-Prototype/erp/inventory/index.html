@@ -39,76 +39,89 @@
               </p>
             </div>
             <div class="page-actions">
-              <button class="btn btn-outline btn-sm">
+              <button class="btn btn-outline btn-sm" id="btnStockIn" onclick="openStockInModal()">
                 <i class="fa-solid fa-arrow-down"></i> Stock In
               </button>
-              <button class="btn btn-outline btn-sm">
+              <button class="btn btn-outline btn-sm" id="btnStockOut" onclick="openStockOutModal()">
                 <i class="fa-solid fa-arrow-up"></i> Stock Out
               </button>
-              <button class="btn btn-primary btn-sm">
+              <button class="btn btn-primary btn-sm" id="btnAdjustStock" onclick="openAdjustStockModal(null)">
                 <i class="fa-solid fa-sliders"></i> Adjust Stock
               </button>
             </div>
           </div>
 
           <!-- KPI Cards -->
-          <div class="kpi-row">
-            <div class="kpi-card">
-              <div class="kpi-value">1,248</div>
-              <div class="kpi-label">
-                <i class="fa-solid fa-tags"></i> Total SKUs
+          <div class="inv-kpi-grid" id="kpiGrid">
+            <div class="inv-kpi-card">
+              <div class="inv-kpi-icon kpi-icon-blue"><i class="fa-solid fa-tags"></i></div>
+              <div class="inv-kpi-body">
+                <div class="inv-kpi-label">Total SKUs</div>
+                <div class="inv-kpi-value" id="kpiTotalSKUs">—</div>
+                <div class="inv-kpi-sub" id="kpiTotalSub">Across all warehouses</div>
               </div>
             </div>
-            <div class="kpi-card">
-              <div class="kpi-value kpi-danger">87</div>
-              <div class="kpi-label">
-                <i class="fa-solid fa-triangle-exclamation"></i> Low Stock Items
+            <div class="inv-kpi-card">
+              <div class="inv-kpi-icon kpi-icon-amber"><i class="fa-solid fa-triangle-exclamation"></i></div>
+              <div class="inv-kpi-body">
+                <div class="inv-kpi-label">Low Stock Items</div>
+                <div class="inv-kpi-value amber" id="kpiLowStock">—</div>
+                <div class="inv-kpi-sub" id="kpiLowStockSub">Need restocking soon</div>
               </div>
             </div>
-            <div class="kpi-card">
-              <div class="kpi-value kpi-danger">23</div>
-              <div class="kpi-label">
-                <i class="fa-solid fa-circle-xmark"></i> Out of Stock
+            <div class="inv-kpi-card">
+              <div class="inv-kpi-icon kpi-icon-red"><i class="fa-solid fa-circle-xmark"></i></div>
+              <div class="inv-kpi-body">
+                <div class="inv-kpi-label">Out of Stock</div>
+                <div class="inv-kpi-value danger" id="kpiOutOfStock">—</div>
+                <div class="inv-kpi-sub" id="kpiOutOfStockSub">Require urgent attention</div>
               </div>
             </div>
-            <div class="kpi-card">
-              <div class="kpi-value">₨ 14.2M</div>
-              <div class="kpi-label">
-                <i class="fa-solid fa-coins"></i> Total Stock Value (LKR)
+            <div class="inv-kpi-card">
+              <div class="inv-kpi-icon kpi-icon-green"><i class="fa-solid fa-coins"></i></div>
+              <div class="inv-kpi-body">
+                <div class="inv-kpi-label">Total Stock Value</div>
+                <div class="inv-kpi-value" id="kpiTotalValue" style="font-size:1.375rem;">—</div>
+                <div class="inv-kpi-sub" id="kpiTotalValueSub">Cost price × quantity</div>
               </div>
             </div>
           </div>
 
           <!-- Filter Bar -->
-          <div class="filter-bar">
-            <i
-              class="fa-solid fa-magnifying-glass"
-              style="color: var(--color-neutral-400)"
-            ></i>
-            <input
-              type="search"
-              placeholder="Search product or SKU…"
-              id="searchInput"
-            />
-            <select id="warehouseFilter">
-              <option value="">All Warehouses</option>
-              <option>Colombo Main</option>
-              <option>Kandy Branch</option>
-              <option>Galle Store</option>
-            </select>
-            <select id="categoryFilter">
-              <option value="">All Categories</option>
-              <option>Electronics</option>
-              <option>Clothing</option>
-              <option>Food & Beverage</option>
-              <option>Household</option>
-            </select>
-            <select id="statusFilter">
-              <option value="">All Statuses</option>
-              <option>In Stock</option>
-              <option>Low Stock</option>
-              <option>Out of Stock</option>
-            </select>
+          <div class="inv-filter-bar">
+            <div class="inv-filter-search-wrap">
+              <i class="fa-solid fa-magnifying-glass inv-filter-search-icon"></i>
+              <input type="text" class="inv-filter-search-input" id="searchInput" placeholder="Search by product name or SKU…" autocomplete="off" />
+            </div>
+            <div class="inv-filter-select-wrap">
+              <label class="inv-filter-select-label">Warehouse</label>
+              <select class="inv-filter-select-input" id="warehouseFilter">
+                <option value="">All</option>
+                <option>Colombo Main</option>
+                <option>Kandy Branch</option>
+                <option>Galle Store</option>
+              </select>
+            </div>
+            <div class="inv-filter-select-wrap">
+              <label class="inv-filter-select-label">Category</label>
+              <select class="inv-filter-select-input" id="categoryFilter">
+                <option value="">All</option>
+                <option>Electronics</option>
+                <option>Clothing</option>
+                <option>Food &amp; Beverage</option>
+                <option>Household</option>
+              </select>
+            </div>
+            <div class="inv-filter-select-wrap">
+              <label class="inv-filter-select-label">Status</label>
+              <select class="inv-filter-select-input" id="statusFilter">
+                <option value="">All Status</option>
+                <option value="In Stock">In Stock</option>
+                <option value="Low Stock">Low Stock</option>
+                <option value="Out of Stock">Out of Stock</option>
+              </select>
+            </div>
+            <button class="inv-reset-btn" id="btnResetFilters"><i class="fa-solid fa-rotate-left"></i> Clear</button>
           </div>
 
           <!-- Inventory Table -->
@@ -124,197 +137,24 @@
                   <th>Reserved</th>
                   <th>Available</th>
                   <th>Min Stock</th>
+                  <th>Unit Cost</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <strong>Maliban Cream Cracker</strong><br /><small
-                      style="color: var(--color-neutral-500)"
-                      >Food &amp; Beverage</small
-                    >
-                  </td>
-                  <td class="sku-code">SKU-00124</td>
-                  <td>Colombo Main</td>
-                  <td>A1-R3</td>
-                  <td>540</td>
-                  <td>60</td>
-                  <td>480</td>
-                  <td>100</td>
-                  <td><span class="badge badge-green">In Stock</span></td>
-                  <td>
-                    <button class="act-btn" title="Edit">
-                      <i class="fa-solid fa-pen"></i></button
-                    ><button class="act-btn" title="View">
-                      <i class="fa-solid fa-eye"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>Dialog 4G Router</strong><br /><small
-                      style="color: var(--color-neutral-500)"
-                      >Electronics</small
-                    >
-                  </td>
-                  <td class="sku-code">SKU-00287</td>
-                  <td>Colombo Main</td>
-                  <td>C2-R1</td>
-                  <td>18</td>
-                  <td>5</td>
-                  <td>13</td>
-                  <td>20</td>
-                  <td><span class="badge badge-yellow">Low Stock</span></td>
-                  <td>
-                    <button class="act-btn" title="Edit">
-                      <i class="fa-solid fa-pen"></i></button
-                    ><button class="act-btn" title="View">
-                      <i class="fa-solid fa-eye"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>Hemas Baby Lotion 200ml</strong><br /><small
-                      style="color: var(--color-neutral-500)"
-                      >Household</small
-                    >
-                  </td>
-                  <td class="sku-code">SKU-00391</td>
-                  <td>Kandy Branch</td>
-                  <td>B4-R2</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>50</td>
-                  <td><span class="badge badge-red">Out of Stock</span></td>
-                  <td>
-                    <button class="act-btn" title="Edit">
-                      <i class="fa-solid fa-pen"></i></button
-                    ><button class="act-btn" title="View">
-                      <i class="fa-solid fa-eye"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>Batik Sarong — Blue</strong><br /><small
-                      style="color: var(--color-neutral-500)"
-                      >Clothing</small
-                    >
-                  </td>
-                  <td class="sku-code">SKU-00452</td>
-                  <td>Galle Store</td>
-                  <td>D1-R5</td>
-                  <td>210</td>
-                  <td>30</td>
-                  <td>180</td>
-                  <td>40</td>
-                  <td><span class="badge badge-green">In Stock</span></td>
-                  <td>
-                    <button class="act-btn" title="Edit">
-                      <i class="fa-solid fa-pen"></i></button
-                    ><button class="act-btn" title="View">
-                      <i class="fa-solid fa-eye"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>Elephant House Ginger Beer 330ml</strong
-                    ><br /><small style="color: var(--color-neutral-500)"
-                      >Food &amp; Beverage</small
-                    >
-                  </td>
-                  <td class="sku-code">SKU-00503</td>
-                  <td>Colombo Main</td>
-                  <td>A3-R1</td>
-                  <td>1,200</td>
-                  <td>150</td>
-                  <td>1,050</td>
-                  <td>200</td>
-                  <td><span class="badge badge-green">In Stock</span></td>
-                  <td>
-                    <button class="act-btn" title="Edit">
-                      <i class="fa-solid fa-pen"></i></button
-                    ><button class="act-btn" title="View">
-                      <i class="fa-solid fa-eye"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>Singer Ceiling Fan 56"</strong><br /><small
-                      style="color: var(--color-neutral-500)"
-                      >Electronics</small
-                    >
-                  </td>
-                  <td class="sku-code">SKU-00617</td>
-                  <td>Kandy Branch</td>
-                  <td>E2-R3</td>
-                  <td>14</td>
-                  <td>3</td>
-                  <td>11</td>
-                  <td>15</td>
-                  <td><span class="badge badge-yellow">Low Stock</span></td>
-                  <td>
-                    <button class="act-btn" title="Edit">
-                      <i class="fa-solid fa-pen"></i></button
-                    ><button class="act-btn" title="View">
-                      <i class="fa-solid fa-eye"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>Munchee Chocolate Puff</strong><br /><small
-                      style="color: var(--color-neutral-500)"
-                      >Food &amp; Beverage</small
-                    >
-                  </td>
-                  <td class="sku-code">SKU-00742</td>
-                  <td>Colombo Main</td>
-                  <td>A2-R4</td>
-                  <td>875</td>
-                  <td>100</td>
-                  <td>775</td>
-                  <td>150</td>
-                  <td><span class="badge badge-green">In Stock</span></td>
-                  <td>
-                    <button class="act-btn" title="Edit">
-                      <i class="fa-solid fa-pen"></i></button
-                    ><button class="act-btn" title="View">
-                      <i class="fa-solid fa-eye"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <strong>Kandyan Handloom Cushion Cover</strong><br /><small
-                      style="color: var(--color-neutral-500)"
-                      >Household</small
-                    >
-                  </td>
-                  <td class="sku-code">SKU-00881</td>
-                  <td>Galle Store</td>
-                  <td>D3-R2</td>
-                  <td>62</td>
-                  <td>10</td>
-                  <td>52</td>
-                  <td>25</td>
-                  <td><span class="badge badge-green">In Stock</span></td>
-                  <td>
-                    <button class="act-btn" title="Edit">
-                      <i class="fa-solid fa-pen"></i></button
-                    ><button class="act-btn" title="View">
-                      <i class="fa-solid fa-eye"></i>
-                    </button>
-                  </td>
-                </tr>
+              <tbody id="invTableBody">
+              <!-- Rendered by JS -->
               </tbody>
             </table>
+            <div id="invEmptyState" class="empty-state" style="display:none;">
+              <div class="empty-state-icon"><i class="fa-solid fa-warehouse"></i></div>
+              <div class="empty-state-title">No inventory items found</div>
+              <div class="empty-state-sub">Try adjusting your filters</div>
+            </div>
+            <div class="inv-pagination-wrap" id="invPaginationWrap">
+              <div id="invPaginationInfo">Showing 0 of 0 items</div>
+              <div class="inv-pagination-controls" id="invPaginationControls"></div>
+            </div>
           </div>
         </main>
       </div>
@@ -325,12 +165,276 @@
   </div><!-- /.main-wrapper -->
 </div><!-- /.app-shell -->
 
+<!-- Stock In Modal -->
+<div class="modal-backdrop" id="stockInModal">
+  <div class="modal-box" style="max-width:520px;">
+    <div class="modal-header">
+      <div class="modal-title"><i class="fa-solid fa-arrow-down" style="color:#16a34a;margin-right:0.5rem;"></i>Stock In</div>
+      <button class="modal-close" onclick="closeStockInModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Product / SKU <span class="req">*</span></label>
+        <select class="form-select" id="siProduct">
+          <option value="">— Select Product —</option>
+        </select>
+      </div>
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="form-group">
+          <label class="form-label">Warehouse <span class="req">*</span></label>
+          <select class="form-select" id="siWarehouse">
+            <option value="Colombo Main">Colombo Main</option>
+            <option value="Kandy Branch">Kandy Branch</option>
+            <option value="Galle Store">Galle Store</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Quantity <span class="req">*</span></label>
+          <input type="number" class="form-input" id="siQty" min="1" value="1" placeholder="Enter qty" />
+        </div>
+      </div>
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="form-group">
+          <label class="form-label">Unit Cost (LKR)</label>
+          <input type="number" class="form-input" id="siUnitCost" min="0" step="0.01" placeholder="0.00" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date <span class="req">*</span></label>
+          <input type="date" class="form-input" id="siDate" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Reference / PO Number</label>
+        <input type="text" class="form-input" id="siReference" placeholder="e.g. PO-2026-001" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <textarea class="form-textarea" id="siNotes" placeholder="Received from supplier, condition notes…" style="min-height:64px;"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeStockInModal()">Cancel</button>
+      <button class="btn btn-primary" style="background:#16a34a;border-color:#16a34a;" onclick="confirmStockIn()"><i class="fa-solid fa-check"></i> Record Stock In</button>
+    </div>
+  </div>
+</div>
+
+<!-- Stock Out Modal -->
+<div class="modal-backdrop" id="stockOutModal">
+  <div class="modal-box" style="max-width:520px;">
+    <div class="modal-header">
+      <div class="modal-title"><i class="fa-solid fa-arrow-up" style="color:#dc2626;margin-right:0.5rem;"></i>Stock Out</div>
+      <button class="modal-close" onclick="closeStockOutModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Product / SKU <span class="req">*</span></label>
+        <select class="form-select" id="soProduct">
+          <option value="">— Select Product —</option>
+        </select>
+      </div>
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="form-group">
+          <label class="form-label">Warehouse <span class="req">*</span></label>
+          <select class="form-select" id="soWarehouse">
+            <option value="Colombo Main">Colombo Main</option>
+            <option value="Kandy Branch">Kandy Branch</option>
+            <option value="Galle Store">Galle Store</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Quantity <span class="req">*</span></label>
+          <input type="number" class="form-input" id="soQty" min="1" value="1" placeholder="Enter qty" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Reason <span class="req">*</span></label>
+        <select class="form-select" id="soReason">
+          <option value="">— Select reason —</option>
+          <option value="sale">Sale (Manual)</option>
+          <option value="damage">Damage / Write-off</option>
+          <option value="transfer">Transfer to Branch</option>
+          <option value="return_to_supplier">Return to Supplier</option>
+          <option value="sample">Sample / Promo</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="form-group">
+          <label class="form-label">Reference</label>
+          <input type="text" class="form-input" id="soReference" placeholder="e.g. ORD-2026-001" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date <span class="req">*</span></label>
+          <input type="date" class="form-input" id="soDate" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <textarea class="form-textarea" id="soNotes" placeholder="Additional notes…" style="min-height:56px;"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeStockOutModal()">Cancel</button>
+      <button class="btn btn-primary" style="background:#dc2626;border-color:#dc2626;" onclick="confirmStockOut()"><i class="fa-solid fa-check"></i> Record Stock Out</button>
+    </div>
+  </div>
+</div>
+
+<!-- Adjust Stock Modal -->
+<div class="modal-backdrop" id="adjustStockModal">
+  <div class="modal-box" style="max-width:540px;">
+    <div class="modal-header">
+      <div class="modal-title"><i class="fa-solid fa-sliders" style="color:#4f46e5;margin-right:0.5rem;"></i>Adjust Stock</div>
+      <button class="modal-close" onclick="closeAdjustStockModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:0.75rem 1rem;margin-bottom:1.25rem;font-size:0.8125rem;color:#1e40af;">
+        <i class="fa-solid fa-circle-info" style="margin-right:0.375rem;"></i>
+        Stock adjustments correct discrepancies found during stock-takes, damage discovery, or system corrections.
+      </div>
+      <div class="form-group">
+        <label class="form-label">Product / SKU <span class="req">*</span></label>
+        <select class="form-select" id="adjProduct">
+          <option value="">— Select Product —</option>
+        </select>
+      </div>
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="form-group">
+          <label class="form-label">Warehouse <span class="req">*</span></label>
+          <select class="form-select" id="adjWarehouse">
+            <option value="Colombo Main">Colombo Main</option>
+            <option value="Kandy Branch">Kandy Branch</option>
+            <option value="Galle Store">Galle Store</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Adjustment Type <span class="req">*</span></label>
+          <select class="form-select" id="adjType">
+            <option value="adjustment">General Adjustment</option>
+            <option value="stock_take">Stock-Take Correction</option>
+            <option value="damage">Damage / Write-off</option>
+            <option value="write_off">Write-off</option>
+            <option value="return">Return from Customer</option>
+          </select>
+        </div>
+      </div>
+      <div style="background:var(--color-neutral-50);border:1px solid var(--color-neutral-200);border-radius:8px;padding:0.75rem 1rem;margin-bottom:1rem;">
+        <div style="font-size:0.75rem;font-weight:600;color:var(--color-neutral-500);margin-bottom:0.25rem;">Current Stock (On Hand)</div>
+        <div style="font-size:1.125rem;font-weight:700;color:var(--color-neutral-900);" id="adjCurrentStock">—</div>
+      </div>
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="form-group">
+          <label class="form-label">Adjusted Quantity <span class="req">*</span></label>
+          <input type="number" class="form-input" id="adjQty" placeholder="New total on-hand qty" min="0" oninput="adjUpdateDelta()" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Difference</label>
+          <div style="padding:0.5625rem 0.75rem;background:var(--color-neutral-50);border:1px solid var(--color-neutral-200);border-radius:var(--radius);font-weight:700;font-size:0.875rem;color:var(--color-neutral-700);" id="adjDelta">—</div>
+        </div>
+      </div>
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="form-group">
+          <label class="form-label">Reference</label>
+          <input type="text" class="form-input" id="adjReference" placeholder="e.g. STOCK-TAKE-2026-01" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date <span class="req">*</span></label>
+          <input type="date" class="form-input" id="adjDate" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Reason / Notes <span class="req">*</span></label>
+        <textarea class="form-textarea" id="adjNotes" placeholder="Explain the reason for this adjustment…" style="min-height:72px;"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeAdjustStockModal()">Cancel</button>
+      <button class="btn btn-primary" style="background:#4f46e5;border-color:#4f46e5;" onclick="confirmAdjustStock()"><i class="fa-solid fa-check"></i> Save Adjustment</button>
+    </div>
+  </div>
+</div>
+
+<!-- View Inventory Item Modal -->
+<div class="modal-backdrop" id="viewItemModal">
+  <div class="modal-box" style="max-width:600px;">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="viewItemTitle">Inventory Details</div>
+        <div style="font-size:0.75rem;color:var(--color-neutral-400);margin-top:1px;" id="viewItemSub"></div>
+      </div>
+      <button class="modal-close" onclick="closeViewItemModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body" id="viewItemBody"><!-- populated by JS --></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeViewItemModal()">Close</button>
+      <button class="btn btn-outline" onclick="editItemFromView()"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+      <button class="btn btn-primary" style="background:#4f46e5;border-color:#4f46e5;" onclick="adjustFromView()"><i class="fa-solid fa-sliders"></i> Adjust Stock</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Inventory Item Modal -->
+<div class="modal-backdrop" id="editItemModal">
+  <div class="modal-box" style="max-width:540px;">
+    <div class="modal-header">
+      <div class="modal-title" id="editItemModalTitle"><i class="fa-solid fa-pen-to-square" style="color:#4f46e5;margin-right:0.5rem;"></i>Edit Inventory Item</div>
+      <button class="modal-close" onclick="closeEditItemModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editItemId" />
+      <div class="form-group">
+        <label class="form-label">Product Name</label>
+        <input type="text" class="form-input" id="editItemProduct" readonly style="background:var(--color-neutral-50);" />
+      </div>
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="form-group">
+          <label class="form-label">SKU</label>
+          <input type="text" class="form-input" id="editItemSku" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Warehouse</label>
+          <select class="form-select" id="editItemWarehouse">
+            <option value="Colombo Main">Colombo Main</option>
+            <option value="Kandy Branch">Kandy Branch</option>
+            <option value="Galle Store">Galle Store</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="form-group">
+          <label class="form-label">Storage Location</label>
+          <input type="text" class="form-input" id="editItemLocation" placeholder="e.g. A1-R3" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Min Stock (Reorder Point)</label>
+          <input type="number" class="form-input" id="editItemMinStock" min="0" />
+        </div>
+      </div>
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="form-group">
+          <label class="form-label">Reserved Qty</label>
+          <input type="number" class="form-input" id="editItemReserved" min="0" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Unit Cost (LKR)</label>
+          <input type="number" class="form-input" id="editItemUnitCost" min="0" step="0.01" />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeEditItemModal()">Cancel</button>
+      <button class="btn btn-primary" style="background:#4f46e5;border-color:#4f46e5;" onclick="confirmEditItem()"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+    </div>
+  </div>
+</div>
+
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <script src="../../assets/js/layout.js"></script>
 <script src="../erp-header.js"></script>
 <script src="../erp.js"></script>
-
-    <script src="inventory.js"></script>
+<script src="../../assets/js/toast.js"></script>
+<script src="inventory.js"></script>
   </body>
 </html>
