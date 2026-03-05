@@ -222,6 +222,193 @@
       "tax": 0,
       "total": 38250,
       "notes": "Accepted — awaiting delivery address confirmation."
+    },
+    {
+      "id": "QUO-2026-0013",
+      "customer_id": "CUS-015",
+      "customer_name": "Priya Wickramasinghe",
+      "customer_phone": "+94 77 987 6543",
+      "status": "sent",
+      "created_at": "2026-02-01T09:30:00",
+      "valid_until": "2026-03-01",
+      "items": [
+        { "name": "Batik Saree", "variant": "Blue Floral", "qty": 3, "unit_price": 8500, "line_total": 25500 },
+        { "name": "Matching Blouse Piece", "variant": "Blue", "qty": 3, "unit_price": 1800, "line_total": 5400 }
+      ],
+      "subtotal": 30900,
+      "discount": 0,
+      "shipping": 400,
+      "tax": 0,
+      "total": 31300,
+      "notes": "Customer requested custom sizes. Confirmation pending."
+    },
+    {
+      "id": "QUO-2026-0014",
+      "customer_id": "CUS-017",
+      "customer_name": "Ashan Fernando",
+      "customer_phone": "+94 71 234 5678",
+      "status": "draft",
+      "created_at": "2026-02-03T11:00:00",
+      "valid_until": "2026-03-05",
+      "items": [
+        { "name": "Men's Dress Shirt", "variant": "L / White", "qty": 5, "unit_price": 3200, "line_total": 16000 },
+        { "name": "Men's Dress Shirt", "variant": "L / Blue", "qty": 5, "unit_price": 3200, "line_total": 16000 }
+      ],
+      "subtotal": 32000,
+      "discount": 1600,
+      "shipping": 0,
+      "tax": 5472,
+      "total": 35872,
+      "notes": "Company uniform order — awaiting manager approval before sending."
+    },
+    {
+      "id": "QUO-2026-0015",
+      "customer_id": "CUS-019",
+      "customer_name": "Dilnoza Amarasinghe",
+      "customer_phone": "+94 76 543 2109",
+      "status": "accepted",
+      "created_at": "2026-01-25T14:00:00",
+      "valid_until": "2026-02-25",
+      "items": [
+        { "name": "Children's School Uniform Set", "variant": "Age 8", "qty": 3, "unit_price": 4500, "line_total": 13500 }
+      ],
+      "subtotal": 13500,
+      "discount": 500,
+      "shipping": 350,
+      "tax": 0,
+      "total": 13350,
+      "notes": "Accepted. Convert to order."
+    },
+    {
+      "id": "QUO-2026-0016",
+      "customer_id": "CUS-021",
+      "customer_name": "Kanishka Rajapaksa",
+      "customer_phone": "+94 74 321 9087",
+      "status": "expired",
+      "created_at": "2025-12-15T08:00:00",
+      "valid_until": "2026-01-15",
+      "items": [
+        { "name": "Silk Tie Set", "variant": "Assorted", "qty": 20, "unit_price": 1500, "line_total": 30000 },
+        { "name": "Cufflinks Set", "variant": "Silver", "qty": 20, "unit_price": 2200, "line_total": 44000 }
+      ],
+      "subtotal": 74000,
+      "discount": 7400,
+      "shipping": 0,
+      "tax": 0,
+      "total": 66600,
+      "notes": "Corporate gifting order — expired without response."
+    },
+    {
+      "id": "QUO-2026-0017",
+      "customer_id": "CUS-023",
+      "customer_name": "Samantha Gunasekara",
+      "customer_phone": "+94 77 654 3210",
+      "status": "rejected",
+      "created_at": "2026-01-18T15:30:00",
+      "valid_until": "2026-02-18",
+      "items": [
+        { "name": "Embroidered Kurta", "variant": "M / Maroon", "qty": 6, "unit_price": 6500, "line_total": 39000 }
+      ],
+      "subtotal": 39000,
+      "discount": 0,
+      "shipping": 500,
+      "tax": 0,
+      "total": 39500,
+      "notes": "Customer rejected — requested a different design."
+    },
+    {
+      "id": "QUO-2026-0018",
+      "customer_id": "CUS-025",
+      "customer_name": "Buddhika Senanayake",
+      "customer_phone": "+94 70 876 5432",
+      "status": "sent",
+      "created_at": "2026-02-05T10:15:00",
+      "valid_until": "2026-03-07",
+      "items": [
+        { "name": "Sports Tracksuit", "variant": "L / Navy", "qty": 15, "unit_price": 5500, "line_total": 82500 }
+      ],
+      "subtotal": 82500,
+      "discount": 8250,
+      "shipping": 0,
+      "tax": 13365,
+      "total": 87615,
+      "notes": "Sports club bulk order. Awaiting committee approval."
+    },
+    {
+      "id": "QUO-2026-0019",
+      "customer_id": "CUS-027",
+      "customer_name": "Thisara Mendis",
+      "customer_phone": "+94 72 123 4567",
+      "status": "draft",
+      "created_at": "2026-02-07T08:30:00",
+      "valid_until": "2026-03-10",
+      "items": [
+        { "name": "Linen Shirt", "variant": "M / Beige", "qty": 4, "unit_price": 4200, "line_total": 16800 },
+        { "name": "Linen Trousers", "variant": "32 / Beige", "qty": 4, "unit_price": 5800, "line_total": 23200 }
+      ],
+      "subtotal": 40000,
+      "discount": 2000,
+      "shipping": 0,
+      "tax": 0,
+      "total": 38000,
+      "notes": "Draft for hotel uniform pilot. Awaiting final size confirmation."
+    },
+    {
+      "id": "QUO-2026-0020",
+      "customer_id": "CUS-029",
+      "customer_name": "Nilmini Herath",
+      "customer_phone": "+94 78 901 2345",
+      "status": "accepted",
+      "created_at": "2026-02-02T13:00:00",
+      "valid_until": "2026-03-02",
+      "items": [
+        { "name": "Wedding Saree", "variant": "Red / Gold Border", "qty": 1, "unit_price": 32000, "line_total": 32000 },
+        { "name": "Matching Blouse Piece", "variant": "Red", "qty": 1, "unit_price": 3500, "line_total": 3500 }
+      ],
+      "subtotal": 35500,
+      "discount": 0,
+      "shipping": 0,
+      "tax": 0,
+      "total": 35500,
+      "notes": "Wedding order — accepted. Convert to order and arrange express delivery."
+    },
+    {
+      "id": "QUO-2026-0021",
+      "customer_id": "CUS-031",
+      "customer_name": "Asitha Kumarasinghe",
+      "customer_phone": "+94 71 567 8901",
+      "status": "sent",
+      "created_at": "2026-02-06T16:00:00",
+      "valid_until": "2026-03-08",
+      "items": [
+        { "name": "Security Guard Uniform Shirt", "variant": "L / Black", "qty": 30, "unit_price": 2800, "line_total": 84000 },
+        { "name": "Security Guard Uniform Trousers", "variant": "34 / Black", "qty": 30, "unit_price": 3200, "line_total": 96000 }
+      ],
+      "subtotal": 180000,
+      "discount": 18000,
+      "shipping": 0,
+      "tax": 0,
+      "total": 162000,
+      "notes": "Security firm uniforms. Price valid 30 days. Volume discount applied."
+    },
+    {
+      "id": "QUO-2026-0022",
+      "customer_id": "CUS-033",
+      "customer_name": "Maneesha Jayawardena",
+      "customer_phone": "+94 75 432 1098",
+      "status": "draft",
+      "created_at": "2026-02-08T09:00:00",
+      "valid_until": "2026-03-10",
+      "items": [
+        { "name": "Office Casual Shirt", "variant": "M / Light Blue", "qty": 10, "unit_price": 2600, "line_total": 26000 },
+        { "name": "Office Casual Trousers", "variant": "30 / Charcoal", "qty": 10, "unit_price": 3800, "line_total": 38000 }
+      ],
+      "subtotal": 64000,
+      "discount": 3200,
+      "shipping": 600,
+      "tax": 0,
+      "total": 61400,
+      "notes": "Office wear refresh order — draft pending final headcount."
     }
   ]
 }
