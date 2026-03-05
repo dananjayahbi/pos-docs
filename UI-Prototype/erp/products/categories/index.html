@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Categories — LankaCommerce Cloud</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="../../../assets/css/variables.css" />
+  <link rel="stylesheet" href="../../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../../assets/css/components.css" />
+  <link rel="stylesheet" href="../../../assets/css/layout.css" />
+  <link rel="stylesheet" href="../../erp.css"/>
+  <link rel="stylesheet" href="categories.css" />
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <div class="main-wrapper" id="mainWrapper">
+    <header class="top-bar" id="erpTopBar" data-page-title="Categories"></header>
+
+    <div class="page-content">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Product Categories</h1>
+          <p class="page-subtitle">Organise your product catalog with categories and subcategories</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-outline btn-sm" id="btnViewToggle" onclick="toggleCatView()" title="Toggle view">
+            <i class="fa-solid fa-table-cells" id="viewToggleIcon"></i>
+          </button>
+          <button class="btn btn-primary btn-sm" onclick="openAddCatModal()">
+            <i class="fa-solid fa-plus"></i> Add Category
+          </button>
+        </div>
+      </div>
+
+      <!-- KPI Cards -->
+      <div class="cat-kpi-grid">
+        <div class="cat-kpi-card">
+          <div class="cat-kpi-icon icon-indigo"><i class="fa-solid fa-folder"></i></div>
+          <div class="cat-kpi-body">
+            <div class="cat-kpi-label">Total Categories</div>
+            <div class="cat-kpi-value" id="kpiTotal">—</div>
+            <div class="cat-kpi-sub" id="kpiTotalSub">—</div>
+          </div>
+        </div>
+        <div class="cat-kpi-card">
+          <div class="cat-kpi-icon icon-green"><i class="fa-solid fa-circle-check"></i></div>
+          <div class="cat-kpi-body">
+            <div class="cat-kpi-label">Active</div>
+            <div class="cat-kpi-value" id="kpiActive">—</div>
+            <div class="cat-kpi-sub">Visible in store &amp; POS</div>
+          </div>
+        </div>
+        <div class="cat-kpi-card">
+          <div class="cat-kpi-icon icon-orange"><i class="fa-solid fa-box-open"></i></div>
+          <div class="cat-kpi-body">
+            <div class="cat-kpi-label">Total Products</div>
+            <div class="cat-kpi-value" id="kpiProducts">—</div>
+            <div class="cat-kpi-sub">Assigned to categories</div>
+          </div>
+        </div>
+        <div class="cat-kpi-card">
+          <div class="cat-kpi-icon icon-amber"><i class="fa-solid fa-clock-rotate-left"></i></div>
+          <div class="cat-kpi-body">
+            <div class="cat-kpi-label">Recently Added</div>
+            <div class="cat-kpi-value" id="kpiRecent">—</div>
+            <div class="cat-kpi-sub">In last 30 days</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="cat-filter-bar">
+        <div class="cat-search-wrap">
+          <i class="fa-solid fa-magnifying-glass cat-search-icon"></i>
+          <input type="text" class="cat-search-input" id="catSearch" placeholder="Search categories…" oninput="applyFilters()" autocomplete="off" />
+        </div>
+        <div class="cat-filter-group">
+          <label class="cat-filter-label">Status</label>
+          <select class="cat-filter-select" id="catStatusFilter" onchange="applyFilters()">
+            <option value="">All Status</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+        <div class="cat-filter-group">
+          <label class="cat-filter-label">Sort By</label>
+          <select class="cat-filter-select" id="catSortBy" onchange="applyFilters()">
+            <option value="name">Name (A–Z)</option>
+            <option value="products_desc">Most Products</option>
+            <option value="products_asc">Least Products</option>
+            <option value="newest">Newest First</option>
+          </select>
+        </div>
+        <button class="cat-reset-btn" id="btnCatReset" onclick="resetFilters()"><i class="fa-solid fa-rotate-left"></i> Clear</button>
+      </div>
+
+      <!-- Results count -->
+      <div style="font-size:0.8rem;color:var(--color-neutral-500);margin-bottom:0.75rem;" id="catResultsLabel"></div>
+
+      <!-- Category Cards Grid -->
+      <div class="cat-grid" id="catCardsContainer">
+        <!-- rendered by JS -->
+      </div>
+
+      <!-- Category Table (hidden by default) -->
+      <div class="tbl-wrap" id="catTableContainer" style="display:none;">
+        <table class="inv-table" id="catTable">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Slug</th>
+              <th>Parent</th>
+              <th>Products</th>
+              <th>Status</th>
+              <th>Created</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="catTableBody"><!-- rendered by JS --></tbody>
+        </table>
+      </div>
+
+      <!-- Empty state -->
+      <div id="catEmptyState" class="empty-state" style="display:none;">
+        <div class="empty-state-icon"><i class="fa-solid fa-folder-open"></i></div>
+        <div class="empty-state-title">No categories found</div>
+        <div class="empty-state-sub">Try adjusting your search or filters</div>
+      </div>
+
+    </div><!-- end page-content -->
+  </div><!-- end main-wrapper -->
+</div><!-- end app-shell -->
+
+<!-- ── Sidebar Overlay ──────────────────────────────────── -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- ── Add / Edit Category Modal ──────────────────────────── -->
+<div class="modal-backdrop" id="catFormModal">
+  <div class="modal-box" style="max-width:560px;">
+    <div class="modal-header">
+      <div class="modal-title" id="catModalTitle"><i class="fa-solid fa-folder-plus" style="color:#4f46e5;margin-right:0.5rem;"></i>Add Category</div>
+      <button class="modal-close" onclick="closeCatModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="catFormId" />
+      <div class="form-group">
+        <label class="form-label">Category Name <span class="req">*</span></label>
+        <input type="text" class="form-input" id="catFormName" placeholder="e.g. Men's Clothing" oninput="autofillSlug()" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Slug <span class="req">*</span></label>
+        <div style="display:flex;gap:0.5rem;">
+          <input type="text" class="form-input" id="catFormSlug" placeholder="e.g. mens-clothing" style="flex:1;" />
+          <button class="btn btn-outline btn-sm" type="button" onclick="autofillSlug(true)" style="white-space:nowrap;">
+            <i class="fa-solid fa-rotate-right"></i> Generate
+          </button>
+        </div>
+        <div style="font-size:0.75rem;color:var(--color-neutral-500);margin-top:0.25rem;">Used in URLs — lowercase, hyphens only.</div>
+      </div>
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="form-group">
+          <label class="form-label">Parent Category</label>
+          <select class="form-select" id="catFormParent">
+            <option value="">— None (Top Level) —</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-select" id="catFormStatus">
+            <option value="true">Active</option>
+            <option value="false">Inactive</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Image URL</label>
+        <input type="url" class="form-input" id="catFormImage" placeholder="https://…" oninput="previewCatImage()" />
+        <div id="catImgPreview" style="margin-top:0.5rem;display:none;">
+          <img id="catImgPreviewImg" src="" alt="preview" style="height:80px;border-radius:8px;object-fit:cover;border:1px solid var(--color-neutral-200);" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea class="form-textarea" id="catFormDesc" rows="3" placeholder="Short description of this category…"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeCatModal()">Cancel</button>
+      <button class="btn btn-primary" style="background:#4f46e5;border-color:#4f46e5;" onclick="saveCatForm()"><i class="fa-solid fa-floppy-disk"></i> <span id="catSaveBtnText">Add Category</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Delete Confirm Modal ──────────────────────────── -->
+<div class="modal-backdrop" id="catDeleteModal">
+  <div class="modal-box" style="max-width:420px;">
+    <div class="modal-header">
+      <div class="modal-title" style="color:#dc2626;"><i class="fa-solid fa-trash" style="margin-right:0.5rem;"></i>Delete Category</div>
+      <button class="modal-close" onclick="closeCatDeleteModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:0.9375rem;margin-bottom:0.25rem;">Are you sure you want to delete <strong id="catDeleteName">this category</strong>?</p>
+      <p style="font-size:0.8125rem;color:var(--color-neutral-500);">This action cannot be undone. Products in this category will not be deleted.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeCatDeleteModal()">Cancel</button>
+      <button class="btn btn-primary" style="background:#dc2626;border-color:#dc2626;" onclick="confirmDeleteCat()"><i class="fa-solid fa-trash"></i> Delete</button>
+    </div>
+  </div>
+</div>
+
+<script src="../../../assets/js/layout.js"></script>
+<script src="../../erp-header.js"></script>
+<script src="../../erp.js"></script>
+<script src="../../../assets/js/toast.js"></script>
+<script src="categories.js"></script>
+</body>
+</html>

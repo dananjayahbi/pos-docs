@@ -108,7 +108,7 @@
         <span class="nav-section-title">Catalog</span>
         ${item('products/index.html',  'fa-box',           'Products',   null, 'products')}
         ${item('inventory/index.html', 'fa-boxes-stacked', 'Inventory',  null, 'inventory')}
-        ${item('products/index.html',  'fa-tags',          'Categories', null, 'categories')}
+        ${item('products/categories/index.html',  'fa-tags',  'Categories', null, 'categories')}
       </div>
 
       <div class="nav-section">
@@ -232,6 +232,7 @@
     { test: function(p){ return p.endsWith('/orders.html');    },  key: 'orders'          },
     { test: function(p){ return p.endsWith('/invoices.html');   },  key: 'invoices'        },
     { test: function(p){ return p.endsWith('/quotations.html'); },  key: 'quotations'      },
+    { test: function(p){ return /\/products\/categories\//i.test(p); },  key: 'categories'  },
     { test: function(p){ return /\/products\//i.test(p);     },  key: 'products'        },
     { test: function(p){ return /\/inventory\//i.test(p);    },  key: 'inventory'       },
     { test: function(p){ return /\/customers\//i.test(p);    },  key: 'customers'       },
