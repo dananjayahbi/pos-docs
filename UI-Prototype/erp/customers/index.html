@@ -43,12 +43,40 @@
       </div>
     </div>
 
-    <!-- Stat pills -->
-    <div class="stat-pills" id="statPills">
-      <div class="stat-pill"><span class="pill-dot orange"></span> Total <strong id="statTotal">–</strong></div>
-      <div class="stat-pill"><span class="pill-dot green"></span> Active <strong id="statActive">–</strong></div>
-      <div class="stat-pill"><span class="pill-dot purple"></span> VIP / Platinum <strong id="statVip">–</strong></div>
-      <div class="stat-pill"><span class="pill-dot red"></span> Has Balance <strong id="statOverdue">–</strong></div>
+    <!-- KPI Grid -->
+    <div class="cust-kpi-grid">
+      <div class="cust-kpi-card">
+        <div class="cust-kpi-icon icon-orange"><i class="fa-solid fa-users"></i></div>
+        <div class="cust-kpi-body">
+          <div class="cust-kpi-label">Total Customers</div>
+          <div class="cust-kpi-value" id="statTotal">–</div>
+          <div class="cust-kpi-sub">All registered</div>
+        </div>
+      </div>
+      <div class="cust-kpi-card">
+        <div class="cust-kpi-icon icon-green"><i class="fa-solid fa-user-check"></i></div>
+        <div class="cust-kpi-body">
+          <div class="cust-kpi-label">Active Customers</div>
+          <div class="cust-kpi-value" id="statActive">–</div>
+          <div class="cust-kpi-sub">Currently active</div>
+        </div>
+      </div>
+      <div class="cust-kpi-card">
+        <div class="cust-kpi-icon icon-purple"><i class="fa-solid fa-crown"></i></div>
+        <div class="cust-kpi-body">
+          <div class="cust-kpi-label">VIP / Platinum</div>
+          <div class="cust-kpi-value" id="statVip">–</div>
+          <div class="cust-kpi-sub">Top tier members</div>
+        </div>
+      </div>
+      <div class="cust-kpi-card">
+        <div class="cust-kpi-icon icon-red"><i class="fa-solid fa-circle-exclamation"></i></div>
+        <div class="cust-kpi-body">
+          <div class="cust-kpi-label">Has Balance</div>
+          <div class="cust-kpi-value" id="statOverdue">–</div>
+          <div class="cust-kpi-sub">Credit balance used</div>
+        </div>
+      </div>
     </div>
 
     <!-- Toolbar -->
@@ -252,6 +280,157 @@
         </button>
       </div>
     </form>
+  </div>
+</div>
+
+<!-- ══════════════ IMPORT MODAL ══════════════ -->
+<div class="modal-overlay" id="importModal">
+  <div class="modal" style="max-width:580px;">
+    <div class="modal-header">
+      <span class="modal-title"><i class="fa-solid fa-file-import" style="margin-right:0.5rem;color:var(--primary,#f97316);"></i>Import Customers</span>
+      <button class="modal-close" onclick="closeImportModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <!-- Step indicators -->
+      <div class="import-steps">
+        <div class="import-step active" id="istep1"><span class="istep-num">1</span><span class="istep-label">Upload</span></div>
+        <div class="import-step-line"></div>
+        <div class="import-step" id="istep2"><span class="istep-num">2</span><span class="istep-label">Preview</span></div>
+        <div class="import-step-line"></div>
+        <div class="import-step" id="istep3"><span class="istep-num">3</span><span class="istep-label">Confirm</span></div>
+      </div>
+
+      <!-- Step 1: Upload -->
+      <div id="importStep1">
+        <div class="import-drop-zone" id="importDropZone" onclick="document.getElementById('importFileInput').click()">
+          <i class="fa-solid fa-cloud-arrow-up" style="font-size:2.25rem;color:var(--primary,#f97316);margin-bottom:0.75rem;display:block;"></i>
+          <p style="font-weight:600;color:var(--color-neutral-700,#374151);margin:0 0 0.3rem;">Click or drag a CSV file here</p>
+          <p style="font-size:0.8125rem;color:var(--color-neutral-400,#9ca3af);margin:0;">Supported format: .csv (UTF-8)</p>
+          <input type="file" id="importFileInput" accept=".csv" style="display:none;" onchange="handleImportFile(this)" />
+        </div>
+        <div style="text-align:center;margin-top:0.75rem;">
+          <a href="#" class="import-template-link" onclick="downloadImportTemplate(event)"><i class="fa-solid fa-download" style="margin-right:0.3rem;"></i>Download CSV Template</a>
+        </div>
+        <div id="importFileInfo" style="display:none;margin-top:0.75rem;" class="import-file-info">
+          <i class="fa-solid fa-file-csv" style="color:#16a34a;margin-right:0.4rem;"></i>
+          <span id="importFileName"></span>
+          <span id="importRowCount" style="margin-left:0.5rem;color:var(--color-neutral-500);font-size:0.8125rem;"></span>
+        </div>
+      </div>
+
+      <!-- Step 2: Preview -->
+      <div id="importStep2" style="display:none;">
+        <p style="font-size:0.875rem;color:var(--color-neutral-600);margin-bottom:0.75rem;">Preview of first 5 records to be imported:</p>
+        <div class="import-preview-wrap">
+          <table class="import-preview-table">
+            <thead>
+              <tr>
+                <th>First Name</th><th>Last Name</th><th>Email</th><th>Phone</th><th>Tier</th>
+              </tr>
+            </thead>
+            <tbody id="importPreviewBody"></tbody>
+          </table>
+        </div>
+        <p id="importPreviewCount" style="font-size:0.8125rem;color:var(--color-neutral-500);margin-top:0.5rem;"></p>
+      </div>
+
+      <!-- Step 3: Done -->
+      <div id="importStep3" style="display:none;text-align:center;padding:1.5rem 0;">
+        <div style="width:64px;height:64px;border-radius:50%;background:#dcfce7;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
+          <i class="fa-solid fa-circle-check" style="font-size:2rem;color:#16a34a;"></i>
+        </div>
+        <h3 style="font-size:1.125rem;font-weight:700;color:var(--color-neutral-900);margin:0 0 0.5rem;">Import Complete!</h3>
+        <p id="importSuccessMsg" style="font-size:0.875rem;color:var(--color-neutral-600);margin:0;"></p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" id="importCancelBtn" onclick="closeImportModal()">Cancel</button>
+      <button class="btn btn-primary" id="importNextBtn" onclick="importNextStep()">
+        <i class="fa-solid fa-arrow-right"></i> Next
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SEND SMS MODAL ══════════════ -->
+<div class="modal-overlay" id="smsModal">
+  <div class="modal" style="max-width:480px;">
+    <div class="modal-header">
+      <span class="modal-title"><i class="fa-solid fa-comment-sms" style="margin-right:0.5rem;color:var(--primary,#f97316);"></i>Send SMS</span>
+      <button class="modal-close" onclick="closeSmsModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group" style="margin-bottom:1rem;">
+        <label class="form-label">Recipient</label>
+        <input type="text" class="form-control" id="smsRecipient" readonly style="background:var(--color-neutral-50);" />
+      </div>
+      <div class="form-group" style="margin-bottom:0.5rem;">
+        <label class="form-label">Message <span class="req">*</span></label>
+        <textarea class="form-control" id="smsMessage" rows="4" placeholder="Type your SMS message here…" oninput="updateSmsCount()" style="min-height:100px;"></textarea>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.8125rem;color:var(--color-neutral-500);">
+        <span><i class="fa-solid fa-circle-info" style="margin-right:0.3rem;"></i>SMS will be sent via Dialog / Mobitel gateway</span>
+        <span id="smsCharCount">0 / 160</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeSmsModal()">Cancel</button>
+      <button class="btn btn-primary" id="smsSendBtn" onclick="confirmSendSMS()">
+        <i class="fa-solid fa-paper-plane"></i> Send SMS
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ DELETE CONFIRM MODAL ══════════════ -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header">
+      <span class="modal-title" style="color:#dc2626;"><i class="fa-solid fa-trash-can" style="margin-right:0.5rem;"></i>Delete Customer</span>
+      <button class="modal-close" onclick="closeDeleteModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body" style="text-align:center;padding:1.75rem 1.5rem;">
+      <div style="width:60px;height:60px;border-radius:50%;background:#fee2e2;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;">
+        <i class="fa-solid fa-triangle-exclamation" style="font-size:1.5rem;color:#dc2626;"></i>
+      </div>
+      <h3 style="font-size:1rem;font-weight:700;color:var(--color-neutral-900);margin:0 0 0.5rem;">Are you sure?</h3>
+      <p style="font-size:0.875rem;color:var(--color-neutral-600);margin:0;">
+        You are about to permanently delete <strong id="deleteCustomerName"></strong>. This action cannot be undone.
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeDeleteModal()">Cancel</button>
+      <button class="btn btn-danger" id="confirmDeleteBtn" onclick="confirmDeleteCustomer()">
+        <i class="fa-solid fa-trash-can"></i> Delete
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ ADD NOTE MODAL ══════════════ -->
+<div class="modal-overlay" id="noteModal">
+  <div class="modal" style="max-width:460px;">
+    <div class="modal-header">
+      <span class="modal-title"><i class="fa-solid fa-note-sticky" style="margin-right:0.5rem;color:var(--primary,#f97316);"></i>Add Note</span>
+      <button class="modal-close" onclick="closeNoteModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="noteCustomerId" />
+      <div class="form-group">
+        <label class="form-label">Customer</label>
+        <input type="text" class="form-control" id="noteCustomerName" readonly style="background:var(--color-neutral-50);" />
+      </div>
+      <div class="form-group" style="margin-top:0.875rem;">
+        <label class="form-label">Note <span class="req">*</span></label>
+        <textarea class="form-control" id="noteText" rows="4" placeholder="Write your note here…" style="min-height:100px;"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeNoteModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveNoteFromModal()">
+        <i class="fa-solid fa-floppy-disk"></i> Save Note
+      </button>
+    </div>
   </div>
 </div>
 

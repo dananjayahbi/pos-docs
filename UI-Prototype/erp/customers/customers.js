@@ -368,24 +368,79 @@ document.getElementById('customerForm').addEventListener('submit', e => {
 });
 
 /* ─── Delete ─── */
+let _pendingDeleteId = null;
 function deleteCustomer(id) {
   const c = allCustomers.find(x => x.id === id);
   if (!c) return;
-  if (!confirm(`Delete ${c.first_name} ${c.last_name}? This cannot be undone.`)) return;
-  allCustomers = allCustomers.filter(x => x.id !== id);
+  _pendingDeleteId = id;
+  document.getElementById('deleteCustomerName').textContent = `${c.first_name} ${c.last_name}`;
+  document.getElementById('deleteModal').classList.add('open');
+}
+function closeDeleteModal() {
+  document.getElementById('deleteModal').classList.remove('open');
+  _pendingDeleteId = null;
+}
+function confirmDeleteCustomer() {
+  if (!_pendingDeleteId) return;
+  allCustomers = allCustomers.filter(x => x.id !== _pendingDeleteId);
   saveLocal();
   applyFilters();
   updateStats();
+  closeDeleteModal();
+  closeSlideOver();
   showToast('Customer deleted.', 'warning');
 }
 
-/* ─── Add Note & SMS ─── */
+/* ─── Add Note ─── */
 function addNote(id) {
+  const c = allCustomers.find(x => x.id === id);
+  if (!c) return;
+  document.getElementById('noteCustomerId').value = id;
+  document.getElementById('noteCustomerName').value = `${c.first_name} ${c.last_name}`;
+  document.getElementById('noteText').value = '';
+  document.getElementById('noteModal').classList.add('open');
+}
+function closeNoteModal() {
+  document.getElementById('noteModal').classList.remove('open');
+}
+function saveNoteFromModal() {
+  const id   = document.getElementById('noteCustomerId').value;
+  const text = document.getElementById('noteText').value.trim();
+  if (!text) { showToast('Please enter a note.', 'error'); return; }
+  const c = allCustomers.find(x => x.id === id);
+  if (!c) return;
+  const prev = (c.notes || '').trim();
+  c.notes = prev ? `${prev}\n${text}` : text;
+  saveLocal();
+  closeNoteModal();
+  showToast('Note saved.', 'success');
   openSlideOver(id, 'notes');
 }
+
+/* ─── Send SMS ─── */
+let _smsCustId = null;
 function sendSMS(id) {
   const c = allCustomers.find(x => x.id === id);
-  showToast(`SMS to ${fmtPhone(c?.phone||'')} queued. (Demo)`, 'info');
+  if (!c) return;
+  _smsCustId = id;
+  document.getElementById('smsRecipient').value = `${c.first_name} ${c.last_name} · ${fmtPhone(c.phone)}`;
+  document.getElementById('smsMessage').value = '';
+  document.getElementById('smsCharCount').textContent = '0 / 160';
+  document.getElementById('smsModal').classList.add('open');
+}
+function closeSmsModal() {
+  document.getElementById('smsModal').classList.remove('open');
+  _smsCustId = null;
+}
+function updateSmsCount() {
+  const len = document.getElementById('smsMessage').value.length;
+  document.getElementById('smsCharCount').textContent = `${len} / 160`;
+}
+function confirmSendSMS() {
+  const msg = document.getElementById('smsMessage').value.trim();
+  if (!msg) { showToast('Please enter a message.', 'error'); return; }
+  closeSmsModal();
+  showToast('SMS queued for delivery. (Demo)', 'success');
 }
 
 /* ─── Slide-Over ─── */
@@ -401,8 +456,8 @@ function openSlideOver(id, tab = 'overview') {
   const html = `
     <div class="profile-header">
       <div class="profile-avatar-lg">${c.avatar
-        ? `<img src="${c.avatar}" alt="${ini}" onerror="this.outerHTML='<span style=\\"font-size:1.25rem;font-weight:700;\\">${ini}</span>'" />`
-        : ini}</div>
+        ? `<img src="${c.avatar}" alt="${ini}" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'${ini}'}));" />`
+        : `<span>${ini}</span>`}</div>
       <div>
         <div class="profile-name">${c.first_name} ${c.last_name}</div>
         <div style="display:flex;align-items:center;gap:0.5rem;margin-top:0.35rem;">
@@ -525,8 +580,117 @@ document.getElementById('btnExport').addEventListener('click', () => {
 });
 
 document.getElementById('btnImport').addEventListener('click', () => {
-  showToast('CSV import coming soon.', 'info');
+  openImportModal();
 });
+
+/* ─── Import Modal ─── */
+let _importStep  = 1;
+let _importRows  = [];
+const IMPORT_HEADERS = ['first_name','last_name','email','phone','loyalty_tier'];
+
+function openImportModal() {
+  _importStep = 1;
+  _importRows = [];
+  // Reset UI
+  document.getElementById('importFileInfo').style.display = 'none';
+  document.getElementById('importStep1').style.display = '';
+  document.getElementById('importStep2').style.display = 'none';
+  document.getElementById('importStep3').style.display = 'none';
+  document.getElementById('importFileInput').value = '';
+  ['istep1','istep2','istep3'].forEach((id,i) => {
+    const el = document.getElementById(id);
+    el.classList.toggle('active', i === 0);
+    el.classList.remove('done');
+  });
+  document.getElementById('importNextBtn').innerHTML = '<i class="fa-solid fa-arrow-right"></i> Next';
+  document.getElementById('importModal').classList.add('open');
+}
+
+function closeImportModal() {
+  document.getElementById('importModal').classList.remove('open');
+}
+
+function handleImportFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const info = document.getElementById('importFileInfo');
+  document.getElementById('importFileName').textContent = file.name;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const lines = e.target.result.split(/\r?\n/).filter(l => l.trim());
+    const rows  = lines.slice(1); // skip header
+    _importRows = rows.map(r => {
+      const cols = r.split(',').map(s => s.trim().replace(/^"|"$/g,''));
+      return {
+        first_name:   cols[0] || '',
+        last_name:    cols[1] || '',
+        email:        cols[2] || '',
+        phone:        cols[3] || '',
+        loyalty_tier: cols[4] || 'Bronze'
+      };
+    }).filter(r => r.first_name);
+    document.getElementById('importRowCount').textContent = `(${_importRows.length} records found)`;
+    info.style.display = '';
+  };
+  reader.readAsText(file);
+}
+
+function importNextStep() {
+  if (_importStep === 1) {
+    if (!_importRows.length) { showToast('Please select a CSV file first.', 'error'); return; }
+    // Show step 2 preview
+    _importStep = 2;
+    document.getElementById('importStep1').style.display = 'none';
+    document.getElementById('importStep2').style.display = '';
+    document.getElementById('istep1').classList.remove('active'); document.getElementById('istep1').classList.add('done');
+    document.getElementById('istep2').classList.add('active');
+    // Fill preview table
+    const tbody = document.getElementById('importPreviewBody');
+    tbody.innerHTML = _importRows.slice(0, 5).map(r =>
+      `<tr><td>${r.first_name}</td><td>${r.last_name}</td><td>${r.email||'—'}</td><td>${r.phone||'—'}</td><td>${r.loyalty_tier}</td></tr>`
+    ).join('');
+    const extra = _importRows.length > 5 ? ` and ${_importRows.length - 5} more…` : '.';
+    document.getElementById('importPreviewCount').textContent = `Total: ${_importRows.length} records${extra}`;
+    document.getElementById('importNextBtn').innerHTML = '<i class="fa-solid fa-check"></i> Confirm Import';
+  } else if (_importStep === 2) {
+    // Perform import
+    let nextId = allCustomers.length + 1;
+    _importRows.forEach(r => {
+      const id = `CUS-${String(nextId++).padStart(3,'0')}`;
+      allCustomers.push({
+        id, first_name: r.first_name, last_name: r.last_name,
+        email: r.email, phone: r.phone,
+        customer_type: 'individual', province: '', district: '', city: '',
+        credit_limit: 0, credit_used: 0, loyalty_points: 0,
+        loyalty_tier: r.loyalty_tier || 'Bronze',
+        store_credit_balance: 0, total_orders: 0, total_spent: 0, avg_order_value: 0,
+        customer_since: new Date().toISOString().slice(0,10),
+        status: 'active', tags: [], notes: '', avatar: null
+      });
+    });
+    saveLocal(); applyFilters(); updateStats();
+    _importStep = 3;
+    document.getElementById('importStep2').style.display = 'none';
+    document.getElementById('importStep3').style.display = '';
+    document.getElementById('istep2').classList.remove('active'); document.getElementById('istep2').classList.add('done');
+    document.getElementById('istep3').classList.add('active');
+    document.getElementById('importSuccessMsg').textContent = `${_importRows.length} customers imported successfully.`;
+    document.getElementById('importNextBtn').innerHTML = '<i class="fa-solid fa-check"></i> Done';
+    document.getElementById('importCancelBtn').style.display = 'none';
+  } else {
+    closeImportModal();
+    document.getElementById('importCancelBtn').style.display = '';
+  }
+}
+
+function downloadImportTemplate(e) {
+  e.preventDefault();
+  const csv = 'first_name,last_name,email,phone,loyalty_tier\nKamal,Perera,kamal@gmail.com,+94771234567,Bronze\n';
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'customer_import_template.csv';
+  a.click();
+}
 
 /* ─── URL param: auto-open add modal ─── */
 if (new URLSearchParams(location.search).get('new') === '1') {
