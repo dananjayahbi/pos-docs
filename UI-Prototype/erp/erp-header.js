@@ -48,6 +48,8 @@
     'accounting': 'Accounting',
     'expenses':   'Expenses',
     'hr':         'HR &amp; Payroll',
+    'attendance': 'Attendance',
+    'payroll':    'Payroll',
     'reports':    'Reports',
     'settings':   'Store Settings',
     'sales':      'Sales Orders',
@@ -128,9 +130,9 @@
 
       <div class="nav-section">
         <span class="nav-section-title">HR</span>
-        ${item('hr/index.html', 'fa-id-card',            'Employees',  null, 'employees')}
-        ${item('hr/index.html', 'fa-clock',               'Attendance', null, 'attendance')}
-        ${item('hr/index.html', 'fa-money-check-dollar',  'Payroll',    null, 'payroll')}
+        ${item('hr/index.html',         'fa-id-card',           'Employees',  null, 'employees')}
+        ${item('attendance/index.html',  'fa-clock',              'Attendance', null, 'attendance')}
+        ${item('payroll/index.html',     'fa-money-check-dollar', 'Payroll',    null, 'payroll')}
       </div>
 
       <div class="nav-section">
@@ -243,6 +245,8 @@
     { test: function(p){ return /\/accounting\//i.test(p);   },  key: 'accounting'      },
     { test: function(p){ return /\/expenses\//i.test(p);    },  key: 'expenses'        },
     { test: function(p){ return /\/hr\//i.test(p);           },  key: 'employees'       },
+    { test: function(p){ return /\/attendance\//i.test(p);  },  key: 'attendance'      },
+    { test: function(p){ return /\/payroll\//i.test(p);     },  key: 'payroll'         },
     { test: function(p){ return /\/reports\//i.test(p);      },  key: 'reports'         },
     { test: function(p){ return /\/settings\//i.test(p);     },  key: 'settings'        },
     { test: function(p){ return /\/sales\//i.test(p);        },  key: 'orders'          },

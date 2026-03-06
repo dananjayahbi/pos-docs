@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HR — LankaCommerce Cloud</title>
+  <title>HR &amp; Payroll — LankaCommerce Cloud</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"/>
@@ -12,211 +12,394 @@
   <link rel="stylesheet" href="../../assets/css/components.css"/>
   <link rel="stylesheet" href="../../assets/css/layout.css"/>
   <link rel="stylesheet" href="../erp.css"/>
-  <link rel="stylesheet" href="hr.css" />
+  <link rel="stylesheet" href="hr.css"/>
 </head>
 <body>
 
 <div class="app-shell">
+  <!-- Sidebar -->
   <aside class="sidebar" id="sidebar"></aside>
 
+  <!-- Main Wrapper -->
   <div class="main-wrapper" id="mainWrapper">
     <header class="top-bar" id="erpTopBar" data-page-title="HR &amp; Payroll"></header>
 
-  <!-- MAIN CONTENT -->
-  <main class="main-content">
+    <!-- ═══════════════ MAIN CONTENT ═══════════════ -->
+    <main class="main-content">
 
-    <!-- Page Header -->
-    <div class="page-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;">
-      <div>
-        <h1 class="page-title">Human Resources</h1>
-        <p class="page-subtitle">Manage employees, attendance, payroll &amp; leave</p>
-      </div>
-      <div style="display:flex;gap:.625rem;">
-        <button class="btn btn-outline"><i class="fa-solid fa-money-check-dollar"></i> Run Payroll</button>
-        <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Employee</button>
-      </div>
-    </div>
-
-    <!-- KPI Cards -->
-    <div class="kpi-row">
-      <div class="kpi-card">
-        <div class="kpi-icon icon-orange"><i class="fa-solid fa-users"></i></div>
-        <div class="kpi-label">Total Employees</div>
-        <div class="kpi-value">48</div>
-        <div class="kpi-sub">Across all departments</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-icon icon-green"><i class="fa-solid fa-user-check"></i></div>
-        <div class="kpi-label">Active</div>
-        <div class="kpi-value">44</div>
-        <div class="kpi-sub">Currently employed</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-icon icon-yellow"><i class="fa-regular fa-calendar-xmark"></i></div>
-        <div class="kpi-label">On Leave Today</div>
-        <div class="kpi-value">3</div>
-        <div class="kpi-sub">Approved absences</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-icon icon-blue"><i class="fa-solid fa-sack-dollar"></i></div>
-        <div class="kpi-label">Total Payroll This Month</div>
-        <div class="kpi-value" style="font-size:1.35rem;">₨ 2.4M</div>
-        <div class="kpi-sub">February 2026</div>
-      </div>
-    </div>
-
-    <!-- Tabs -->
-    <div class="tabs-bar">
-      <button class="tab-btn active" data-tab="employees"><i class="fa-solid fa-users" style="margin-right:.4rem;"></i>Employees</button>
-      <button class="tab-btn" data-tab="attendance"><i class="fa-regular fa-clock" style="margin-right:.4rem;"></i>Attendance</button>
-      <button class="tab-btn" data-tab="payroll"><i class="fa-solid fa-money-check-dollar" style="margin-right:.4rem;"></i>Payroll</button>
-      <button class="tab-btn" data-tab="leave"><i class="fa-regular fa-calendar-minus" style="margin-right:.4rem;"></i>Leave Requests</button>
-    </div>
-
-    <!-- TAB: Employees -->
-    <div id="tab-employees" class="tab-panel">
-      <!-- Filter Toolbar -->
-      <div class="toolbar">
-        <div class="toolbar-search">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" placeholder="Search by name, ID or phone…"/>
+      <!-- Page Header -->
+      <div class="page-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem;">
+        <div>
+          <h1 class="page-title">Human Resources</h1>
+          <p class="page-subtitle">Manage employees, attendance, payroll &amp; leave</p>
         </div>
-        <select>
-          <option value="">All Departments</option>
-          <option>Sales</option>
-          <option>Warehouse</option>
-          <option>IT</option>
-          <option>Accounting</option>
-          <option>Administration</option>
-          <option>Delivery</option>
-        </select>
-        <select>
-          <option value="">All Status</option>
-          <option>Active</option>
-          <option>On Leave</option>
-          <option>Inactive</option>
-        </select>
+        <div style="display:flex;gap:.625rem;flex-wrap:wrap;">
+          <button class="btn btn-outline" id="btnExport">
+            <i class="fa-solid fa-download"></i> Export
+          </button>
+          <button class="btn btn-primary" id="btnAddEmployee">
+            <i class="fa-solid fa-plus"></i> Add Employee
+          </button>
+        </div>
       </div>
 
-      <!-- Employee Table -->
-      <div class="data-table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Employee</th>
-              <th>ID</th>
-              <th>Department</th>
-              <th>Role / Position</th>
-              <th>Phone</th>
-              <th>Joined</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><div class="emp-cell"><div class="emp-avatar" style="background:#f97316;">NK</div><div><div class="emp-name">Nuwan Karunaratne</div><div class="emp-email">nuwan@lcc.lk</div></div></div></td>
-              <td><span style="font-family:monospace;font-size:.8125rem;">EMP-001</span></td>
-              <td>Sales</td>
-              <td>Senior Sales Executive</td>
-              <td>+94 77 234 5678</td>
-              <td>12 Jan 2022</td>
-              <td><span class="badge badge-active"><i class="fa-solid fa-circle" style="font-size:.45rem;"></i> Active</span></td>
-              <td><div class="row-actions"><button class="row-btn" title="View"><i class="fa-regular fa-eye"></i></button><button class="row-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button><button class="row-btn danger" title="Remove"><i class="fa-regular fa-trash-can"></i></button></div></td>
-            </tr>
-            <tr>
-              <td><div class="emp-cell"><div class="emp-avatar" style="background:#8b5cf6;">DP</div><div><div class="emp-name">Dilani Perera</div><div class="emp-email">dilani@lcc.lk</div></div></div></td>
-              <td><span style="font-family:monospace;font-size:.8125rem;">EMP-002</span></td>
-              <td>Accounting</td>
-              <td>Finance Manager</td>
-              <td>+94 71 345 6789</td>
-              <td>03 Mar 2021</td>
-              <td><span class="badge badge-active"><i class="fa-solid fa-circle" style="font-size:.45rem;"></i> Active</span></td>
-              <td><div class="row-actions"><button class="row-btn" title="View"><i class="fa-regular fa-eye"></i></button><button class="row-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button><button class="row-btn danger" title="Remove"><i class="fa-regular fa-trash-can"></i></button></div></td>
-            </tr>
-            <tr>
-              <td><div class="emp-cell"><div class="emp-avatar" style="background:#0ea5e9;">RF</div><div><div class="emp-name">Ravindra Fernando</div><div class="emp-email">ravindra@lcc.lk</div></div></div></td>
-              <td><span style="font-family:monospace;font-size:.8125rem;">EMP-003</span></td>
-              <td>IT</td>
-              <td>Systems Administrator</td>
-              <td>+94 76 456 7890</td>
-              <td>17 Jun 2023</td>
-              <td><span class="badge badge-active"><i class="fa-solid fa-circle" style="font-size:.45rem;"></i> Active</span></td>
-              <td><div class="row-actions"><button class="row-btn" title="View"><i class="fa-regular fa-eye"></i></button><button class="row-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button><button class="row-btn danger" title="Remove"><i class="fa-regular fa-trash-can"></i></button></div></td>
-            </tr>
-            <tr>
-              <td><div class="emp-cell"><div class="emp-avatar" style="background:#22c55e;">SR</div><div><div class="emp-name">Samanthi Rajapaksa</div><div class="emp-email">samanthi@lcc.lk</div></div></div></td>
-              <td><span style="font-family:monospace;font-size:.8125rem;">EMP-004</span></td>
-              <td>Warehouse</td>
-              <td>Stock Controller</td>
-              <td>+94 70 567 8901</td>
-              <td>29 Aug 2022</td>
-              <td><span class="badge badge-leave"><i class="fa-solid fa-circle" style="font-size:.45rem;"></i> On Leave</span></td>
-              <td><div class="row-actions"><button class="row-btn" title="View"><i class="fa-regular fa-eye"></i></button><button class="row-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button><button class="row-btn danger" title="Remove"><i class="fa-regular fa-trash-can"></i></button></div></td>
-            </tr>
-            <tr>
-              <td><div class="emp-cell"><div class="emp-avatar" style="background:#ef4444;">PM</div><div><div class="emp-name">Pradeep Mendis</div><div class="emp-email">pradeep@lcc.lk</div></div></div></td>
-              <td><span style="font-family:monospace;font-size:.8125rem;">EMP-005</span></td>
-              <td>Sales</td>
-              <td>Sales Representative</td>
-              <td>+94 75 678 9012</td>
-              <td>05 Feb 2024</td>
-              <td><span class="badge badge-active"><i class="fa-solid fa-circle" style="font-size:.45rem;"></i> Active</span></td>
-              <td><div class="row-actions"><button class="row-btn" title="View"><i class="fa-regular fa-eye"></i></button><button class="row-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button><button class="row-btn danger" title="Remove"><i class="fa-regular fa-trash-can"></i></button></div></td>
-            </tr>
-            <tr>
-              <td><div class="emp-cell"><div class="emp-avatar" style="background:#f59e0b;">AW</div><div><div class="emp-name">Amali Wickramasinghe</div><div class="emp-email">amali@lcc.lk</div></div></div></td>
-              <td><span style="font-family:monospace;font-size:.8125rem;">EMP-006</span></td>
-              <td>Administration</td>
-              <td>HR Coordinator</td>
-              <td>+94 72 789 0123</td>
-              <td>20 Nov 2020</td>
-              <td><span class="badge badge-active"><i class="fa-solid fa-circle" style="font-size:.45rem;"></i> Active</span></td>
-              <td><div class="row-actions"><button class="row-btn" title="View"><i class="fa-regular fa-eye"></i></button><button class="row-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button><button class="row-btn danger" title="Remove"><i class="fa-regular fa-trash-can"></i></button></div></td>
-            </tr>
-            <tr>
-              <td><div class="emp-cell"><div class="emp-avatar" style="background:#06b6d4;">CS</div><div><div class="emp-name">Chaminda Silva</div><div class="emp-email">chaminda@lcc.lk</div></div></div></td>
-              <td><span style="font-family:monospace;font-size:.8125rem;">EMP-007</span></td>
-              <td>Delivery</td>
-              <td>Delivery Driver</td>
-              <td>+94 78 890 1234</td>
-              <td>14 Apr 2023</td>
-              <td><span class="badge badge-inactive"><i class="fa-solid fa-circle" style="font-size:.45rem;"></i> Inactive</span></td>
-              <td><div class="row-actions"><button class="row-btn" title="View"><i class="fa-regular fa-eye"></i></button><button class="row-btn" title="Edit"><i class="fa-regular fa-pen-to-square"></i></button><button class="row-btn danger" title="Remove"><i class="fa-regular fa-trash-can"></i></button></div></td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- KPI Cards -->
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-icon icon-orange"><i class="fa-solid fa-users"></i></div>
+          <div class="kpi-label">Total Employees</div>
+          <div class="kpi-value" id="statTotalEmployees">—</div>
+          <div class="kpi-sub">All staff</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon icon-green"><i class="fa-solid fa-user-check"></i></div>
+          <div class="kpi-label">Active</div>
+          <div class="kpi-value" id="statActiveEmployees">—</div>
+          <div class="kpi-sub">Currently employed</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon icon-yellow"><i class="fa-regular fa-calendar-xmark"></i></div>
+          <div class="kpi-label">On Leave</div>
+          <div class="kpi-value" id="statOnLeave">—</div>
+          <div class="kpi-sub">Approved absences</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon icon-blue"><i class="fa-solid fa-sack-dollar"></i></div>
+          <div class="kpi-label">Monthly Payroll</div>
+          <div class="kpi-value" id="statMonthlyPayroll" style="font-size:1.35rem;">—</div>
+          <div class="kpi-sub">Active + on-leave staff</div>
+        </div>
+      </div>
+
+      <!-- Tabs Bar -->
+      <div class="tabs-bar">
+        <button class="tab-btn active" data-tab="employees">
+          <i class="fa-solid fa-users" style="margin-right:.4rem;"></i>Employees
+        </button>
+        <button class="tab-btn" data-tab="attendance">
+          <i class="fa-regular fa-clock" style="margin-right:.4rem;"></i>Attendance
+        </button>
+        <button class="tab-btn" data-tab="payroll">
+          <i class="fa-solid fa-money-check-dollar" style="margin-right:.4rem;"></i>Payroll
+        </button>
+        <button class="tab-btn" data-tab="leave">
+          <i class="fa-regular fa-calendar-minus" style="margin-right:.4rem;"></i>Leave Requests
+        </button>
+      </div>
+
+      <!-- ─────────── TAB: Employees ─────────── -->
+      <div id="tab-employees" class="tab-panel active">
+
+        <!-- Filter Toolbar -->
+        <div class="toolbar">
+          <div class="toolbar-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="empSearch" placeholder="Search by name, ID or email…"/>
+          </div>
+          <select id="filterDept">
+            <option value="">All Departments</option>
+            <option value="Sales">Sales</option>
+            <option value="Warehouse">Warehouse</option>
+            <option value="IT">IT</option>
+            <option value="Accounting">Accounting</option>
+            <option value="Administration">Administration</option>
+            <option value="Delivery">Delivery</option>
+            <option value="HR">HR</option>
+          </select>
+          <select id="filterStatus">
+            <option value="">All Status</option>
+            <option value="active">Active</option>
+            <option value="on_leave">On Leave</option>
+            <option value="inactive">Inactive</option>
+          </select>
+          <select id="filterType">
+            <option value="">All Types</option>
+            <option value="full-time">Full-time</option>
+            <option value="part-time">Part-time</option>
+            <option value="contract">Contract</option>
+          </select>
+          <button class="btn btn-outline btn-sm" onclick="clearFilters()" title="Clear filters">
+            <i class="fa-solid fa-xmark"></i> Clear
+          </button>
+        </div>
+
+        <!-- Employee Table -->
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Employee</th>
+                <th>ID</th>
+                <th>Department</th>
+                <th>Designation</th>
+                <th>Phone</th>
+                <th>Hire Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="empBody">
+              <tr>
+                <td colspan="8" style="text-align:center;padding:2rem;color:var(--color-neutral-400);">
+                  <i class="fa-solid fa-spinner fa-spin" style="margin-right:.4rem;"></i>Loading employees…
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- Pagination -->
+          <div class="pagination-bar">
+            <span id="paginationInfo">—</span>
+            <div class="pagination-btns" id="paginationBtns"></div>
+          </div>
+        </div>
+
+      </div><!-- /tab-employees -->
+
+      <!-- ─────────── TAB: Attendance ─────────── -->
+      <div id="tab-attendance" class="tab-panel">
+        <div class="coming-soon">
+          <i class="fa-regular fa-clock"></i>
+          <p>Attendance Management</p>
+          <span style="font-size:.85rem;color:var(--color-neutral-400);max-width:340px;text-align:center;">
+            Track employee check-in/check-out, daily attendance records and monthly summaries. Coming soon.
+          </span>
+        </div>
+      </div>
+
+      <!-- ─────────── TAB: Payroll ─────────── -->
+      <div id="tab-payroll" class="tab-panel">
+        <div class="coming-soon">
+          <i class="fa-solid fa-money-check-dollar"></i>
+          <p>Payroll Processing</p>
+          <span style="font-size:.85rem;color:var(--color-neutral-400);max-width:340px;text-align:center;">
+            Generate payslips, manage EPF/ETF contributions and process monthly payroll runs. Coming soon.
+          </span>
+        </div>
+      </div>
+
+      <!-- ─────────── TAB: Leave Requests ─────────── -->
+      <div id="tab-leave" class="tab-panel">
+        <div class="coming-soon">
+          <i class="fa-regular fa-calendar-minus"></i>
+          <p>Leave Management</p>
+          <span style="font-size:.85rem;color:var(--color-neutral-400);max-width:340px;text-align:center;">
+            Submit, approve and track annual, medical and casual leave requests. Coming soon.
+          </span>
+        </div>
+      </div>
+
+    </main><!-- /main-content -->
+  </div><!-- /main-wrapper -->
+</div><!-- /app-shell -->
+
+<!-- ═══════════════ EXPORT MODAL ═══════════════ -->
+<div class="modal-overlay" id="exportModal">
+  <div class="modal" style="max-width:440px;">
+    <div class="modal-header">
+      <span class="modal-title"><i class="fa-solid fa-download" style="margin-right:.5rem;color:var(--primary,#f97316);"></i>Export Employees</span>
+      <button class="modal-close" onclick="closeExportModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Export Format</label>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="exportFmt" value="csv" checked/>
+            <i class="fa-solid fa-file-csv" style="color:#16a34a;"></i> CSV (.csv)
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="exportFmt" value="json"/>
+            <i class="fa-solid fa-file-code" style="color:#2563eb;"></i> JSON (.json)
+          </label>
+        </div>
+      </div>
+      <div class="form-group" style="margin-top:.75rem;">
+        <label>Scope</label>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="exportScope" value="all" checked/> All Employees
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="exportScope" value="filtered"/> Current Filter
+          </label>
+        </div>
       </div>
     </div>
-
-    <!-- TAB: Attendance -->
-    <div id="tab-attendance" class="tab-panel" style="display:none;">
-      <div class="coming-soon"><i class="fa-regular fa-clock"></i><p>Attendance management coming soon.</p></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeExportModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="doExport()">
+        <i class="fa-solid fa-download"></i> Export
+      </button>
     </div>
+  </div>
+</div>
 
-    <!-- TAB: Payroll -->
-    <div id="tab-payroll" class="tab-panel" style="display:none;">
-      <div class="coming-soon"><i class="fa-solid fa-money-check-dollar"></i><p>Payroll processing coming soon.</p></div>
+<!-- ═══════════════ ADD / EDIT EMPLOYEE MODAL ═══════════════ -->
+<div class="modal-overlay" id="employeeModal">
+  <div class="modal" style="max-width:680px;">
+    <div class="modal-header">
+      <span class="modal-title" id="empModalTitle">Add Employee</span>
+      <button class="modal-close" onclick="closeEmpModal()"><i class="fa-solid fa-xmark"></i></button>
     </div>
+    <form id="employeeForm" novalidate>
+      <div class="modal-body">
 
-    <!-- TAB: Leave Requests -->
-    <div id="tab-leave" class="tab-panel" style="display:none;">
-      <div class="coming-soon"><i class="fa-regular fa-calendar-minus"></i><p>Leave request management coming soon.</p></div>
+        <!-- Personal Information -->
+        <div class="form-section-title">Personal Information</div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="fFirstName">First Name <span style="color:#ef4444;">*</span></label>
+            <input type="text" id="fFirstName" placeholder="e.g. Nuwan" required/>
+          </div>
+          <div class="form-group">
+            <label for="fLastName">Last Name <span style="color:#ef4444;">*</span></label>
+            <input type="text" id="fLastName" placeholder="e.g. Karunaratne" required/>
+          </div>
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="fEmail">Email</label>
+            <input type="email" id="fEmail" placeholder="name@lcc.lk"/>
+          </div>
+          <div class="form-group">
+            <label for="fPhone">Phone</label>
+            <input type="tel" id="fPhone" placeholder="+94 77 XXX XXXX"/>
+          </div>
+        </div>
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label for="fNIC">NIC Number</label>
+            <input type="text" id="fNIC" placeholder="XXXXXXXXXXXX or XXXXXXXXV"/>
+          </div>
+          <div class="form-group">
+            <label for="fDOB">Date of Birth</label>
+            <input type="date" id="fDOB"/>
+          </div>
+          <div class="form-group">
+            <label for="fGender">Gender</label>
+            <select id="fGender">
+              <option value="">Select…</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Employment Details -->
+        <div class="form-section-title">Employment Details</div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="fDepartment">Department <span style="color:#ef4444;">*</span></label>
+            <select id="fDepartment" required>
+              <option value="">Select department…</option>
+              <option value="Sales">Sales</option>
+              <option value="Warehouse">Warehouse</option>
+              <option value="IT">IT</option>
+              <option value="Accounting">Accounting</option>
+              <option value="Administration">Administration</option>
+              <option value="Delivery">Delivery</option>
+              <option value="HR">HR</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="fDesignation">Designation <span style="color:#ef4444;">*</span></label>
+            <input type="text" id="fDesignation" placeholder="e.g. Sales Executive"/>
+          </div>
+        </div>
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label for="fEmploymentType">Employment Type</label>
+            <select id="fEmploymentType">
+              <option value="full-time">Full-time</option>
+              <option value="part-time">Part-time</option>
+              <option value="contract">Contract</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="fStatus">Status</label>
+            <select id="fStatus">
+              <option value="active">Active</option>
+              <option value="on_leave">On Leave</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="fHireDate">Hire Date</label>
+            <input type="date" id="fHireDate"/>
+          </div>
+        </div>
+
+        <!-- Salary -->
+        <div class="form-section-title">Compensation</div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="fBasicSalary">Basic Salary (LKR)</label>
+            <input type="number" id="fBasicSalary" placeholder="e.g. 85000" min="0"/>
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="form-section-title">Additional Notes</div>
+        <div class="form-group">
+          <label for="fNotes">Notes</label>
+          <textarea id="fNotes" rows="3" placeholder="Any additional information…"></textarea>
+        </div>
+
+      </div><!-- /modal-body -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" onclick="closeEmpModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="empModalSaveBtn">
+          <i class="fa-solid fa-plus"></i> Add Employee
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ═══════════════ DELETE EMPLOYEE MODAL ═══════════════ -->
+<div class="modal-overlay" id="deleteEmployeeModal">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header">
+      <span class="modal-title" style="color:#dc2626;">
+        <i class="fa-solid fa-triangle-exclamation" style="margin-right:.5rem;"></i>Delete Employee
+      </span>
+      <button class="modal-close" onclick="closeDeleteModal()"><i class="fa-solid fa-xmark"></i></button>
     </div>
+    <div class="modal-body">
+      <p style="font-size:.9rem;color:var(--color-neutral-700);line-height:1.6;">
+        Are you sure you want to delete <strong id="deleteEmployeeName"></strong>?
+        This action cannot be undone.
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeDeleteModal()">Cancel</button>
+      <button class="btn-danger" onclick="confirmDeleteEmployee()">
+        <i class="fa-solid fa-trash"></i> Delete Employee
+      </button>
+    </div>
+  </div>
+</div>
 
-  </main>
-</div><!-- /.main-wrapper -->
-</div><!-- /.app-shell -->
+<!-- ═══════════════ EMPLOYEE DRAWER ═══════════════ -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<aside class="employee-drawer" id="employeeDrawer">
+  <div id="empDrawerHeader"></div>
+  <div id="empDrawerBody" style="flex:1;overflow-y:auto;"></div>
+  <div id="empDrawerFooter"></div>
+</aside>
 
-  </div><!-- /.main-wrapper -->
-</div><!-- /.app-shell -->
-
+<!-- Sidebar overlay (mobile) -->
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
+<!-- Toast container -->
+<div id="toastContainer" style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;display:flex;flex-direction:column;gap:.5rem;"></div>
 
+<!-- Scripts -->
+<script src="../../assets/js/utils.js"></script>
 <script src="../../assets/js/layout.js"></script>
 <script src="../erp-header.js"></script>
 <script src="../erp.js"></script>
-
-  <script src="hr.js"></script>
+<script src="../../assets/js/toast.js"></script>
+<script src="hr.js"></script>
 </body>
 </html>
