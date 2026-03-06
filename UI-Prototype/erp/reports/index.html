@@ -30,52 +30,52 @@
             <h1 class="page-title">Reports &amp; Analytics</h1>
             <p class="page-subtitle" style="color:var(--color-text-secondary);font-size:0.875rem;margin-top:0.25rem;">Generate and export business insights</p>
           </div>
-          <button class="btn btn-primary"><i class="fa fa-download" style="margin-right:0.4rem;"></i>Export Report</button>
+          <button class="btn btn-primary" id="exportReportBtn" onclick="openExportModal()"><i class="fa fa-download" style="margin-right:0.4rem;"></i>Export Report</button>
         </div>
 
         <!-- Report Cards Grid -->
         <div class="report-grid">
 
-          <div class="report-card">
+          <div class="report-card" onclick="openReport('sales')">
             <div class="report-card-icon"><i class="fa fa-chart-bar"></i></div>
             <div class="report-card-title">Sales Report</div>
             <p class="report-card-desc">Revenue, order count, and sales trends over selected date range.</p>
-            <button class="btn btn-outline btn-sm" style="align-self:flex-start;">Generate</button>
+            <button class="btn btn-outline btn-sm" style="align-self:flex-start;" onclick="event.stopPropagation();openReport('sales')">Generate</button>
           </div>
 
-          <div class="report-card">
+          <div class="report-card" onclick="openReport('inventory')">
             <div class="report-card-icon"><i class="fa fa-boxes-stacked"></i></div>
             <div class="report-card-title">Inventory Report</div>
             <p class="report-card-desc">Stock levels, low-stock alerts, and warehouse movement summary.</p>
-            <button class="btn btn-outline btn-sm" style="align-self:flex-start;">Generate</button>
+            <button class="btn btn-outline btn-sm" style="align-self:flex-start;" onclick="event.stopPropagation();openReport('inventory')">Generate</button>
           </div>
 
-          <div class="report-card">
+          <div class="report-card" onclick="openReport('customers')">
             <div class="report-card-icon"><i class="fa fa-users"></i></div>
             <div class="report-card-title">Customer Report</div>
             <p class="report-card-desc">New vs. returning customers, top buyers, and retention rates.</p>
-            <button class="btn btn-outline btn-sm" style="align-self:flex-start;">Generate</button>
+            <button class="btn btn-outline btn-sm" style="align-self:flex-start;" onclick="event.stopPropagation();openReport('customers')">Generate</button>
           </div>
 
-          <div class="report-card">
+          <div class="report-card" onclick="openReport('financial')">
             <div class="report-card-icon"><i class="fa fa-chart-line"></i></div>
             <div class="report-card-title">Financial Report</div>
             <p class="report-card-desc">Profit &amp; loss, expenses, and balance sheet snapshot.</p>
-            <button class="btn btn-outline btn-sm" style="align-self:flex-start;">Generate</button>
+            <button class="btn btn-outline btn-sm" style="align-self:flex-start;" onclick="event.stopPropagation();openReport('financial')">Generate</button>
           </div>
 
-          <div class="report-card">
+          <div class="report-card" onclick="openReport('hr')">
             <div class="report-card-icon"><i class="fa fa-id-card"></i></div>
             <div class="report-card-title">HR Report</div>
             <p class="report-card-desc">Headcount, attendance, payroll summary, and leave analysis.</p>
-            <button class="btn btn-outline btn-sm" style="align-self:flex-start;">Generate</button>
+            <button class="btn btn-outline btn-sm" style="align-self:flex-start;" onclick="event.stopPropagation();openReport('hr')">Generate</button>
           </div>
 
-          <div class="report-card">
+          <div class="report-card" onclick="openReport('purchases')">
             <div class="report-card-icon"><i class="fa fa-truck"></i></div>
             <div class="report-card-title">Purchase Report</div>
             <p class="report-card-desc">Purchase orders, vendor spend, and goods received summary.</p>
-            <button class="btn btn-outline btn-sm" style="align-self:flex-start;">Generate</button>
+            <button class="btn btn-outline btn-sm" style="align-self:flex-start;" onclick="event.stopPropagation();openReport('purchases')">Generate</button>
           </div>
 
         </div>
@@ -87,20 +87,17 @@
           <div class="stats-table-card">
             <div class="card-title">Last 30 Days</div>
             <table class="stats-table">
-              <tr><td>Revenue</td><td>₨ 4,872,500</td></tr>
-              <tr><td>Orders</td><td>1,243</td></tr>
-              <tr><td>New Customers</td><td>318</td></tr>
-              <tr><td>Avg Order Value</td><td>₨ 3,920</td></tr>
+              <tr><td>Revenue</td><td id="statRevenue">—</td></tr>
+              <tr><td>Orders</td><td id="statOrders">—</td></tr>
+              <tr><td>New Customers</td><td id="statNewCust">—</td></tr>
+              <tr><td>Avg Order Value</td><td id="statAvgOrder">—</td></tr>
             </table>
           </div>
 
           <div class="chart-card">
             <div class="card-title"><i class="fa fa-chart-bar" style="color:var(--color-primary-500);margin-right:0.4rem;"></i>Sales Trend</div>
-            <div class="chart-placeholder">
-              <i class="fa fa-chart-bar" style="font-size:1.5rem;opacity:0.3;"></i>
-              <span>Chart Preview</span>
-            </div>
-            <p style="font-size:0.75rem;color:var(--color-text-secondary);margin-top:0.75rem;text-align:center;">Monthly sales — Jan to Mar 2026</p>
+            <div style="position:relative;height:180px;width:100%;"><canvas id="salesChart"></canvas></div>
+            <p style="font-size:0.75rem;color:var(--color-text-secondary);margin-top:0.75rem;text-align:center;" id="chartLabel">Monthly sales — last 6 months</p>
           </div>
 
         </div>
@@ -112,9 +109,88 @@
 </div><!-- /.app-shell -->
 
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="toast-container" id="toastContainer"></div>
 
+<!-- Report Generator Modal -->
+<div class="modal-overlay" id="reportModal">
+  <div class="modal" style="max-width:780px;width:95%;max-height:88vh;display:flex;flex-direction:column;">
+    <div class="modal-header">
+      <div style="display:flex;align-items:center;gap:0.5rem;">
+        <i class="fa" id="reportModalIcon" style="color:var(--color-primary-500);"></i>
+        <h3 class="modal-title" id="reportModalTitle">Report</h3>
+      </div>
+      <button class="modal-close" onclick="closeReportModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body" style="flex:1;overflow:auto;">
+      <div style="display:flex;gap:0.75rem;align-items:flex-end;flex-wrap:wrap;margin-bottom:1rem;">
+        <div>
+          <label style="font-size:.75rem;color:#6b7280;display:block;margin-bottom:.25rem;">From</label>
+          <input type="date" id="reportFrom" style="padding:.375rem .625rem;border:1px solid #e5e7eb;border-radius:6px;font-size:.875rem;"/>
+        </div>
+        <div>
+          <label style="font-size:.75rem;color:#6b7280;display:block;margin-bottom:.25rem;">To</label>
+          <input type="date" id="reportTo" style="padding:.375rem .625rem;border:1px solid #e5e7eb;border-radius:6px;font-size:.875rem;"/>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="generateReport()"><i class="fa-solid fa-rotate"></i> Generate</button>
+        <button class="btn btn-ghost btn-sm" onclick="exportReportCSV()"><i class="fa-solid fa-download"></i> Export CSV</button>
+      </div>
+      <div id="reportSummaryBar" style="font-size:.8125rem;color:#6b7280;margin-bottom:.75rem;"></div>
+      <div style="overflow-x:auto;">
+        <table class="data-table" id="reportTable" style="min-width:560px;">
+          <thead id="reportThead"></thead>
+          <tbody id="reportTbody"><tr><td colspan="8" style="text-align:center;padding:2rem;color:#9ca3af;">Select a date range and click Generate.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer" style="padding:0.875rem 1.25rem;border-top:1px solid #e5e7eb;display:flex;justify-content:flex-end;gap:.5rem;">
+      <button class="btn btn-ghost btn-sm" onclick="closeReportModal()"><i class="fa-solid fa-xmark"></i> Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Export All Modal -->
+<div class="modal-overlay" id="exportModal">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header">
+      <h3 class="modal-title"><i class="fa fa-download" style="margin-right:.4rem;color:var(--color-primary-500);"></i>Export Report</h3>
+      <button class="modal-close" onclick="closeExportModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:.875rem;color:#374151;margin-bottom:1rem;">Choose a report type and date range to export as CSV.</p>
+      <div style="margin-bottom:.75rem;">
+        <label style="font-size:.75rem;color:#6b7280;display:block;margin-bottom:.25rem;">Report Type</label>
+        <select id="exportType" style="width:100%;padding:.375rem .625rem;border:1px solid #e5e7eb;border-radius:6px;font-size:.875rem;">
+          <option value="sales">Sales Report</option>
+          <option value="inventory">Inventory Report</option>
+          <option value="customers">Customer Report</option>
+          <option value="financial">Financial Report</option>
+          <option value="hr">HR Report</option>
+          <option value="purchases">Purchase Report</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:.75rem;">
+        <div style="flex:1;">
+          <label style="font-size:.75rem;color:#6b7280;display:block;margin-bottom:.25rem;">From</label>
+          <input type="date" id="exportFrom" style="width:100%;padding:.375rem .625rem;border:1px solid #e5e7eb;border-radius:6px;font-size:.875rem;"/>
+        </div>
+        <div style="flex:1;">
+          <label style="font-size:.75rem;color:#6b7280;display:block;margin-bottom:.25rem;">To</label>
+          <input type="date" id="exportTo" style="width:100%;padding:.375rem .625rem;border:1px solid #e5e7eb;border-radius:6px;font-size:.875rem;"/>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer" style="padding:.875rem 1.25rem;border-top:1px solid #e5e7eb;display:flex;justify-content:flex-end;gap:.5rem;">
+      <button class="btn btn-ghost btn-sm" onclick="closeExportModal()">Cancel</button>
+      <button class="btn btn-primary btn-sm" onclick="doExportAll()"><i class="fa-solid fa-download"></i> Download CSV</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="../../assets/js/utils.js"></script>
 <script src="../../assets/js/layout.js"></script>
 <script src="../erp-header.js"></script>
 <script src="../erp.js"></script>
+<script src="reports.js"></script>
 </body>
 </html>
