@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Users & Roles — Settings — LCC</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"/>
+  <link rel="stylesheet" href="../../assets/css/variables.css"/>
+  <link rel="stylesheet" href="../../assets/css/base.css"/>
+  <link rel="stylesheet" href="../../assets/css/components.css"/>
+  <link rel="stylesheet" href="../../assets/css/layout.css"/>
+  <link rel="stylesheet" href="../erp.css"/>
+  <link rel="stylesheet" href="settings.css?v=20250605"/>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="main-wrapper" id="mainWrapper">
+    <header class="top-bar" id="erpTopBar" data-page-title="Store Settings"></header>
+    <main class="main-content">
+      <div class="page-header" style="margin-bottom:0;">
+        <div>
+          <h1 class="page-title">Settings</h1>
+          <p class="page-subtitle">Manage your store configuration, team, billing and integrations.</p>
+        </div>
+      </div>
+            <div class="settings-subnav">
+        <a href="index.html"><i class="fa-solid fa-sliders"></i> General</a>
+        <a href="company.html"><i class="fa-solid fa-building"></i> Company Profile</a>
+        <a href="users.html" class="active"><i class="fa-solid fa-users-gear"></i> Users &amp; Roles</a>
+        <a href="billing.html"><i class="fa-solid fa-credit-card"></i> Billing &amp; Plan</a>
+        <a href="integrations.html"><i class="fa-solid fa-plug"></i> Integrations</a>
+        <a href="notifications.html"><i class="fa-solid fa-bell"></i> Notifications</a>
+      </div>
+      <div class="settings-page-card">
+        <div class="settings-page-header">
+          <i class="fa-solid fa-users-gear" style="color:#f97316;"></i>
+          <div><h2 class="settings-page-title">Users &amp; Roles</h2><p class="settings-page-desc">Manage team members, assign roles and send invitations.</p></div>
+          <div style="margin-left:auto;">
+            <button class="btn btn-primary btn-sm" onclick="openModal('inviteModal')">
+              <i class="fa-solid fa-user-plus"></i> Invite Member
+            </button>
+          </div>
+        </div>
+        <div class="users-table-wrap">
+          <table class="users-table">
+            <thead><tr><th>Member</th><th>Role</th><th>Joined</th><th>Last Active</th><th>Status</th><th></th></tr></thead>
+            <tbody>
+              <tr>
+                <td><div class="user-cell"><div class="user-avatar" style="background:#fee2e2;color:#dc2626;">KP</div><div><div class="user-name">Kamal Perera</div><div class="user-email">kamal@demostore.lk</div></div></div></td>
+                <td><span class="role-badge role-owner">Owner</span></td><td>Jan 2024</td><td>Today</td>
+                <td><span class="status-badge status-active">Active</span></td>
+                <td><button class="btn-icon" onclick="editMember('Kamal Perera','kamal@demostore.lk','owner','active')" title="Edit"><i class="fa-solid fa-pen fa-sm"></i></button></td>
+              </tr>
+              <tr>
+                <td><div class="user-cell"><div class="user-avatar" style="background:#dcfce7;color:#16a34a;">NS</div><div><div class="user-name">Nadeesha Silva</div><div class="user-email">nadeesha@demostore.lk</div></div></div></td>
+                <td><span class="role-badge role-manager">Manager</span></td><td>Mar 2024</td><td>Yesterday</td>
+                <td><span class="status-badge status-active">Active</span></td>
+                <td><button class="btn-icon" onclick="editMember('Nadeesha Silva','nadeesha@demostore.lk','manager','active')" title="Edit"><i class="fa-solid fa-pen fa-sm"></i></button></td>
+              </tr>
+              <tr>
+                <td><div class="user-cell"><div class="user-avatar" style="background:#dbeafe;color:#2563eb;">RF</div><div><div class="user-name">Ruwani Fernando</div><div class="user-email">ruwani@demostore.lk</div></div></div></td>
+                <td><span class="role-badge role-cashier">Cashier</span></td><td>Jun 2024</td><td>2 days ago</td>
+                <td><span class="status-badge status-active">Active</span></td>
+                <td><button class="btn-icon" onclick="editMember('Ruwani Fernando','ruwani@demostore.lk','cashier','active')" title="Edit"><i class="fa-solid fa-pen fa-sm"></i></button></td>
+              </tr>
+              <tr>
+                <td><div class="user-cell"><div class="user-avatar" style="background:#f3e8ff;color:#7c3aed;">AW</div><div><div class="user-name">Ashan Wickrama</div><div class="user-email">ashan@demostore.lk</div></div></div></td>
+                <td><span class="role-badge role-staff">Staff</span></td><td>Aug 2024</td><td>1 week ago</td>
+                <td><span class="status-badge status-active">Active</span></td>
+                <td><button class="btn-icon" onclick="editMember('Ashan Wickrama','ashan@demostore.lk','staff','active')" title="Edit"><i class="fa-solid fa-pen fa-sm"></i></button></td>
+              </tr>
+              <tr>
+                <td><div class="user-cell"><div class="user-avatar" style="background:#fef9c3;color:#a16207;">DM</div><div><div class="user-name">Dilshan Mendis</div><div class="user-email">dilshan@demostore.lk</div></div></div></td>
+                <td><span class="role-badge role-staff">Staff</span></td><td>Oct 2024</td><td>Pending</td>
+                <td><span class="status-badge status-pending">Invited</span></td>
+                <td><button class="btn-icon" onclick="showToast('Invitation resent to Dilshan Mendis.','info')" title="Resend invite"><i class="fa-solid fa-rotate fa-sm"></i></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- INVITE MODAL -->
+      <div class="modal-overlay" id="inviteModal">
+        <div class="modal" style="width:440px;max-width:95vw;">
+          <div class="modal-header">
+            <h3 class="modal-title"><i class="fa-solid fa-user-plus" style="color:#f97316;margin-right:.5rem;"></i>Invite Team Member</h3>
+            <button class="modal-close" onclick="closeModal('inviteModal')"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group"><label class="form-label">Full Name</label><input id="inviteName" class="form-control" type="text" placeholder="e.g. Kamal Perera" style="max-width:100%;"/></div>
+            <div class="form-group"><label class="form-label">Email Address</label><input id="inviteEmail" class="form-control" type="email" placeholder="name@company.lk" style="max-width:100%;"/></div>
+            <div class="form-group"><label class="form-label">Role</label>
+              <select id="inviteRole" class="form-control" style="max-width:100%;">
+                <option value="Manager">Manager</option><option value="Cashier">Cashier</option>
+                <option value="Staff" selected>Staff</option><option value="Accountant">Accountant</option>
+              </select>
+            </div>
+            <div style="display:flex;gap:.75rem;margin-top:1.25rem;">
+              <button class="btn btn-primary btn-sm" onclick="submitInvite()"><i class="fa-solid fa-paper-plane"></i> Send Invite</button>
+              <button class="btn btn-secondary btn-sm" onclick="closeModal('inviteModal')">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EDIT MEMBER MODAL -->
+      <div class="modal-overlay" id="editMemberModal">
+        <div class="modal" style="width:440px;max-width:95vw;">
+          <div class="modal-header">
+            <h3 class="modal-title"><i class="fa-solid fa-user-pen" style="color:#f97316;margin-right:.5rem;"></i>Edit Member</h3>
+            <button class="modal-close" onclick="closeModal('editMemberModal')"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group"><label class="form-label">Full Name</label><input id="editName" class="form-control" type="text" style="max-width:100%;"/></div>
+            <div class="form-group"><label class="form-label">Email</label><input id="editEmail" class="form-control" type="email" readonly style="max-width:100%;background:#f8fafc;"/></div>
+            <div class="form-group"><label class="form-label">Role</label>
+              <select id="editRole" class="form-control" style="max-width:100%;">
+                <option value="owner">Owner</option><option value="manager">Manager</option>
+                <option value="cashier">Cashier</option><option value="accountant">Accountant</option><option value="staff">Staff</option>
+              </select>
+            </div>
+            <div class="form-group"><label class="form-label">Status</label>
+              <select id="editStatus" class="form-control" style="max-width:100%;">
+                <option value="active">Active</option><option value="inactive">Inactive</option>
+              </select>
+            </div>
+            <div style="display:flex;gap:.75rem;margin-top:1.25rem;flex-wrap:wrap;">
+              <button class="btn btn-primary btn-sm" onclick="saveEdit()"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+              <button class="btn btn-secondary btn-sm" onclick="closeModal('editMemberModal')">Cancel</button>
+              <button class="btn btn-sm" style="margin-left:auto;border:1px solid #fca5a5;color:#dc2626;background:#fff;" onclick="removeMember()"><i class="fa-solid fa-trash"></i> Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="toast-container" id="toastContainer"></div>
+<script>
+function editMember(name,email,role,status){
+  document.getElementById('editName').value=name;
+  document.getElementById('editEmail').value=email;
+  document.getElementById('editRole').value=role;
+  document.getElementById('editStatus').value=status;
+  openModal('editMemberModal');
+}
+function submitInvite(){
+  const n=document.getElementById('inviteName').value.trim();
+  const e=document.getElementById('inviteEmail').value.trim();
+  const r=document.getElementById('inviteRole').value;
+  if(!n||!e){showToast('Please fill in name and email.','error');return;}
+  closeModal('inviteModal');
+  showToast('Invitation sent to '+n+' ('+r+').','success');
+  document.getElementById('inviteName').value='';
+  document.getElementById('inviteEmail').value='';
+}
+function saveEdit(){
+  const n=document.getElementById('editName').value.trim();
+  if(!n){showToast('Name cannot be empty.','error');return;}
+  closeModal('editMemberModal');
+  showToast(n+' has been updated.','success');
+}
+function removeMember(){
+  const n=document.getElementById('editName').value;
+  closeModal('editMemberModal');
+  showToast(n+' has been removed from the team.','warning');
+}
+</script>
+<script src="../../assets/js/layout.js"></script>
+<script src="../erp-header.js"></script>
+<script src="../erp.js"></script>
+<script src="settings.js?v=20250603"></script>
+</body>
+</html>

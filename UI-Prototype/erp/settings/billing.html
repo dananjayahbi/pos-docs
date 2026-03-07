@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Billing & Plan — Settings — LCC</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"/>
+  <link rel="stylesheet" href="../../assets/css/variables.css"/>
+  <link rel="stylesheet" href="../../assets/css/base.css"/>
+  <link rel="stylesheet" href="../../assets/css/components.css"/>
+  <link rel="stylesheet" href="../../assets/css/layout.css"/>
+  <link rel="stylesheet" href="../erp.css"/>
+  <link rel="stylesheet" href="settings.css?v=20250605"/>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="main-wrapper" id="mainWrapper">
+    <header class="top-bar" id="erpTopBar" data-page-title="Store Settings"></header>
+    <main class="main-content">
+      <div class="page-header" style="margin-bottom:0;">
+        <div>
+          <h1 class="page-title">Settings</h1>
+          <p class="page-subtitle">Manage your store configuration, team, billing and integrations.</p>
+        </div>
+      </div>
+            <div class="settings-subnav">
+        <a href="index.html"><i class="fa-solid fa-sliders"></i> General</a>
+        <a href="company.html"><i class="fa-solid fa-building"></i> Company Profile</a>
+        <a href="users.html"><i class="fa-solid fa-users-gear"></i> Users &amp; Roles</a>
+        <a href="billing.html" class="active"><i class="fa-solid fa-credit-card"></i> Billing &amp; Plan</a>
+        <a href="integrations.html"><i class="fa-solid fa-plug"></i> Integrations</a>
+        <a href="notifications.html"><i class="fa-solid fa-bell"></i> Notifications</a>
+      </div>
+      <div class="settings-page-card">
+        <div class="settings-page-header">
+          <i class="fa-solid fa-credit-card" style="color:#f97316;"></i>
+          <div><h2 class="settings-page-title">Billing &amp; Plan</h2><p class="settings-page-desc">Manage your subscription plan, usage and invoices.</p></div>
+        </div>
+        <div class="plan-card">
+          <div class="plan-card-header">
+            <div>
+              <div class="plan-badge">Current Plan</div>
+              <div class="plan-name">Starter Plan</div>
+              <div class="plan-price">&#8360; 2,990 <span>/ month</span></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:.5rem;align-items:flex-end;">
+              <button class="btn btn-primary btn-sm" onclick="openModal('upgradeModal')"><i class="fa-solid fa-rocket"></i> Upgrade Plan</button>
+              <span style="font-size:.75rem;color:#fff;opacity:.8;">Renews Apr 1, 2025</span>
+            </div>
+          </div>
+          <div class="plan-features">
+            <span><i class="fa-solid fa-check"></i> 2 Users</span>
+            <span><i class="fa-solid fa-check"></i> 500 Products</span>
+            <span><i class="fa-solid fa-check"></i> 1 Location</span>
+            <span><i class="fa-solid fa-check"></i> Basic Reports</span>
+            <span><i class="fa-solid fa-check"></i> Email Support</span>
+          </div>
+        </div>
+        <div class="usage-section" style="margin-top:1.5rem;">
+          <div class="usage-title">Usage This Month</div>
+          <div class="usage-row"><div class="usage-label"><i class="fa-solid fa-users tcolor"></i> Team Members</div><div class="usage-bar-wrap"><div class="usage-bar" style="width:100%;background:linear-gradient(90deg,#dc2626,#ef4444);"></div></div><div class="usage-num">2 / 2</div></div>
+          <div class="usage-row"><div class="usage-label"><i class="fa-solid fa-box tcolor"></i> Products</div><div class="usage-bar-wrap"><div class="usage-bar" style="width:56%;"></div></div><div class="usage-num">278 / 500</div></div>
+          <div class="usage-row"><div class="usage-label"><i class="fa-solid fa-file-invoice tcolor"></i> Invoices</div><div class="usage-bar-wrap"><div class="usage-bar" style="width:34%;"></div></div><div class="usage-num">340 / 1,000</div></div>
+        </div>
+        <div class="invoices-section" style="margin-top:1.5rem;">
+          <div class="usage-title">Recent Invoices</div>
+          <table class="invoice-table">
+            <thead><tr><th>Invoice</th><th>Period</th><th>Amount</th><th>Plan</th><th></th></tr></thead>
+            <tbody>
+              <tr><td style="font-weight:600;">INV-2025-003</td><td>March 2025</td><td style="font-weight:600;">&#8360; 2,990.00</td><td><span class="role-badge role-staff">Starter</span></td><td><button class="btn btn-secondary btn-sm" onclick="downloadInv('INV-2025-003','March 2025')"><i class="fa-solid fa-download"></i> Download</button></td></tr>
+              <tr><td style="font-weight:600;">INV-2025-002</td><td>February 2025</td><td style="font-weight:600;">&#8360; 2,990.00</td><td><span class="role-badge role-staff">Starter</span></td><td><button class="btn btn-secondary btn-sm" onclick="downloadInv('INV-2025-002','February 2025')"><i class="fa-solid fa-download"></i> Download</button></td></tr>
+              <tr><td style="font-weight:600;">INV-2025-001</td><td>January 2025</td><td style="font-weight:600;">&#8360; 2,990.00</td><td><span class="role-badge role-staff">Starter</span></td><td><button class="btn btn-secondary btn-sm" onclick="downloadInv('INV-2025-001','January 2025')"><i class="fa-solid fa-download"></i> Download</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- UPGRADE PLAN MODAL -->
+      <div class="modal-overlay" id="upgradeModal">
+        <div class="modal" style="width:820px;max-width:96vw;">
+          <div class="modal-header">
+            <h3 class="modal-title"><i class="fa-solid fa-rocket" style="color:#f97316;margin-right:.5rem;"></i>Choose a Plan</h3>
+            <button class="modal-close" onclick="closeModal('upgradeModal')"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <div class="modal-body">
+            <p style="color:#6b7280;font-size:.875rem;margin-bottom:1.5rem;">All plans include a 14-day free trial. No credit card required.</p>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+              <div class="upgrade-plan-card">
+                <div class="upc-name">Starter</div>
+                <div class="upc-price">&#8360; 2,990<span>/mo</span></div>
+                <ul class="upc-features"><li><i class="fa-solid fa-check"></i> 2 Users</li><li><i class="fa-solid fa-check"></i> 500 Products</li><li><i class="fa-solid fa-check"></i> 1 Location</li><li><i class="fa-solid fa-check"></i> Email Support</li></ul>
+                <button class="btn btn-secondary btn-sm" style="width:100%;" onclick="selectPlan('Starter')">Current Plan</button>
+              </div>
+              <div class="upgrade-plan-card featured">
+                <div class="upc-badge">Popular</div>
+                <div class="upc-name">Business</div>
+                <div class="upc-price">&#8360; 7,490<span>/mo</span></div>
+                <ul class="upc-features"><li><i class="fa-solid fa-check"></i> 10 Users</li><li><i class="fa-solid fa-check"></i> Unlimited Products</li><li><i class="fa-solid fa-check"></i> 5 Locations</li><li><i class="fa-solid fa-check"></i> Advanced Reports</li><li><i class="fa-solid fa-check"></i> Priority Support</li></ul>
+                <button class="btn btn-primary btn-sm" style="width:100%;" onclick="selectPlan('Business')">Upgrade to Business</button>
+              </div>
+              <div class="upgrade-plan-card">
+                <div class="upc-name">Enterprise</div>
+                <div class="upc-price">&#8360; 19,990<span>/mo</span></div>
+                <ul class="upc-features"><li><i class="fa-solid fa-check"></i> Unlimited Users</li><li><i class="fa-solid fa-check"></i> Unlimited Products</li><li><i class="fa-solid fa-check"></i> Unlimited Locations</li><li><i class="fa-solid fa-check"></i> AI Features</li><li><i class="fa-solid fa-check"></i> Dedicated Support</li></ul>
+                <button class="btn btn-primary btn-sm" style="width:100%;" onclick="selectPlan('Enterprise')">Upgrade to Enterprise</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="toast-container" id="toastContainer"></div>
+<script>
+function downloadInv(id, period){
+  const content='LankaCommerce Cloud\nInvoice: '+id+'\nPeriod: '+period+'\nPlan: Starter\nAmount: Rs. 2,990.00\nStatus: PAID';
+  const a=document.createElement('a'); a.href='data:text/plain,'+encodeURIComponent(content);
+  a.download=id+'.txt'; a.click();
+  showToast(id+' downloaded.','success');
+}
+function selectPlan(name){
+  closeModal('upgradeModal');
+  showToast('Plan upgrade to '+name+' initiated. Our team will contact you.','success');
+}
+</script>
+<script src="../../assets/js/layout.js"></script>
+<script src="../erp-header.js"></script>
+<script src="../erp.js"></script>
+<script src="settings.js?v=20250603"></script>
+</body>
+</html>

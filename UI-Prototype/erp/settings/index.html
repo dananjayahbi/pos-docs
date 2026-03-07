@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Settings — LankaCommerce Cloud</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>General Settings — Settings — LCC</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"/>
@@ -12,480 +12,69 @@
   <link rel="stylesheet" href="../../assets/css/components.css"/>
   <link rel="stylesheet" href="../../assets/css/layout.css"/>
   <link rel="stylesheet" href="../erp.css"/>
-  <link rel="stylesheet" href="settings.css"/>
+  <link rel="stylesheet" href="settings.css?v=20250605"/>
 </head>
 <body>
-
 <div class="app-shell">
   <aside class="sidebar" id="sidebar"></aside>
-
   <div class="main-wrapper" id="mainWrapper">
     <header class="top-bar" id="erpTopBar" data-page-title="Store Settings"></header>
-
     <main class="main-content">
-
-      <!-- Page Header -->
-      <div class="page-header">
+      <div class="page-header" style="margin-bottom:0;">
         <div>
           <h1 class="page-title">Settings</h1>
-          <p class="page-subtitle">Configure your store preferences and system options</p>
+          <p class="page-subtitle">Manage your store configuration, team, billing and integrations.</p>
         </div>
       </div>
-
-      <!-- Settings Layout -->
-      <div class="settings-layout">
-
-        <!-- Left Nav -->
-        <nav class="settings-nav">
-          <ul>
-            <li class="active" data-tab="general">
-              <a href="#" onclick="switchTab('general',this);return false;">
-                <i class="fa-solid fa-sliders"></i> General
-              </a>
-            </li>
-            <li data-tab="company">
-              <a href="#" onclick="switchTab('company',this);return false;">
-                <i class="fa-solid fa-building"></i> Company Profile
-              </a>
-            </li>
-            <li data-tab="users">
-              <a href="#" onclick="switchTab('users',this);return false;">
-                <i class="fa-solid fa-users-gear"></i> Users &amp; Roles
-              </a>
-            </li>
-            <li data-tab="billing">
-              <a href="#" onclick="switchTab('billing',this);return false;">
-                <i class="fa-solid fa-credit-card"></i> Billing &amp; Plan
-              </a>
-            </li>
-            <li data-tab="integrations">
-              <a href="#" onclick="switchTab('integrations',this);return false;">
-                <i class="fa-solid fa-plug"></i> Integrations
-              </a>
-            </li>
-            <li data-tab="notifications">
-              <a href="#" onclick="switchTab('notifications',this);return false;">
-                <i class="fa-solid fa-bell"></i> Notifications
-              </a>
-            </li>
-          </ul>
-        </nav>
-
-        <!-- Right Panels -->
-        <div class="settings-panel">
-
-          <!-- ===== GENERAL ===== -->
-          <div class="panel-card active" id="tab-general">
-            <div class="panel-title">
-              <i class="fa-solid fa-sliders" style="color:#f97316;margin-right:.5rem;"></i>General Settings
-            </div>
-            <div class="settings-grid-2">
-              <div class="form-group">
-                <label class="form-label">Store Name</label>
-                <input class="form-control" type="text" value="Demo Store Pvt Ltd"/>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Store Email</label>
-                <input class="form-control" type="email" value="hello@demostore.lk"/>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Currency</label>
-                <select class="form-control">
-                  <option selected>LKR — Sri Lankan Rupee</option>
-                  <option>USD — US Dollar</option>
-                  <option>EUR — Euro</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Timezone</label>
-                <select class="form-control">
-                  <option selected>Asia/Colombo (UTC+5:30)</option>
-                  <option>Asia/Kolkata (UTC+5:30)</option>
-                  <option>UTC</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Language</label>
-                <select class="form-control">
-                  <option selected>English</option>
-                  <option>සිංහල (Sinhala)</option>
-                  <option>Tamil</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Date Format</label>
-                <select class="form-control">
-                  <option selected>DD/MM/YYYY</option>
-                  <option>MM/DD/YYYY</option>
-                  <option>YYYY-MM-DD</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Fiscal Year Start</label>
-                <select class="form-control">
-                  <option selected>January</option>
-                  <option>April</option>
-                  <option>July</option>
-                  <option>October</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Default Tax Rate (%)</label>
-                <input class="form-control" type="number" value="0" min="0" max="100" step="0.5"/>
-              </div>
-            </div>
-            <div class="panel-footer">
-              <button class="btn btn-primary btn-sm" onclick="showToast('General settings saved.','success')">
-                <i class="fa-solid fa-floppy-disk"></i> Save Changes
-              </button>
-            </div>
+            <div class="settings-subnav">
+        <a href="index.html" class="active"><i class="fa-solid fa-sliders"></i> General</a>
+        <a href="company.html"><i class="fa-solid fa-building"></i> Company Profile</a>
+        <a href="users.html"><i class="fa-solid fa-users-gear"></i> Users &amp; Roles</a>
+        <a href="billing.html"><i class="fa-solid fa-credit-card"></i> Billing &amp; Plan</a>
+        <a href="integrations.html"><i class="fa-solid fa-plug"></i> Integrations</a>
+        <a href="notifications.html"><i class="fa-solid fa-bell"></i> Notifications</a>
+      </div>
+      <div class="settings-page-card">
+        <div class="settings-page-header">
+          <i class="fa-solid fa-sliders" style="color:#f97316;"></i>
+          <div><h2 class="settings-page-title">General Settings</h2><p class="settings-page-desc">Configure your store's basic information, locale and defaults.</p></div>
+        </div>
+        <div class="settings-grid-2">
+          <div class="form-group"><label class="form-label">Store Name</label><input class="form-control" type="text" value="Demo Store Pvt Ltd"/></div>
+          <div class="form-group"><label class="form-label">Store Email</label><input class="form-control" type="email" value="hello@demostore.lk"/></div>
+          <div class="form-group"><label class="form-label">Currency</label>
+            <select class="form-control"><option selected>LKR — Sri Lankan Rupee</option><option>USD — US Dollar</option><option>EUR — Euro</option></select>
           </div>
-
-          <!-- ===== COMPANY PROFILE ===== -->
-          <div class="panel-card" id="tab-company">
-            <div class="panel-title">
-              <i class="fa-solid fa-building" style="color:#f97316;margin-right:.5rem;"></i>Company Profile
-            </div>
-            <!-- Logo Upload -->
-            <div class="logo-upload-section">
-              <div class="logo-preview">
-                <i class="fa-solid fa-store" style="font-size:2rem;color:#f97316;"></i>
-              </div>
-              <div class="logo-upload-info">
-                <div class="logo-upload-label">Company Logo</div>
-                <div class="logo-upload-hint">PNG or SVG, max 2MB. Recommended: 200×200px</div>
-                <button class="btn btn-secondary btn-sm" style="margin-top:.5rem;">
-                  <i class="fa-solid fa-upload"></i> Upload Logo
-                </button>
-              </div>
-            </div>
-            <div class="settings-grid-2">
-              <div class="form-group">
-                <label class="form-label">Legal Name</label>
-                <input class="form-control" type="text" value="Demo Store Private Limited"/>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Trading Name</label>
-                <input class="form-control" type="text" value="Demo Store"/>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Business Registration No.</label>
-                <input class="form-control" type="text" placeholder="PV XXXXX"/>
-              </div>
-              <div class="form-group">
-                <label class="form-label">VAT / SVAT Number</label>
-                <input class="form-control" type="text" placeholder="XXX-XXXX-XXXX-V"/>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Contact Phone</label>
-                <input class="form-control" type="tel" value="+94 77 123 4567"/>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Contact Email</label>
-                <input class="form-control" type="email" value="contact@demostore.lk"/>
-              </div>
-            </div>
-            <div class="form-group" style="margin-bottom:1.25rem;">
-              <label class="form-label">Address Line 1</label>
-              <input class="form-control" type="text" value="123, Main Street" style="max-width:100%;"/>
-            </div>
-            <div class="settings-grid-2">
-              <div class="form-group">
-                <label class="form-label">City</label>
-                <input class="form-control" type="text" value="Colombo"/>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Province</label>
-                <select class="form-control">
-                  <option selected>Western Province</option>
-                  <option>Central Province</option>
-                  <option>Southern Province</option>
-                  <option>Northern Province</option>
-                  <option>Eastern Province</option>
-                </select>
-              </div>
-            </div>
-            <div class="panel-footer">
-              <button class="btn btn-primary btn-sm" onclick="showToast('Company profile saved.','success')">
-                <i class="fa-solid fa-floppy-disk"></i> Save Changes
-              </button>
-            </div>
+          <div class="form-group"><label class="form-label">Timezone</label>
+            <select class="form-control"><option selected>Asia/Colombo (UTC+5:30)</option><option>UTC</option></select>
           </div>
-
-          <!-- ===== USERS & ROLES ===== -->
-          <div class="panel-card" id="tab-users">
-            <div class="panel-title">
-              <i class="fa-solid fa-users-gear" style="color:#f97316;margin-right:.5rem;"></i>Users &amp; Roles
-            </div>
-            <div class="users-toolbar">
-              <div class="users-count"><strong>5</strong> team members</div>
-              <button class="btn btn-primary btn-sm" onclick="showToast('Invitation sent!','success')">
-                <i class="fa-solid fa-user-plus"></i> Invite Member
-              </button>
-            </div>
-            <div class="users-table-wrap">
-              <table class="users-table">
-                <thead>
-                  <tr>
-                    <th>Member</th>
-                    <th>Role</th>
-                    <th>Joined</th>
-                    <th>Last Active</th>
-                    <th>Status</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <div class="user-cell">
-                        <div class="user-avatar" style="background:#fee2e2;color:#dc2626;">KP</div>
-                        <div><div class="user-name">Kamal Perera</div><div class="user-email">kamal@demostore.lk</div></div>
-                      </div>
-                    </td>
-                    <td><span class="role-badge role-owner">Owner</span></td>
-                    <td>Jan 2024</td><td>Today</td>
-                    <td><span class="status-badge status-active">Active</span></td>
-                    <td><button class="btn-icon" title="Edit"><i class="fa-solid fa-pen fa-sm"></i></button></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="user-cell">
-                        <div class="user-avatar" style="background:#dcfce7;color:#16a34a;">NS</div>
-                        <div><div class="user-name">Nadeesha Silva</div><div class="user-email">nadeesha@demostore.lk</div></div>
-                      </div>
-                    </td>
-                    <td><span class="role-badge role-manager">Manager</span></td>
-                    <td>Mar 2024</td><td>Yesterday</td>
-                    <td><span class="status-badge status-active">Active</span></td>
-                    <td><button class="btn-icon" title="Edit"><i class="fa-solid fa-pen fa-sm"></i></button></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="user-cell">
-                        <div class="user-avatar" style="background:#dbeafe;color:#2563eb;">RF</div>
-                        <div><div class="user-name">Ruwani Fernando</div><div class="user-email">ruwani@demostore.lk</div></div>
-                      </div>
-                    </td>
-                    <td><span class="role-badge role-cashier">Cashier</span></td>
-                    <td>Jun 2024</td><td>2 days ago</td>
-                    <td><span class="status-badge status-active">Active</span></td>
-                    <td><button class="btn-icon" title="Edit"><i class="fa-solid fa-pen fa-sm"></i></button></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="user-cell">
-                        <div class="user-avatar" style="background:#f3e8ff;color:#7c3aed;">AW</div>
-                        <div><div class="user-name">Ashan Wickrama</div><div class="user-email">ashan@demostore.lk</div></div>
-                      </div>
-                    </td>
-                    <td><span class="role-badge role-staff">Staff</span></td>
-                    <td>Aug 2024</td><td>1 week ago</td>
-                    <td><span class="status-badge status-active">Active</span></td>
-                    <td><button class="btn-icon" title="Edit"><i class="fa-solid fa-pen fa-sm"></i></button></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="user-cell">
-                        <div class="user-avatar" style="background:#fef9c3;color:#a16207;">DM</div>
-                        <div><div class="user-name">Dilshan Mendis</div><div class="user-email">dilshan@demostore.lk</div></div>
-                      </div>
-                    </td>
-                    <td><span class="role-badge role-staff">Staff</span></td>
-                    <td>Oct 2024</td><td>Pending</td>
-                    <td><span class="status-badge status-pending">Invited</span></td>
-                    <td><button class="btn-icon" title="Resend"><i class="fa-solid fa-rotate fa-sm"></i></button></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div class="form-group"><label class="form-label">Language</label>
+            <select class="form-control"><option selected>English</option><option>සිංහල (Sinhala)</option><option>Tamil</option></select>
           </div>
-
-          <!-- ===== BILLING ===== -->
-          <div class="panel-card" id="tab-billing">
-            <div class="panel-title">
-              <i class="fa-solid fa-credit-card" style="color:#f97316;margin-right:.5rem;"></i>Billing &amp; Subscription
-            </div>
-            <!-- Current Plan -->
-            <div class="plan-card">
-              <div class="plan-card-header">
-                <div>
-                  <div class="plan-badge">Current Plan</div>
-                  <div class="plan-name">Starter</div>
-                  <div class="plan-price">₨ 4,900 <span>/month</span></div>
-                </div>
-                <button class="btn btn-primary btn-sm" onclick="showToast('Upgrade flow coming soon.','info')">
-                  <i class="fa-solid fa-arrow-up"></i> Upgrade Plan
-                </button>
-              </div>
-              <div class="plan-features">
-                <span><i class="fa-solid fa-check"></i> Up to 3 users</span>
-                <span><i class="fa-solid fa-check"></i> 500 products</span>
-                <span><i class="fa-solid fa-check"></i> 1 POS terminal</span>
-                <span><i class="fa-solid fa-check"></i> Basic analytics</span>
-              </div>
-            </div>
-            <!-- Usage -->
-            <div class="usage-section">
-              <div class="usage-title">This Month’s Usage</div>
-              <div class="usage-row">
-                <div class="usage-label"><i class="fa-solid fa-cart-shopping tcolor"></i> Orders</div>
-                <div class="usage-bar-wrap"><div class="usage-bar" style="width:72%;"></div></div>
-                <div class="usage-num">361 / 500</div>
-              </div>
-              <div class="usage-row">
-                <div class="usage-label"><i class="fa-solid fa-boxes-stacked tcolor"></i> Products</div>
-                <div class="usage-bar-wrap"><div class="usage-bar" style="width:46%;"></div></div>
-                <div class="usage-num">231 / 500</div>
-              </div>
-              <div class="usage-row">
-                <div class="usage-label"><i class="fa-solid fa-users tcolor"></i> Team Members</div>
-                <div class="usage-bar-wrap"><div class="usage-bar" style="width:67%;"></div></div>
-                <div class="usage-num">2 / 3</div>
-              </div>
-            </div>
-            <!-- Invoices -->
-            <div class="invoices-section">
-              <div class="usage-title">Recent Invoices</div>
-              <table class="invoice-table">
-                <thead><tr><th>Invoice</th><th>Period</th><th>Amount</th><th>Status</th><th></th></tr></thead>
-                <tbody>
-                  <tr><td>INV-2025-003</td><td>March 2025</td><td>₨ 4,900</td><td><span class="status-badge status-active">Paid</span></td><td><button class="btn-icon" title="Download"><i class="fa-solid fa-download fa-sm"></i></button></td></tr>
-                  <tr><td>INV-2025-002</td><td>February 2025</td><td>₨ 4,900</td><td><span class="status-badge status-active">Paid</span></td><td><button class="btn-icon" title="Download"><i class="fa-solid fa-download fa-sm"></i></button></td></tr>
-                  <tr><td>INV-2025-001</td><td>January 2025</td><td>₨ 4,900</td><td><span class="status-badge status-active">Paid</span></td><td><button class="btn-icon" title="Download"><i class="fa-solid fa-download fa-sm"></i></button></td></tr>
-                </tbody>
-              </table>
-            </div>
+          <div class="form-group"><label class="form-label">Date Format</label>
+            <select class="form-control"><option selected>DD/MM/YYYY</option><option>MM/DD/YYYY</option><option>YYYY-MM-DD</option></select>
           </div>
-
-          <!-- ===== INTEGRATIONS ===== -->
-          <div class="panel-card" id="tab-integrations">
-            <div class="panel-title">
-              <i class="fa-solid fa-plug" style="color:#f97316;margin-right:.5rem;"></i>Integrations
-            </div>
-            <div class="integrations-section-label">Payment Gateways</div>
-            <div class="integrations-grid">
-              <div class="integ-card connected">
-                <div class="integ-icon" style="background:#1a56db1a;color:#1a56db;"><i class="fa-solid fa-credit-card"></i></div>
-                <div class="integ-info"><div class="integ-name">PayHere</div><div class="integ-desc">Cards, bank transfer, eZ Cash</div></div>
-                <span class="integ-status connected">Connected</span>
-                <button class="btn btn-secondary btn-sm" onclick="showToast('PayHere settings saved.','info')">Manage</button>
-              </div>
-              <div class="integ-card">
-                <div class="integ-icon" style="background:#7c3aed1a;color:#7c3aed;"><i class="fa-solid fa-mobile-screen"></i></div>
-                <div class="integ-info"><div class="integ-name">FriMi Pay</div><div class="integ-desc">Nations Trust Bank mobile wallet</div></div>
-                <span class="integ-status">Not connected</span>
-                <button class="btn btn-primary btn-sm" onclick="showToast('FriMi connection initiated.','info')">Connect</button>
-              </div>
-            </div>
-            <div class="integrations-section-label" style="margin-top:1.5rem;">Delivery &amp; Logistics</div>
-            <div class="integrations-grid">
-              <div class="integ-card connected">
-                <div class="integ-icon" style="background:#dc26261a;color:#dc2626;"><i class="fa-solid fa-truck"></i></div>
-                <div class="integ-info"><div class="integ-name">PickMe Delivery</div><div class="integ-desc">On-demand courier platform</div></div>
-                <span class="integ-status connected">Connected</span>
-                <button class="btn btn-secondary btn-sm" onclick="showToast('PickMe settings opened.','info')">Manage</button>
-              </div>
-              <div class="integ-card">
-                <div class="integ-icon" style="background:#0284c71a;color:#0284c7;"><i class="fa-solid fa-box"></i></div>
-                <div class="integ-info"><div class="integ-name">Sri Lanka Post</div><div class="integ-desc">EMS and registered mail</div></div>
-                <span class="integ-status">Not connected</span>
-                <button class="btn btn-primary btn-sm" onclick="showToast('SL Post connection initiated.','info')">Connect</button>
-              </div>
-            </div>
-            <div class="integrations-section-label" style="margin-top:1.5rem;">Communication</div>
-            <div class="integrations-grid">
-              <div class="integ-card connected">
-                <div class="integ-icon" style="background:#16a34a1a;color:#16a34a;"><i class="fa-brands fa-whatsapp"></i></div>
-                <div class="integ-info"><div class="integ-name">WhatsApp Business</div><div class="integ-desc">Order notifications &amp; support chat</div></div>
-                <span class="integ-status connected">Connected</span>
-                <button class="btn btn-secondary btn-sm" onclick="showToast('WhatsApp settings opened.','info')">Manage</button>
-              </div>
-              <div class="integ-card">
-                <div class="integ-icon" style="background:#f973161a;color:#f97316;"><i class="fa-solid fa-comment-sms"></i></div>
-                <div class="integ-info"><div class="integ-name">Dialog Genie SMS</div><div class="integ-desc">Bulk SMS for promotions &amp; OTP</div></div>
-                <span class="integ-status">Not connected</span>
-                <button class="btn btn-primary btn-sm" onclick="showToast('Dialog SMS connection initiated.','info')">Connect</button>
-              </div>
-            </div>
+          <div class="form-group"><label class="form-label">Fiscal Year Start</label>
+            <select class="form-control"><option selected>January</option><option>April</option><option>July</option></select>
           </div>
-
-          <!-- ===== NOTIFICATIONS ===== -->
-          <div class="panel-card" id="tab-notifications">
-            <div class="panel-title">
-              <i class="fa-solid fa-bell" style="color:#f97316;margin-right:.5rem;"></i>Notification Preferences
-            </div>
-            <div class="notif-table-head">
-              <span>Alert Type</span>
-              <span>In-App</span>
-              <span>Email</span>
-              <span>SMS</span>
-            </div>
-            <div class="notif-row">
-              <div>
-                <div class="toggle-label">Low Stock Alert</div>
-                <div class="toggle-desc">When items fall below reorder level</div>
-              </div>
-              <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
-              <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
-              <label class="toggle"><input type="checkbox"/><span class="toggle-slider"></span></label>
-            </div>
-            <div class="notif-row">
-              <div>
-                <div class="toggle-label">New Order</div>
-                <div class="toggle-desc">Alert on every new sales order</div>
-              </div>
-              <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
-              <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
-              <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
-            </div>
-            <div class="notif-row">
-              <div>
-                <div class="toggle-label">Daily Summary</div>
-                <div class="toggle-desc">End-of-day business summary report</div>
-              </div>
-              <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
-              <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
-              <label class="toggle"><input type="checkbox"/><span class="toggle-slider"></span></label>
-            </div>
-            <div class="notif-row">
-              <div>
-                <div class="toggle-label">Payment Received</div>
-                <div class="toggle-desc">Notify on successful payment collection</div>
-              </div>
-              <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
-              <label class="toggle"><input type="checkbox"/><span class="toggle-slider"></span></label>
-              <label class="toggle"><input type="checkbox"/><span class="toggle-slider"></span></label>
-            </div>
-            <div class="notif-row">
-              <div>
-                <div class="toggle-label">Purchase Order Received</div>
-                <div class="toggle-desc">When a supplier PO is marked received</div>
-              </div>
-              <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
-              <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
-              <label class="toggle"><input type="checkbox"/><span class="toggle-slider"></span></label>
-            </div>
-            <div class="panel-footer">
-              <button class="btn btn-primary btn-sm" onclick="showToast('Notification preferences saved.','success')">
-                <i class="fa-solid fa-floppy-disk"></i> Save Preferences
-              </button>
-            </div>
+          <div class="form-group"><label class="form-label">Default Tax Rate (%)</label>
+            <input class="form-control" type="number" value="0" min="0" max="100" step="0.5"/>
           </div>
-
-        </div><!-- /settings-panel -->
-      </div><!-- /settings-layout -->
-
+        </div>
+        <div class="form-group"><label class="form-label">Store Website</label><input class="form-control" type="url" value="https://demostore.lk" style="max-width:100%;"/></div>
+        <div class="settings-page-footer">
+          <button class="btn btn-primary btn-sm" onclick="showToast('General settings saved successfully.','success')"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+        </div>
+      </div>
     </main>
-  </div><!-- /main-wrapper -->
-</div><!-- /app-shell -->
-
+  </div>
+</div>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 <div class="toast-container" id="toastContainer"></div>
 
 <script src="../../assets/js/layout.js"></script>
 <script src="../erp-header.js"></script>
 <script src="../erp.js"></script>
-<script src="settings.js"></script>
+<script src="settings.js?v=20250603"></script>
 </body>
 </html>

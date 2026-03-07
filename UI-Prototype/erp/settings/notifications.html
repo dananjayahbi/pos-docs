@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Notifications — Settings — LCC</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"/>
+  <link rel="stylesheet" href="../../assets/css/variables.css"/>
+  <link rel="stylesheet" href="../../assets/css/base.css"/>
+  <link rel="stylesheet" href="../../assets/css/components.css"/>
+  <link rel="stylesheet" href="../../assets/css/layout.css"/>
+  <link rel="stylesheet" href="../erp.css"/>
+  <link rel="stylesheet" href="settings.css?v=20250605"/>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="main-wrapper" id="mainWrapper">
+    <header class="top-bar" id="erpTopBar" data-page-title="Store Settings"></header>
+    <main class="main-content">
+      <div class="page-header" style="margin-bottom:0;">
+        <div>
+          <h1 class="page-title">Settings</h1>
+          <p class="page-subtitle">Manage your store configuration, team, billing and integrations.</p>
+        </div>
+      </div>
+            <div class="settings-subnav">
+        <a href="index.html"><i class="fa-solid fa-sliders"></i> General</a>
+        <a href="company.html"><i class="fa-solid fa-building"></i> Company Profile</a>
+        <a href="users.html"><i class="fa-solid fa-users-gear"></i> Users &amp; Roles</a>
+        <a href="billing.html"><i class="fa-solid fa-credit-card"></i> Billing &amp; Plan</a>
+        <a href="integrations.html"><i class="fa-solid fa-plug"></i> Integrations</a>
+        <a href="notifications.html" class="active"><i class="fa-solid fa-bell"></i> Notifications</a>
+      </div>
+      <div class="settings-page-card">
+        <div class="settings-page-header">
+          <i class="fa-solid fa-bell" style="color:#f97316;"></i>
+          <div><h2 class="settings-page-title">Notification Preferences</h2><p class="settings-page-desc">Choose how and when you receive alerts for different events.</p></div>
+        </div>
+        <div class="notif-table-head"><span>Alert Type</span><span>App</span><span>Email</span><span>SMS</span></div>
+        <div class="notif-row">
+          <div class="notif-label"><div style="font-weight:600;font-size:.875rem;">New Order</div><div style="font-size:.75rem;color:#6b7280;">When a customer places a new order</div></div>
+          <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          <label class="toggle"><input type="checkbox"/><span class="toggle-slider"></span></label>
+        </div>
+        <div class="notif-row">
+          <div class="notif-label"><div style="font-weight:600;font-size:.875rem;">Payment Received</div><div style="font-size:.75rem;color:#6b7280;">When a payment is confirmed</div></div>
+          <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+        </div>
+        <div class="notif-row">
+          <div class="notif-label"><div style="font-weight:600;font-size:.875rem;">Low Stock Alert</div><div style="font-size:.75rem;color:#6b7280;">When product stock falls below threshold</div></div>
+          <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          <label class="toggle"><input type="checkbox"/><span class="toggle-slider"></span></label>
+          <label class="toggle"><input type="checkbox"/><span class="toggle-slider"></span></label>
+        </div>
+        <div class="notif-row">
+          <div class="notif-label"><div style="font-weight:600;font-size:.875rem;">New Team Member</div><div style="font-size:.75rem;color:#6b7280;">When someone joins or is invited</div></div>
+          <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          <label class="toggle"><input type="checkbox"/><span class="toggle-slider"></span></label>
+        </div>
+        <div class="notif-row">
+          <div class="notif-label"><div style="font-weight:600;font-size:.875rem;">Invoice Due</div><div style="font-size:.75rem;color:#6b7280;">3 days before an invoice due date</div></div>
+          <label class="toggle"><input type="checkbox"/><span class="toggle-slider"></span></label>
+          <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+        </div>
+        <div class="notif-row">
+          <div class="notif-label"><div style="font-weight:600;font-size:.875rem;">System Updates</div><div style="font-size:.75rem;color:#6b7280;">Release notes and scheduled maintenance</div></div>
+          <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          <label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          <label class="toggle"><input type="checkbox"/><span class="toggle-slider"></span></label>
+        </div>
+        <div class="settings-page-footer">
+          <button class="btn btn-primary btn-sm" onclick="showToast('Notification preferences saved.','success')"><i class="fa-solid fa-floppy-disk"></i> Save Preferences</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="../../assets/js/layout.js"></script>
+<script src="../erp-header.js"></script>
+<script src="../erp.js"></script>
+<script src="settings.js?v=20250603"></script>
+</body>
+</html>
