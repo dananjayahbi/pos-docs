@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shift Ended — LCC POS</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #0f172a 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #e2e8f0;
+    }
+
+    .leave-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 20px;
+      padding: 3rem 3.5rem;
+      text-align: center;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 24px 60px rgba(0,0,0,.45);
+      animation: fadeUp .5s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Brand */
+    .leave-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .6rem;
+      font-size: .9rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin-bottom: 2rem;
+    }
+    .leave-brand-dot {
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, #f97316, #fb923c);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem; color: #fff;
+    }
+
+    /* Icon ring */
+    .leave-icon-wrap {
+      width: 88px; height: 88px;
+      background: linear-gradient(135deg, #166534 0%, #15803d 100%);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2.2rem;
+      color: #bbf7d0;
+      box-shadow: 0 0 0 14px rgba(21,128,61,.12), 0 0 0 28px rgba(21,128,61,.06);
+    }
+
+    .leave-heading {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #f1f5f9;
+      margin-bottom: .4rem;
+      letter-spacing: -.02em;
+    }
+
+    .leave-sub {
+      font-size: .95rem;
+      color: #94a3b8;
+      margin-bottom: 2rem;
+    }
+
+    /* User chip */
+    .leave-user-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 40px;
+      padding: .45rem 1rem;
+      font-size: .85rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-bottom: 2rem;
+    }
+    .leave-user-chip i { color: #f97316; }
+
+    /* Shift Summary */
+    .shift-summary {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 14px;
+      padding: 1.4rem 1.6rem;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+    .ss-title {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 1rem;
+    }
+    .ss-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: .55rem 0;
+      border-bottom: 1px solid #1e293b;
+    }
+    .ss-row:last-child { border-bottom: none; }
+    .ss-label { font-size: .85rem; color: #94a3b8; }
+    .ss-val   { font-size: .9rem; font-weight: 600; color: #e2e8f0; }
+    .ss-val.highlight { color: #f97316; font-size: 1rem; font-weight: 700; }
+
+    /* Thank you note */
+    .leave-thankyou {
+      font-size: .9rem;
+      color: #64748b;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .leave-thankyou strong { color: #94a3b8; }
+
+    /* CTA button */
+    .btn-return {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .55rem;
+      width: 100%;
+      padding: .9rem 1.5rem;
+      background: linear-gradient(135deg, #f97316, #fb923c);
+      color: #fff;
+      font-size: .97rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: opacity .18s, transform .18s;
+      text-decoration: none;
+    }
+    .btn-return:hover { opacity: .9; transform: translateY(-1px); }
+    .btn-return:active { transform: translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+
+<div class="leave-card">
+
+  <!-- Brand -->
+  <div class="leave-brand">
+    <div class="leave-brand-dot"><i class="fa-solid fa-cart-shopping"></i></div>
+    LankaCommerce POS
+  </div>
+
+  <!-- Icon -->
+  <div class="leave-icon-wrap">
+    <i class="fa-solid fa-check"></i>
+  </div>
+
+  <h1 class="leave-heading">Shift Ended</h1>
+  <p class="leave-sub" id="shiftDateLabel">Have a great rest of your day!</p>
+
+  <!-- Cashier chip -->
+  <div class="leave-user-chip">
+    <i class="fa-solid fa-user-circle"></i>
+    <span id="cashierName">Cashier</span>
+  </div>
+
+  <!-- Shift Summary -->
+  <div class="shift-summary">
+    <div class="ss-title"><i class="fa-regular fa-clock"></i>&nbsp; Shift Summary</div>
+    <div class="ss-row">
+      <span class="ss-label">Shift Started</span>
+      <span class="ss-val" id="ssStart">—</span>
+    </div>
+    <div class="ss-row">
+      <span class="ss-label">Shift Ended</span>
+      <span class="ss-val" id="ssEnd">—</span>
+    </div>
+    <div class="ss-row">
+      <span class="ss-label">Transactions Processed</span>
+      <span class="ss-val" id="ssSales">0 transactions</span>
+    </div>
+    <div class="ss-row">
+      <span class="ss-label">Total Revenue</span>
+      <span class="ss-val highlight" id="ssRevenue">₨ 0.00</span>
+    </div>
+  </div>
+
+  <p class="leave-thankyou">
+    Your shift data has been recorded. <strong>A Z-Report has been queued for printing.</strong>
+    Thank you for your work today!
+  </p>
+
+  <button class="btn-return" onclick="returnToLogin()">
+    <i class="fa-solid fa-right-to-bracket"></i> Return to Login
+  </button>
+
+</div>
+
+<script>
+  (function () {
+    // Read last shift from localStorage
+    try {
+      const shift = JSON.parse(localStorage.getItem('lcc_last_shift') || '{}');
+      const user  = JSON.parse(localStorage.getItem('lcc_user')       || '{}');
+
+      if (shift.date)      document.getElementById('shiftDateLabel').textContent = shift.date;
+      if (shift.startTime) document.getElementById('ssStart').textContent = shift.startTime;
+      if (shift.endTime)   document.getElementById('ssEnd').textContent   = shift.endTime;
+      if (shift.salesCount != null)
+        document.getElementById('ssSales').textContent =
+          shift.salesCount + ' transaction' + (shift.salesCount !== 1 ? 's' : '');
+      if (shift.revenue != null)
+        document.getElementById('ssRevenue').textContent =
+          '\u20A8\u00A0' + Number(shift.revenue).toLocaleString('en-LK', { minimumFractionDigits: 2 });
+
+      if (user.name)
+        document.getElementById('cashierName').textContent =
+          user.name.replace(/\b\w/g, c => c.toUpperCase());
+    } catch (e) {}
+  })();
+
+  function returnToLogin() {
+    // Clear auth — cashier session is done
+    localStorage.removeItem('lcc_auth');
+    localStorage.removeItem('lcc_user');
+    localStorage.removeItem('lcc_last_shift');
+    window.location.href = '../auth/login.html';
+  }
+</script>
+
+</body>
+</html>
