@@ -12,17 +12,23 @@ document.addEventListener('DOMContentLoaded', function () {
   const toggleBtn = document.querySelector('.header-toggle-btn');
   const mobileOverlay = document.querySelector('.sidebar-overlay');
 
-  const COLLAPSED_KEY = 'lcc_sidebar_collapsed';
+  const COLLAPSED_KEY     = 'lcc_sidebar_collapsed';
+  const AUTO_COLLAPSE_BP  = 1280; // px — sidebar auto-collapses to icon-only below this width
   let isCollapsed = localStorage.getItem(COLLAPSED_KEY) === 'true';
 
   function applyCollapsedState() {
     if (!sidebar) return;
     if (window.innerWidth > 1024) {
-      sidebar.classList.toggle('collapsed', isCollapsed);
-      header && header.classList.toggle('sidebar-collapsed', isCollapsed);
-      mainWrapper && mainWrapper.classList.toggle('sidebar-collapsed', isCollapsed);
+      // Auto-collapse when ≤ AUTO_COLLAPSE_BP; otherwise respect saved user preference
+      const shouldCollapse = window.innerWidth <= AUTO_COLLAPSE_BP ? true : isCollapsed;
+      sidebar.classList.toggle('collapsed', shouldCollapse);
+      header      && header.classList.toggle('sidebar-collapsed', shouldCollapse);
+      mainWrapper && mainWrapper.classList.toggle('sidebar-collapsed', shouldCollapse);
     } else {
+      // ≤ 1024px: overlay/drawer mode — remove desktop collapse class
       sidebar.classList.remove('collapsed');
+      header      && header.classList.remove('sidebar-collapsed');
+      mainWrapper && mainWrapper.classList.remove('sidebar-collapsed');
     }
   }
 
@@ -31,10 +37,19 @@ document.addEventListener('DOMContentLoaded', function () {
   if (toggleBtn) {
     toggleBtn.addEventListener('click', function () {
       if (window.innerWidth > 1024) {
-        isCollapsed = !isCollapsed;
-        localStorage.setItem(COLLAPSED_KEY, isCollapsed);
-        applyCollapsedState();
+        // Toggle directly on the elements for immediate feedback
+        const currentlyCollapsed = sidebar.classList.contains('collapsed');
+        const nextCollapsed = !currentlyCollapsed;
+        sidebar.classList.toggle('collapsed', nextCollapsed);
+        header      && header.classList.toggle('sidebar-collapsed', nextCollapsed);
+        mainWrapper && mainWrapper.classList.toggle('sidebar-collapsed', nextCollapsed);
+        // Save preference only when above the auto-collapse breakpoint
+        if (window.innerWidth > AUTO_COLLAPSE_BP) {
+          isCollapsed = nextCollapsed;
+          localStorage.setItem(COLLAPSED_KEY, isCollapsed);
+        }
       } else {
+        // Mobile: drawer toggle
         sidebar && sidebar.classList.toggle('mobile-open');
         mobileOverlay && mobileOverlay.classList.toggle('active');
       }

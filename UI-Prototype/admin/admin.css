@@ -602,3 +602,231 @@
   box-shadow: 0 6px 18px rgba(79, 70, 229, 0.45);
   transform: translateX(0) translateY(-50%) scale(1.1) !important;
 }
+
+/* ============================================================
+   COMPREHENSIVE RESPONSIVE — ADMIN DASHBOARD
+   Breakpoints: 4K → 2K → 1080p → 1440px → 1280px → 1024px
+                → 768px → 600px → 480px → 375px → 320px
+   Note: sidebar off-canvas / top-bar left:0 is handled by
+         layout.css (≤1024px). This file handles content layout.
+   ============================================================ */
+
+/* ── 4K (≥3840px) ─────────────────────────────────────── */
+@media (min-width: 3840px) {
+  .page-title         { font-size: 2.4rem; }
+  .page-description   { font-size: 1.2rem; }
+  .kpi-grid           { grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+  .kpi-card           { padding: 2.5rem; border-radius: 20px; }
+  .kpi-value          { font-size: 3rem; }
+  .kpi-label          { font-size: 1rem; }
+  .kpi-icon           { width: 72px; height: 72px; font-size: 1.8rem; }
+  .dashboard-grid     { grid-template-columns: 1fr 420px; gap: 2rem; }
+  .sys-status-panel   { padding: 2rem; }
+  .table-wrapper th,
+  .table-wrapper td   { padding: 1.2rem 1.4rem; font-size: 1rem; }
+  .notif-panel        { width: 460px; }
+  .modal-dialog       { max-width: 780px; }
+}
+
+/* ── 2K / QHD (2560px – 3839px) ──────────────────────── */
+@media (min-width: 2560px) and (max-width: 3839px) {
+  .page-title         { font-size: 2rem; }
+  .page-description   { font-size: 1.05rem; }
+  .kpi-grid           { grid-template-columns: repeat(4, 1fr); gap: 1.6rem; }
+  .kpi-card           { padding: 2rem; border-radius: 18px; }
+  .kpi-value          { font-size: 2.5rem; }
+  .kpi-label          { font-size: 0.95rem; }
+  .kpi-icon           { width: 64px; height: 64px; font-size: 1.6rem; }
+  .dashboard-grid     { grid-template-columns: 1fr 380px; gap: 1.6rem; }
+  .sys-status-panel   { padding: 1.75rem; }
+  .table-wrapper th,
+  .table-wrapper td   { padding: 1rem 1.2rem; font-size: 0.95rem; }
+  .notif-panel        { width: 420px; }
+  .modal-dialog       { max-width: 700px; }
+}
+
+/* ── Full HD / 1080p (1920px – 2559px) ───────────────── */
+@media (min-width: 1920px) and (max-width: 2559px) {
+  .page-title         { font-size: 1.75rem; }
+  .kpi-grid           { grid-template-columns: repeat(4, 1fr); gap: 1.4rem; }
+  .kpi-card           { padding: 1.75rem; }
+  .kpi-value          { font-size: 2.25rem; }
+  .kpi-icon           { width: 58px; height: 58px; font-size: 1.5rem; }
+  .dashboard-grid     { grid-template-columns: 1fr 360px; }
+  .notif-panel        { width: 400px; }
+}
+
+/* ── Large Laptop / 1440p (≤1440px) ──────────────────── */
+@media (max-width: 1440px) {
+  .kpi-grid           { gap: 1rem; }
+  .kpi-card           { padding: 1.25rem; }
+  .kpi-value          { font-size: 1.75rem; }
+  .dashboard-grid     { grid-template-columns: 1fr 320px; gap: 1rem; }
+}
+
+/* ── Standard Laptop (≤1280px) ───────────────────────── */
+@media (max-width: 1280px) {
+  .kpi-grid           { grid-template-columns: repeat(2, 1fr); gap: 0.9rem; }
+  .kpi-card           { padding: 1.1rem 1.25rem; }
+  .kpi-value          { font-size: 1.6rem; }
+  .kpi-label          { font-size: 0.78rem; }
+  .dashboard-grid     { grid-template-columns: 1fr 300px; }
+  .page-title         { font-size: 1.35rem; }
+}
+
+/* ── iPad Landscape / 1024px (≤1024px) ───────────────── */
+/* Note: layout.css activates sidebar overlay at this breakpoint */
+@media (max-width: 1024px) {
+  .kpi-grid           { grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
+  .kpi-card           { padding: 1rem 1.1rem; }
+  .kpi-value          { font-size: 1.5rem; }
+  .dashboard-grid     { grid-template-columns: 1fr; }
+  .sys-status-panel   { max-height: none; }
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+  .page-header-actions { width: 100%; }
+  .page-header-actions .btn { flex: 1; justify-content: center; }
+}
+
+/* ── Tablet Portrait (≤768px) ────────────────────────── */
+@media (max-width: 768px) {
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  .kpi-card           { padding: 0.9rem 1rem; }
+  .kpi-value          { font-size: 1.35rem; }
+  .kpi-icon           { width: 40px; height: 40px; font-size: 1rem; }
+  .kpi-label          { font-size: 0.73rem; }
+  .kpi-change         { font-size: 0.7rem; }
+  .dashboard-grid     { grid-template-columns: 1fr; gap: 0.75rem; }
+  .page-title         { font-size: 1.15rem; }
+  .page-description   { font-size: 0.82rem; }
+  .form-grid-2        { grid-template-columns: 1fr; }
+  .form-col-full      { grid-column: auto; }
+  .modal-dialog       { max-width: 100%; margin: 0; border-radius: 0; }
+}
+
+/* ── Mobile Landscape / Large Phone (≤600px) ─────────── */
+@media (max-width: 600px) {
+  .kpi-grid           { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  .kpi-card           { padding: 0.8rem; }
+  .kpi-value          { font-size: 1.25rem; }
+  .kpi-icon           { width: 36px; height: 36px; font-size: 0.95rem; border-radius: 8px; }
+  .page-header        { gap: 0.5rem; }
+  .page-header-actions .btn { font-size: 0.78rem; padding: 0.4rem 0.75rem; }
+  .table-card         { border-radius: 10px; }
+  .modal-dialog       { border-radius: 0; }
+  .filter-bar         { flex-direction: column; gap: 0.5rem; }
+  .filter-bar > *     { width: 100%; }
+  .search-input-wrap  { width: 100%; }
+}
+
+/* ── Phone (≤480px) ──────────────────────────────────── */
+@media (max-width: 480px) {
+  .kpi-grid           { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .kpi-card {
+    padding: 0.75rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+  .kpi-icon           { display: none; }
+  .kpi-value          { font-size: 1.15rem; }
+  .kpi-label          { font-size: 0.71rem; }
+  .kpi-footer,
+  .kpi-change         { font-size: 0.67rem; }
+  .page-title         { font-size: 1rem; }
+  .page-description   { display: none; }
+  .notif-panel        { width: calc(100vw - 12px); right: 6px; }
+  .modal-dialog       { padding: 1rem; }
+  .modal-footer       { flex-direction: column; gap: 0.5rem; }
+  .modal-footer .btn  { width: 100%; justify-content: center; }
+}
+
+/* ── Small Phone (≤375px) ────────────────────────────── */
+@media (max-width: 375px) {
+  .kpi-grid           { grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+  .kpi-card           { padding: 0.6rem 0.7rem; }
+  .kpi-value          { font-size: 1.05rem; }
+  .page-title         { font-size: 0.95rem; }
+  .sys-status-card    { padding: 0.7rem 0.9rem; }
+  .status-dot         { width: 8px; height: 8px; }
+  .modal-header h3    { font-size: 1rem; }
+}
+
+/* ── Tiny Screen (≤320px) ────────────────────────────── */
+@media (max-width: 320px) {
+  .kpi-grid           { grid-template-columns: 1fr; gap: 0.4rem; }
+  .kpi-card           { padding: 0.55rem 0.65rem; }
+  .kpi-value          { font-size: 0.95rem; }
+  .page-title         { font-size: 0.88rem; }
+  .notif-panel        { width: calc(100vw - 8px); right: 4px; }
+  .modal-dialog       { padding: 0.75rem; }
+}
+
+/* ============================================================
+   MOBILE SIDEBAR OVERLAY & HAMBURGER ENHANCEMENTS
+   ============================================================ */
+
+/* Overlay — activated by JS (.active) as fallback for sibling
+   selector when overlay is outside .app-shell */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+  z-index: 149;   /* just below sidebar (z-index: 150 via --z-fixed) */
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+}
+.sidebar-overlay.active { display: block; }
+
+/* Sidebar z-index on mobile (above overlay) */
+@media (max-width: 1024px) {
+  .sidebar {
+    z-index: 150;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.28s ease;
+  }
+  .sidebar.mobile-open {
+    box-shadow: 4px 0 32px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Make hamburger button more tappable & prominent */
+  #sidebarToggle,
+  .header-toggle-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 1.05rem;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  #sidebarToggle:hover,
+  .header-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.16);
+  }
+
+  /* Ensure top-bar spans full width (sidebar is off-canvas) */
+  .top-bar {
+    left: 0 !important;
+  }
+}
+
+/* Slightly larger on small phones */
+@media (max-width: 480px) {
+  #sidebarToggle,
+  .header-toggle-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 1rem;
+  }
+  .top-bar {
+    padding-inline: 0.75rem;
+  }
+}

@@ -27,3 +27,391 @@
 .positive { color:#16a34a; font-weight:600; }
 .negative { color:#dc2626; font-weight:600; }
 @media (max-width:900px) { .plans-grid { grid-template-columns:1fr; } }
+
+/* =============================================================================
+   BILLING.CSS — RESPONSIVE BREAKPOINTS
+   Coverage: 4K (≥3840px) → Tiny Screen (≤320px)
+   Billing-specific classes only. admin.css handles sidebar, KPI grid,
+   dashboard-grid, modal-dialog, form-grid-2, hamburger, top-bar offset.
+   ============================================================================= */
+
+/* ── 4K — ≥3840px ──────────────────────────────────────────────────────────── */
+@media (min-width: 3840px) {
+  .plans-grid {
+    gap: 3rem;
+    margin-bottom: 3.5rem;
+  }
+  .plan-card {
+    padding: 3rem;
+    border-radius: 20px;
+    gap: 1.75rem;
+  }
+  .plan-badge {
+    font-size: .9rem;
+    padding: .4rem 1.2rem;
+  }
+  .plan-price {
+    font-size: 3.5rem;
+  }
+  .plan-price span {
+    font-size: 1.5rem;
+  }
+  .plan-features li {
+    font-size: 1.1rem;
+    gap: .75rem;
+  }
+  .plan-tenants {
+    font-size: 1rem;
+    padding-top: 1rem;
+  }
+  .section-card {
+    border-radius: 20px;
+  }
+  .section-header {
+    padding: 2rem 2.5rem;
+  }
+  .section-title {
+    font-size: 1.4rem;
+    gap: .75rem;
+  }
+  .data-table th {
+    padding: 1.25rem 2rem;
+    font-size: 1rem;
+  }
+  .data-table td {
+    padding: 1.5rem 2rem;
+    font-size: 1.1rem;
+  }
+}
+
+/* ── 2K QHD — ≥2560px ──────────────────────────────────────────────────────── */
+@media (min-width: 2560px) and (max-width: 3839px) {
+  .plans-grid {
+    gap: 2.25rem;
+    margin-bottom: 2.75rem;
+  }
+  .plan-card {
+    padding: 2.25rem;
+    border-radius: 16px;
+  }
+  .plan-price {
+    font-size: 2.75rem;
+  }
+  .plan-price span {
+    font-size: 1.2rem;
+  }
+  .plan-features li {
+    font-size: 1rem;
+  }
+  .plan-tenants {
+    font-size: .9rem;
+  }
+  .section-header {
+    padding: 1.5rem 2rem;
+  }
+  .section-title {
+    font-size: 1.15rem;
+  }
+  .data-table th {
+    padding: 1rem 1.75rem;
+    font-size: .875rem;
+  }
+  .data-table td {
+    padding: 1.125rem 1.75rem;
+    font-size: 1rem;
+  }
+}
+
+/* ── Full HD — ≥1920px ──────────────────────────────────────────────────────── */
+@media (min-width: 1920px) and (max-width: 2559px) {
+  .plans-grid {
+    gap: 2rem;
+  }
+  .plan-card {
+    padding: 2rem;
+  }
+  .plan-price {
+    font-size: 2.4rem;
+  }
+  .data-table th,
+  .data-table td {
+    padding: .9rem 1.5rem;
+  }
+}
+
+/* ── Large Laptop — ≤1440px ─────────────────────────────────────────────────── */
+@media (max-width: 1440px) {
+  .plans-grid {
+    gap: 1.25rem;
+  }
+  .plan-card {
+    padding: 1.5rem;
+  }
+  .plan-price {
+    font-size: 1.85rem;
+  }
+  .data-table th {
+    padding: .65rem 1rem;
+  }
+  .data-table td {
+    padding: .75rem 1rem;
+  }
+}
+
+/* ── Standard Laptop — ≤1280px ──────────────────────────────────────────────── */
+@media (max-width: 1280px) {
+  .plans-grid {
+    gap: 1rem;
+  }
+  .plan-card {
+    padding: 1.25rem;
+    border-radius: 10px;
+  }
+  .plan-price {
+    font-size: 1.65rem;
+  }
+  .plan-features li {
+    font-size: .825rem;
+  }
+  .section-header {
+    padding: 1rem 1.25rem;
+  }
+  .data-table th,
+  .data-table td {
+    padding: .65rem .875rem;
+    font-size: .825rem;
+  }
+}
+
+/* ── iPad Landscape — ≤1024px ───────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  /* Override the existing max-width:900px 1-col rule — 2-col is better at tablet */
+  .plans-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  /* Featured card spans full width as the standout plan */
+  .plan-card.plan-featured {
+    grid-column: 1 / -1;
+  }
+  .plan-price {
+    font-size: 1.6rem;
+  }
+  .section-card {
+    border-radius: 10px;
+  }
+  .data-table th,
+  .data-table td {
+    padding: .6rem .75rem;
+    font-size: .8rem;
+  }
+}
+
+/* ── Tablet Portrait — ≤768px ───────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .plans-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: .875rem;
+  }
+  .plan-card.plan-featured {
+    grid-column: 1 / -1;
+  }
+  .plan-card {
+    padding: 1.1rem;
+    border-radius: 8px;
+    gap: .75rem;
+  }
+  .plan-price {
+    font-size: 1.5rem;
+  }
+  .plan-badge {
+    font-size: .65rem;
+    padding: .2rem .6rem;
+  }
+  .plan-features li {
+    font-size: .8rem;
+  }
+  .plan-tenants {
+    font-size: .75rem;
+  }
+  .section-header {
+    padding: .875rem 1rem;
+  }
+  .section-title {
+    font-size: .9rem;
+  }
+  /* Revenue table: hide Churned column at tablet */
+  .data-table th:nth-child(5),
+  .data-table td:nth-child(5) {
+    display: none;
+  }
+  .data-table th,
+  .data-table td {
+    padding: .55rem .65rem;
+    font-size: .775rem;
+  }
+}
+
+/* ── Large Phone — ≤600px ───────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .plans-grid {
+    grid-template-columns: 1fr;
+    gap: .75rem;
+  }
+  .plan-card.plan-featured {
+    grid-column: auto;
+  }
+  .plan-card {
+    padding: 1rem;
+  }
+  .plan-price {
+    font-size: 1.6rem;
+  }
+  /* Revenue table: also hide New Subs at ≤600px */
+  .data-table th:nth-child(4),
+  .data-table td:nth-child(4) {
+    display: none;
+  }
+  .data-table th,
+  .data-table td {
+    padding: .5rem .6rem;
+    font-size: .75rem;
+  }
+  .amount,
+  .positive,
+  .negative {
+    font-size: .75rem;
+  }
+}
+
+/* ── Phone — ≤480px ─────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .plans-grid {
+    margin-bottom: 1rem;
+  }
+  .plan-card {
+    padding: .875rem;
+    gap: .625rem;
+  }
+  .plan-price {
+    font-size: 1.4rem;
+  }
+  .plan-features li {
+    font-size: .775rem;
+  }
+  .section-card {
+    border-radius: 8px;
+  }
+  .section-header {
+    padding: .75rem .875rem;
+  }
+  .section-title {
+    font-size: .85rem;
+  }
+  /* Revenue table: hide Active Subs — keep Month, Total Revenue, Net MRR */
+  .data-table th:nth-child(3),
+  .data-table td:nth-child(3) {
+    display: none;
+  }
+  .data-table th,
+  .data-table td {
+    padding: .45rem .5rem;
+    font-size: .725rem;
+  }
+  .data-table th:nth-child(1),
+  .data-table td:nth-child(1) {
+    white-space: nowrap;
+  }
+}
+
+/* ── Small Phone — ≤375px ───────────────────────────────────────────────────── */
+@media (max-width: 375px) {
+  .plan-card {
+    padding: .75rem;
+  }
+  .plan-price {
+    font-size: 1.25rem;
+  }
+  .plan-badge {
+    font-size: .6rem;
+    padding: .15rem .5rem;
+  }
+  .plan-features li {
+    font-size: .725rem;
+    gap: .375rem;
+  }
+  .plan-tenants {
+    font-size: .7rem;
+  }
+  .section-header {
+    padding: .625rem .75rem;
+  }
+  .section-title {
+    font-size: .8rem;
+  }
+  .data-table th,
+  .data-table td {
+    padding: .4rem .45rem;
+    font-size: .7rem;
+  }
+  .amount,
+  .positive,
+  .negative {
+    font-size: .7rem;
+  }
+}
+
+/* ── Tiny Screen — ≤320px ───────────────────────────────────────────────────── */
+@media (max-width: 320px) {
+  .plans-grid {
+    gap: .5rem;
+    margin-bottom: .75rem;
+  }
+  .plan-card {
+    padding: .625rem;
+    border-radius: 6px;
+    gap: .5rem;
+  }
+  .plan-price {
+    font-size: 1.1rem;
+    line-height: 1.1;
+  }
+  .plan-price span {
+    font-size: .8rem;
+  }
+  .plan-features li {
+    font-size: .675rem;
+  }
+  .plan-tenants {
+    font-size: .65rem;
+    padding-top: .5rem;
+  }
+  .plan-badge {
+    font-size: .55rem;
+    padding: .1rem .4rem;
+  }
+  .section-card {
+    border-radius: 6px;
+  }
+  .section-header {
+    padding: .5rem .625rem;
+  }
+  .section-title {
+    font-size: .75rem;
+    gap: .3rem;
+  }
+  .table-wrapper {
+    margin: 0 -.625rem;
+  }
+  .data-table th,
+  .data-table td {
+    padding: .35rem .4rem;
+    font-size: .65rem;
+  }
+  .amount,
+  .positive,
+  .negative {
+    font-size: .65rem;
+  }
+}

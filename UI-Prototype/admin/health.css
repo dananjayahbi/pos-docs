@@ -37,3 +37,145 @@
 .inc-postmortem    { background:#dbeafe; color:#1d4ed8; }
 @media (max-width:900px) { .services-grid { grid-template-columns:1fr 1fr; } }
 @media (max-width:580px) { .services-grid { grid-template-columns:1fr; } }
+
+/* =============================================================
+   HEALTH.CSS — RESPONSIVE BREAKPOINTS
+   Health-specific classes only; admin.css handles sidebar/topbar/
+   KPI-grid/dashboard-grid/modal/form-grid; layout.css handles
+   sidebar off-canvas. Rules below cover 4K → 320 px.
+   ============================================================= */
+
+/* ── 4K  ≥3840px ─────────────────────────────────────────── */
+@media (min-width: 3840px) {
+  .services-grid               { grid-template-columns: repeat(5, 1fr); gap: 2rem; }
+  .service-card                { padding: 2rem; }
+  .status-banner               { padding: 2rem 2.5rem; font-size: 1.1rem; }
+  .status-banner i             { font-size: 2rem; }
+  .section-title               { font-size: 1.25rem; }
+  .data-table th,
+  .data-table td               { padding: 1.25rem 2rem; font-size: 1rem; }
+  .metric .val                 { font-size: 1.1rem; }
+  .metric .label               { font-size: .8rem; }
+  .status-timestamp            { font-size: 1rem; }
+}
+
+/* ── 2K  ≥2560px ─────────────────────────────────────────── */
+@media (min-width: 2560px) and (max-width: 3839px) {
+  .services-grid               { grid-template-columns: repeat(4, 1fr); gap: 1.75rem; }
+  .service-card                { padding: 1.75rem; }
+  .status-banner               { padding: 1.625rem 2rem; font-size: 1rem; }
+  .status-banner i             { font-size: 1.75rem; }
+  .data-table th,
+  .data-table td               { padding: 1rem 1.75rem; }
+  .metric .val                 { font-size: 1rem; }
+  .status-timestamp            { font-size: .9rem; }
+}
+
+/* ── 1080p  ≥1920px ──────────────────────────────────────── */
+@media (min-width: 1920px) and (max-width: 2559px) {
+  .services-grid               { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .service-card                { padding: 1.5rem; }
+  .status-banner               { padding: 1.375rem 1.75rem; }
+}
+
+/* ── ≤1440px ─────────────────────────────────────────────── */
+@media (max-width: 1440px) {
+  .services-grid               { grid-template-columns: repeat(3, 1fr); gap: 1.125rem; }
+  .service-card                { padding: 1.125rem; }
+}
+
+/* ── ≤1280px ─────────────────────────────────────────────── */
+@media (max-width: 1280px) {
+  .services-grid               { gap: 1rem; }
+  .status-banner               { padding: 1rem 1.25rem; }
+}
+
+/* ── ≤1024px ─────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .services-grid               { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .status-banner               { padding: 1rem 1.125rem; gap: .875rem; }
+  .service-metrics             { gap: .75rem; }
+  .section-header              { padding: 1rem 1.25rem; }
+  .data-table th,
+  .data-table td               { padding: .75rem 1rem; }
+}
+
+/* ── ≤768px ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .services-grid               { grid-template-columns: repeat(2, 1fr); gap: .875rem; }
+  .status-banner               { flex-direction: column; gap: .625rem; }
+  .status-banner i             { font-size: 1.25rem; margin-top: 0; }
+  .section-title               { font-size: .9rem; }
+  /* hide Duration column at ≤768 */
+  .data-table th:nth-child(4),
+  .data-table td:nth-child(4)  { display: none; }
+  .data-table th,
+  .data-table td               { padding: .625rem .875rem; font-size: .8rem; }
+  .status-timestamp            { font-size: .75rem; }
+  .service-metrics             { gap: .625rem; }
+  .metric .val                 { font-size: .8rem; }
+  .metric .label               { font-size: .6rem; }
+}
+
+/* ── ≤600px ──────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .services-grid               { grid-template-columns: 1fr; gap: .75rem; }
+  .service-card                { padding: 1rem; }
+  .status-banner               { padding: .875rem 1rem; }
+  /* metrics: spread evenly across 3 equal columns */
+  .service-metrics             { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+  .metric                      { align-items: flex-start; }
+}
+
+/* ── ≤480px ──────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .status-banner               { font-size: .8rem; padding: .75rem .875rem; }
+  .status-banner strong        { font-size: .875rem; }
+  .service-header              { flex-wrap: wrap; gap: .375rem; }
+  .service-name                { font-size: .8rem; }
+  .status-badge                { font-size: .65rem; padding: .15rem .5rem; }
+  /* hide Description column at ≤480 (Duration already hidden) */
+  .data-table th:nth-child(3),
+  .data-table td:nth-child(3)  { display: none; }
+  .data-table th,
+  .data-table td               { padding: .5rem .625rem; font-size: .75rem; }
+  .section-header              { padding: .875rem 1rem; }
+  .service-metrics             { grid-template-columns: repeat(3, 1fr); gap: .375rem; }
+  .metric .val                 { font-size: .75rem; }
+  .status-timestamp            { display: none; }
+}
+
+/* ── ≤375px ──────────────────────────────────────────────── */
+@media (max-width: 375px) {
+  .service-card                { padding: .75rem; gap: .625rem; }
+  .service-name                { font-size: .75rem; }
+  /* collapse to 2 cols so each metric is more readable */
+  .service-metrics             { grid-template-columns: 1fr 1fr; gap: .375rem; }
+  .metric .val                 { font-size: .7rem; }
+  .metric .label               { font-size: .58rem; }
+  .data-table th,
+  .data-table td               { padding: .4rem .5rem; font-size: .7rem; }
+  .status-banner               { padding: .625rem .75rem; font-size: .75rem; gap: .5rem; }
+  .status-banner i             { font-size: 1rem; }
+  .section-title               { font-size: .825rem; }
+  .incident-badge              { font-size: .62rem; padding: .15rem .4rem; }
+}
+
+/* ── ≤320px ──────────────────────────────────────────────── */
+@media (max-width: 320px) {
+  .service-card                { padding: .625rem; border-radius: 8px; }
+  .service-name                { font-size: .7rem; }
+  .service-name i              { display: none; }          /* icons too tight */
+  .service-metrics             { grid-template-columns: 1fr 1fr; gap: .25rem; }
+  .metric .val                 { font-size: .65rem; }
+  .metric .label               { font-size: .55rem; }
+  .status-banner               { padding: .5rem .625rem; border-radius: 8px; font-size: .7rem; }
+  .status-banner i             { font-size: .875rem; }
+  .status-badge                { font-size: .58rem; padding: .1rem .35rem; }
+  .data-table th,
+  .data-table td               { padding: .35rem .375rem; font-size: .65rem; }
+  .section-card                { border-radius: 8px; }
+  .section-header              { padding: .625rem .75rem; }
+  .section-title               { font-size: .75rem; }
+  .incident-badge              { font-size: .58rem; padding: .1rem .3rem; }
+}

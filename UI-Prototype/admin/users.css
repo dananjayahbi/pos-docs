@@ -143,3 +143,290 @@
 
 /* modal-sm override for confirm modal */
 .modal-dialog.modal-sm { max-width: 460px; }
+
+/* ============================================================
+   RESPONSIVE BREAKPOINTS — users.css
+   Coverage : 4K (≥3840px) → Tiny (≤320px)
+   IMPORTANT : Rules already in admin.css (sidebar, top-bar,
+   kpi-grid, modal-dialog, form-grid-2, overlay, hamburger)
+   are NOT repeated here. Only users-page-specific classes.
+   Column map for .users-table:
+     1=checkbox  2=User  3=Email  4=Role  5=Tenant
+     6=LastLogin  7=Status  8=Actions
+   ============================================================ */
+
+/* ── ≥3840px  4K ──────────────────────────────────────────── */
+@media (min-width: 3840px) {
+  .stats-row          { gap: 2rem; margin-bottom: 2rem; }
+  .stat-card          { padding: 1.75rem 2rem; border-radius: 16px; }
+  .stat-value         { font-size: 3rem; }
+  .stat-label         { font-size: 1rem; }
+
+  .filter-bar         { gap: 1.25rem; margin-bottom: 1.75rem; }
+  .search-icon        { font-size: 1.1rem; left: 1.1rem; }
+  .search-input       { padding: 0.8rem 1.25rem 0.8rem 3rem; font-size: 1.1rem; border-radius: 12px; }
+  .filter-select      { padding: 0.8rem 1.25rem; font-size: 1.1rem; border-radius: 12px; }
+
+  .table-card         { border-radius: 18px; }
+  .table-header       { padding: 1.5rem 2rem; }
+  .table-count        { font-size: 1.1rem; }
+  .data-table th      { padding: 1.25rem 1.5rem; font-size: 1rem; }
+  .data-table td      { padding: 1.5rem 1.5rem; font-size: 1rem; }
+
+  .user-avatar        { width: 52px; height: 52px; font-size: 1rem; }
+  .user-name          { font-size: 1.1rem; }
+  .user-id            { font-size: 0.9rem; }
+  .badge              { font-size: 0.9rem; padding: 0.35rem 0.9rem; }
+  .icon-btn-sm        { width: 42px; height: 42px; font-size: 1rem; border-radius: 8px; }
+  .action-btns        { gap: 0.5rem; }
+
+  .table-footer       { padding: 1.5rem 2rem; }
+  .pagination-info    { font-size: 1rem; }
+  .page-btn           { min-width: 44px; height: 44px; font-size: 1rem; }
+
+  .view-meta-strip    { padding: 1.25rem 1.75rem; gap: 1.25rem 2.5rem; border-radius: 14px; margin-bottom: 1.75rem; }
+  .view-meta-label    { font-size: 0.9rem; }
+  .view-detail-grid   { gap: 1.75rem; }
+  .view-detail-section{ padding: 1.5rem 1.75rem; border-radius: 14px; }
+  .view-field         { font-size: 1rem; }
+  .role-hint          { font-size: 1rem; padding: 1rem 1.25rem; }
+  .confirm-modal-msg  { font-size: 1.1rem; }
+}
+
+/* ── ≥2560px  2K / QHD ───────────────────────────────────── */
+@media (min-width: 2560px) and (max-width: 3839px) {
+  .stats-row          { gap: 1.5rem; }
+  .stat-card          { padding: 1.4rem 1.75rem; border-radius: 14px; }
+  .stat-value         { font-size: 2.4rem; }
+  .stat-label         { font-size: 0.88rem; }
+
+  .filter-bar         { gap: 1rem; }
+  .search-icon        { left: 1rem; font-size: 0.95rem; }
+  .search-input       { padding: 0.65rem 1rem 0.65rem 2.75rem; font-size: 1rem; }
+  .filter-select      { padding: 0.65rem 1rem; font-size: 1rem; }
+
+  .data-table th      { padding: 1rem 1.25rem; font-size: 0.88rem; }
+  .data-table td      { padding: 1.1rem 1.25rem; font-size: 0.95rem; }
+  .user-avatar        { width: 44px; height: 44px; font-size: 0.85rem; }
+  .user-name          { font-size: 1rem; }
+  .badge              { font-size: 0.8rem; padding: 0.28rem 0.75rem; }
+  .icon-btn-sm        { width: 36px; height: 36px; }
+  .page-btn           { min-width: 38px; height: 38px; }
+
+  .table-header       { padding: 1.1rem 1.75rem; }
+  .table-footer       { padding: 1.1rem 1.75rem; }
+  .view-detail-grid   { gap: 1.5rem; }
+  .view-meta-strip    { padding: 1rem 1.5rem; }
+  .view-detail-section{ padding: 1.25rem 1.5rem; }
+}
+
+/* ── ≥1920px  Full HD ────────────────────────────────────── */
+@media (min-width: 1920px) and (max-width: 2559px) {
+  .stats-row          { gap: 1.25rem; }
+  .stat-card          { padding: 1.1rem 1.5rem; }
+  .stat-value         { font-size: 2rem; }
+
+  .data-table th      { padding: 0.875rem 1.25rem; }
+  .data-table td      { padding: 1rem 1.25rem; }
+  .user-avatar        { width: 40px; height: 40px; }
+  .table-header       { padding: 1rem 1.5rem; }
+  .table-footer       { padding: 1rem 1.5rem; }
+  .view-detail-grid   { gap: 1.25rem; }
+}
+
+/* ── ≤1440px  Large Laptop ───────────────────────────────── */
+@media (max-width: 1440px) {
+  .stats-row          { gap: 0.875rem; }
+  .stat-card          { padding: 0.875rem 1rem; }
+  .stat-value         { font-size: 1.6rem; }
+}
+
+/* ── ≤1280px  Standard Laptop ───────────────────────────── */
+@media (max-width: 1280px) {
+  .stats-row          { gap: 0.75rem; }
+  .stat-value         { font-size: 1.4rem; }
+  .table-header       { gap: 0.5rem; }
+  .table-count        { font-size: 0.82rem; }
+  .table-header-actions{ gap: 0.375rem; }
+}
+
+/* ── ≤1024px  iPad Landscape ─────────────────────────────── */
+@media (max-width: 1024px) {
+  .stats-row          { grid-template-columns: repeat(4, 1fr); gap: 0.625rem; }
+  .stat-card          { padding: 0.75rem; }
+  .stat-value         { font-size: 1.3rem; }
+  .stat-label         { font-size: 0.72rem; }
+
+  .filter-bar         { gap: 0.5rem; }
+
+  .data-table th,
+  .data-table td      { padding: 0.75rem; font-size: 0.82rem; }
+
+  .user-avatar        { width: 32px; height: 32px; font-size: 0.65rem; }
+  .user-cell          { gap: 0.5rem; }
+  .icon-btn-sm        { width: 28px; height: 28px; }
+
+  .table-header       { padding: 0.75rem 1rem; flex-wrap: wrap; gap: 0.5rem; }
+  .table-footer       { padding: 0.75rem 1rem; }
+
+  .view-meta-strip    { gap: 0.5rem 1rem; padding: 0.75rem 1rem; }
+  .view-detail-grid   { gap: 0.875rem; }
+}
+
+/* ── ≤768px  Tablet Portrait ─────────────────────────────── */
+/* Hide: Last Login (col 6)                                   */
+@media (max-width: 768px) {
+  /* stat-card fine-tune (grid already 2-col from base rule) */
+  .stat-card          { padding: 0.75rem 0.875rem; }
+  .stat-value         { font-size: 1.5rem; }
+
+  /* filter controls full-width */
+  .filter-select      { width: 100%; }
+
+  /* table header — stack label + actions */
+  .table-header       { flex-direction: column; align-items: flex-start; }
+  .table-header-actions{ width: 100%; justify-content: flex-end; }
+
+  /* hide Last Login column */
+  .users-table th:nth-child(6),
+  .users-table td:nth-child(6) { display: none; }
+
+  .user-avatar        { width: 30px; height: 30px; }
+
+  /* pagination — stack */
+  .table-footer       { flex-direction: column; align-items: flex-start; gap: 0.625rem; }
+  .pagination         { flex-wrap: wrap; }
+
+  /* view modal meta strip */
+  .view-meta-strip    { flex-direction: column; gap: 0.5rem; }
+}
+
+/* ── ≤600px  Large Phone ─────────────────────────────────── */
+/* Hide: Tenant (col 5) + Last Login (col 6)                  */
+@media (max-width: 600px) {
+  .stats-row          { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+  .stat-card          { padding: 0.625rem 0.75rem; border-radius: 8px; }
+  .stat-value         { font-size: 1.35rem; }
+
+  /* hide Tenant + Last Login */
+  .users-table th:nth-child(5),
+  .users-table td:nth-child(5),
+  .users-table th:nth-child(6),
+  .users-table td:nth-child(6) { display: none; }
+
+  .data-table th,
+  .data-table td      { padding: 0.625rem; }
+  .user-name          { font-size: 0.82rem; }
+  .user-id            { font-size: 0.7rem; }
+  .icon-btn-sm        { width: 28px; height: 28px; font-size: 0.75rem; }
+  .action-btns        { gap: 0.125rem; }
+
+  /* view detail section */
+  .view-detail-section{ padding: 0.75rem 1rem; }
+}
+
+/* ── ≤480px  Phone ───────────────────────────────────────── */
+/* Keep: checkbox(1) User(2) Role(4) Status(7) Actions(8)     */
+/* Hide: Email (col 3)  +  already-hidden 5, 6                */
+@media (max-width: 480px) {
+  .stats-row          { gap: 0.375rem; }
+  .stat-card          { padding: 0.5rem 0.625rem; border-radius: 8px; }
+  .stat-value         { font-size: 1.25rem; }
+  .stat-label         { font-size: 0.68rem; }
+
+  /* hide Email column */
+  .users-table th:nth-child(3),
+  .users-table td:nth-child(3) { display: none; }
+
+  /* shrink checkbox column */
+  .users-table th:nth-child(1),
+  .users-table td:nth-child(1) { padding: 0.5rem 0.375rem; width: 28px; }
+
+  .data-table th,
+  .data-table td      { padding: 0.5rem; font-size: 0.8rem; }
+  .user-avatar        { width: 28px; height: 28px; font-size: 0.6rem; }
+  .user-cell          { gap: 0.375rem; }
+  .user-name          { font-size: 0.8rem; }
+  .user-id            { display: none; }   /* hide UID-xxx to save space */
+
+  .badge              { font-size: 0.68rem; padding: 0.15rem 0.5rem; }
+  .icon-btn-sm        { width: 26px; height: 26px; font-size: 0.72rem; }
+  .action-btns        { gap: 0.1rem; }
+
+  /* filter bar */
+  .filter-bar         { gap: 0.375rem; }
+  .search-input       { padding: 0.45rem 0.625rem 0.45rem 2rem; font-size: 0.82rem; }
+  .search-icon        { left: 0.625rem; font-size: 0.78rem; }
+  .filter-select      { padding: 0.45rem 0.625rem; font-size: 0.82rem; }
+
+  .table-header       { padding: 0.625rem 0.75rem; }
+  .table-footer       { padding: 0.625rem 0.75rem; }
+  .pagination-info    { font-size: 0.76rem; }
+  .page-btn           { min-width: 28px; height: 28px; font-size: 0.76rem; }
+
+  /* modal inner */
+  .view-meta-strip    { padding: 0.625rem 0.875rem; }
+  .role-hint          { font-size: 0.78rem; padding: 0.5rem 0.75rem; }
+  .confirm-modal-msg  { font-size: 0.88rem; }
+}
+
+/* ── ≤375px  Small Phone ─────────────────────────────────── */
+@media (max-width: 375px) {
+  .stats-row          { gap: 0.25rem; }
+  .stat-card          { padding: 0.5rem; }
+  .stat-value         { font-size: 1.1rem; }
+  .stat-label         { font-size: 0.65rem; letter-spacing: 0; }
+
+  .data-table th,
+  .data-table td      { padding: 0.4rem 0.375rem; font-size: 0.76rem; }
+  .user-avatar        { width: 24px; height: 24px; font-size: 0.55rem; }
+  .badge              { font-size: 0.64rem; padding: 0.1rem 0.4rem; }
+  .icon-btn-sm        { width: 24px; height: 24px; font-size: 0.68rem; }
+  .page-btn           { min-width: 26px; height: 26px; font-size: 0.72rem; }
+  .pagination-info    { font-size: 0.72rem; }
+
+  /* table header actions — stack vertically */
+  .table-header-actions{ flex-direction: column; align-items: stretch; gap: 0.25rem; }
+  .table-header-actions .btn { width: 100%; justify-content: center; font-size: 0.78rem; }
+
+  /* view fields — stack label above value */
+  .view-field         { flex-direction: column; align-items: flex-start; }
+  .vf-value           { text-align: left; }
+  .view-detail-section{ padding: 0.625rem 0.75rem; }
+}
+
+/* ── ≤320px  Tiny Screen ─────────────────────────────────── */
+@media (max-width: 320px) {
+  .stats-row          { grid-template-columns: 1fr 1fr; gap: 0.2rem; }
+  .stat-card          { padding: 0.375rem 0.5rem; border-radius: 6px; }
+  .stat-value         { font-size: 1rem; }
+  .stat-label         { font-size: 0.6rem; }
+
+  /* hide checkbox column — no space at 320px */
+  .users-table th:nth-child(1),
+  .users-table td:nth-child(1) { display: none; }
+
+  .data-table th,
+  .data-table td      { padding: 0.375rem 0.3rem; font-size: 0.72rem; }
+  .user-avatar        { width: 22px; height: 22px; font-size: 0.52rem; }
+  .user-cell          { gap: 0.25rem; }
+  .badge              { font-size: 0.6rem; padding: 0.1rem 0.35rem; }
+  .icon-btn-sm        { width: 22px; height: 22px; font-size: 0.65rem; }
+  .action-btns        { gap: 0.1rem; }
+
+  /* filter */
+  .filter-bar         { gap: 0.25rem; }
+  .search-input       { padding: 0.4rem 0.5rem 0.4rem 1.75rem; font-size: 0.78rem; }
+  .search-icon        { left: 0.5rem; font-size: 0.72rem; }
+  .filter-select      { padding: 0.4rem 0.5rem; font-size: 0.78rem; }
+
+  .table-header       { padding: 0.5rem 0.625rem; }
+  .table-footer       { padding: 0.5rem 0.625rem; }
+  .page-btn           { min-width: 24px; height: 24px; font-size: 0.7rem; padding: 0; }
+  .pagination-info    { font-size: 0.68rem; }
+
+  .view-meta-strip    { gap: 0.375rem; padding: 0.5rem 0.625rem; }
+  .view-detail-section{ padding: 0.625rem 0.75rem; }
+  .role-hint          { font-size: 0.72rem; padding: 0.375rem 0.625rem; }
+  .confirm-modal-msg  { font-size: 0.82rem; }
+}
